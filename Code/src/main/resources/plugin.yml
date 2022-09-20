@@ -1,0 +1,11 @@
+name: SepareWorldItems
+version: '${project.version}'
+main: com.github.happyrogelio7.separeworlditems.SepareWorldItems
+api-version: 1.16
+authors: [ HappyRogelio7 ]
+description: Separe World Items
+website: https://github.com/HappyRogelio7
+commands:
+  separeworlditems:
+    aliases: [swi, swis]
+    usage: /<command> help
