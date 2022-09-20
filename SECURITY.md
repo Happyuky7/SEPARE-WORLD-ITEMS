@@ -19,7 +19,7 @@ currently being supported with security updates.
 
 | Version | Supported          |
 | ------- | ------------------ |
-| 1.2.19-DEV-107   | :white_check_mark: |
+| 1.2.19-DEV-112   | :white_check_mark: |
 | 1.2.19-DEV-100   | :x:                |
 | 1.2.17-DEV-101   | :x:                |
 | 1.2.17-DEV-100   | :x:                |
