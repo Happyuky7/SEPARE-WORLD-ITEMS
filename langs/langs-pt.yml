@@ -1,0 +1,35 @@
+# Config Langs
+# Config = 1.2.19-DEV-116
+# Prefix Value: %prefix%
+general:
+  prefix: "&8[&aSepareWorldItems&8]&r" #Value: %prefix%
+  reload: |-
+    &r  
+    &r%prefix% &2Configuration reload successfully.
+    &r &r
+  no-permission: |-
+    &r 
+    &r%prefix% &cNo Permission.
+    &r &r
+  unknown-cmd-args: |- 
+    &r 
+    &r%prefix% &cUsing:&f /separeworlditems help
+    &r &r
+  bypass:
+    bypass-warning-alert: |-
+      &r 
+      &r%prefix% &cWarning! &fYou can lose your things be careful. This command is only designed for Administrators or Staff of the server, not for users.
+      &r &r
+    bypass-enabled: |-
+      &r 
+      %prefix% &aBypass mode Enabled.
+      &r &r
+    bypass-disabled: |-
+      &r 
+      %prefix% &cBypass Mode Disabled.
+      &r &r
+    bypass-world-options:
+          use_bypass: |-
+            &r 
+            %prefix% &fActivate the &euse_bypass &foption in the &aconfig.yml &fset it to &ctrue.
+            &r &r
