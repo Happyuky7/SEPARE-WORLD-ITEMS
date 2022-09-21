@@ -5,31 +5,31 @@ general:
   prefix: "&8[&aSepareWorldItems&8]&r" #Value: %prefix%
   reload: |-
     &r  
-    &r%prefix% &2Configuration reload successfully.
+    &r%prefix% &2Konfiguration neu geladen.
     &r &r
   no-permission: |-
     &r 
-    &r%prefix% &cNo Permission.
+    &r%prefix% &cKeine Rechte.
     &r &r
   unknown-cmd-args: |- 
     &r 
-    &r%prefix% &cUsing:&f /separeworlditems help
+    &r%prefix% &cNutze:&f /separeworlditems help
     &r &r
   bypass:
     bypass-warning-alert: |-
       &r 
-      &r%prefix% &cWarning! &fYou can lose your things be careful. This command is only designed for Administrators or Staff of the server, not for users.
+      &r%prefix% &cAchtung! &fDu kannst deine Sachen verlieren, sei vorsichtig. Dieser Befehl ist nur für Team Mitglieder ausgelegt.
       &r &r
     bypass-enabled: |-
       &r 
-      %prefix% &aBypass mode Enabled.
+      %prefix% &aUmgehung aktiviert.
       &r &r
     bypass-disabled: |-
       &r 
-      %prefix% &cBypass Mode Disabled.
+      %prefix% &cUmgehung deaktiviert.
       &r &r
     bypass-world-options:
           use_bypass: |-
             &r 
-            %prefix% &fActivate the &euse_bypass &foption in the &aconfig.yml &fset it to &ctrue.
+            %prefix% &fAktiviere die &euse_bypass &fOption in der &aconfig.yml &fsetze es auf &ctrue.
             &r &r
