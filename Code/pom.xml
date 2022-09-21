@@ -6,7 +6,7 @@
 
     <groupId>com.github.happyrogelio7</groupId>
     <artifactId>SepareWorldItems</artifactId>
-    <version>1.2.19-DEV-116</version>
+    <version>1.2.19-DEV-117</version>
     <packaging>jar</packaging>
 
     <name>SepareWorldItems</name>
@@ -40,7 +40,7 @@
 
     <build>
         <!-- Name of your compiled artifact -->
-        <finalName>${artifactId}-${version}</finalName>
+        <finalName>${project.artifactId}-${project.version}</finalName>
 
         <resources>
             <resource>

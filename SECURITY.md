@@ -17,13 +17,12 @@ currently being supported with security updates.
 
 **Dev Versions, Beta's, Alpha's | Security Update Support**
 
-| Version        | Supported          |
-|----------------| ------------------ |
-| 1.2.19-DEV-116 | :white_check_mark: |
-| 1.2.19-DEV-100 | :x:                |
-| 1.2.17-DEV-101 | :x:                |
-| 1.2.17-DEV-100 | :x:                |
-| < 1.2.16       | :x:                |
+| Version          | Supported          |
+|------------------| ------------------ |
+| 1.2.19-DEV-117   | :white_check_mark: |
+| 1.2.19-DEV-116   | :white_check_mark: |
+| < 1.2.19-DEV-115 | :x:                |
+| < 1.2.16         | :x:                |
 
 ## Reporting a Vulnerability
 

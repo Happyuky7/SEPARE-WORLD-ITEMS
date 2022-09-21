@@ -4,12 +4,12 @@
 # Discord OR Support: https://discord.gg/3EebYUyeUX
 # Config Plugin SepareWorldItems 1.2.19
 # Update = true
-# Config = 1.2.19-DEV-116
+# Config = 1.2.19-DEV-117
 #
 general:
   update: true
   update-link: "https://github.com/HappyRogelio7/SEPARE-WORLD-ITEMS/" #Do not change.
-  config: 1.2.19-DEV-116 #Do not change
+  config: 1.2.19-DEV-117 #Do not change
   java-version: 17 #Do not change, This version is build for Java 17.
 #
 # Options.

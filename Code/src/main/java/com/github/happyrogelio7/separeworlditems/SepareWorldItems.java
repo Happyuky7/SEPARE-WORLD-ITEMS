@@ -74,7 +74,7 @@ public final class SepareWorldItems extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&f [Register]: &aReload Files."));
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&3&m------------------------------------"));
 
-        if (!getConfig().getString("general.config").equals("1.2.19-DEV-116")) {
+        if (!getConfig().getString("general.config").equals("1.2.19-DEV-117")) {
             Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&3&m------------------------------------"));
             Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&f [Error]: &cConfig Version ERROR."));
             getLogger().log(Level.SEVERE, "[Error]: Config Version ERROR.");
