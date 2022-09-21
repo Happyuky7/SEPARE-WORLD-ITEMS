@@ -1,5 +1,12 @@
 package com.github.happyrogelio7.separeworlditems.listeners;
 
+/*
+ * Code by: HappyRogelio7
+ * Github: https://github.com/happyrogelio7
+ * License: Custom
+ * Link: https://github.com/HappyRogelio7/SEPARE-WORLD-ITEMS
+ */
+
 import com.github.happyrogelio7.separeworlditems.SepareWorldItems;
 import com.github.happyrogelio7.separeworlditems.filemanagers.FileManager2;
 import com.github.happyrogelio7.separeworlditems.utils.MessageColors;
@@ -43,10 +50,10 @@ public class WorldChangeEvent implements Listener {
 
             if (plugin.playerlist1.contains(p.getUniqueId())) {
 
-                if (plugin.getConfig().getBoolean("Options.bypass-world-options.use_bypass", true)) {
+                if (!plugin.getConfig().getBoolean("Options.bypass-world-options.use_bypass", true)) {
 
                     p.sendMessage(MessageColors.getMsgColor(plugin.getMsgs().getString("general.bypass.bypass-warning-alert")));
-
+                    return;
                 }
                 plugin.playerlist1.remove(p.getUniqueId());
             }

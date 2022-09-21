@@ -1,5 +1,12 @@
 package com.github.happyrogelio7.separeworlditems;
 
+/*
+ * Code by: HappyRogelio7
+ * Github: https://github.com/happyrogelio7
+ * License: Custom
+ * Link: https://github.com/HappyRogelio7/SEPARE-WORLD-ITEMS
+ */
+
 import com.github.happyrogelio7.separeworlditems.commands.SepareWorldItemsCMD;
 import com.github.happyrogelio7.separeworlditems.filemanagers.FileManager;
 import com.github.happyrogelio7.separeworlditems.listeners.WorldChangeEvent;
@@ -13,6 +20,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.logging.Level;
 
@@ -66,24 +74,25 @@ public final class SepareWorldItems extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&f [Register]: &aReload Files."));
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&3&m------------------------------------"));
 
-        /*if (getConfig().getString("general.config").contains("1.2.19-DEV-112")) {
+        if (!getConfig().getString("general.config").equals("1.2.19-DEV-116")) {
             Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&3&m------------------------------------"));
             Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&f [Error]: &cConfig Version ERROR."));
-            getLogger().log(Level.SEVERE, "[Error]: &cConfig Version ERROR.");
+            getLogger().log(Level.SEVERE, "[Error]: Config Version ERROR.");
             Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&3&m------------------------------------"));
             //Bukkit.getPluginManager().disablePlugin(this);
             //onDisable();
         }
 
-        if (getConfig().getString("general.java-version").contains("17")) {
+        if (!Objects.equals(getConfig().getString("general.java-version"), "17")) {
             Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&3&m------------------------------------"));
             Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&f [Error]: &cConfig Version JAVA ERROR."));
-            getLogger().log(Level.SEVERE, "[Error]: &cConfig Version JAVA ERROR.");
-            getLogger().log(Level.SEVERE, "[Error]: &cJava 17");
+            Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&f [Error]: &cJava Build 17"));
+            getLogger().log(Level.SEVERE, "[Error]: Config Version JAVA ERROR.");
+            getLogger().log(Level.SEVERE, "[Error]: Java Build 17");
             Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&3&m------------------------------------"));
             //Bukkit.getPluginManager().disablePlugin(this);
             //onDisable();
-        }*/
+        }
 
     }
 

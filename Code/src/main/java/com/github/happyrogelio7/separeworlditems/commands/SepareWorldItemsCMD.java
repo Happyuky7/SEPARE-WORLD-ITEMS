@@ -1,5 +1,12 @@
 package com.github.happyrogelio7.separeworlditems.commands;
 
+/*
+ * Code by: HappyRogelio7
+ * Github: https://github.com/happyrogelio7
+ * License: Custom
+ * Link: https://github.com/HappyRogelio7/SEPARE-WORLD-ITEMS
+ */
+
 import com.github.happyrogelio7.separeworlditems.SepareWorldItems;
 import com.github.happyrogelio7.separeworlditems.utils.MessageColors;
 import org.bukkit.command.Command;
@@ -136,6 +143,7 @@ public class SepareWorldItemsCMD implements CommandExecutor {
                 if (!plugin.getConfig().getBoolean("Options.bypass-world-options.use_bypass", false)) {
                     p.sendMessage(MessageColors.getMsgColor(plugin.getMsgs().getString("general.bypass.bypass-world-options.use_bypass")
                             .replaceAll(MessageColors.getMsgColor("%prefix%"), plugin.getMsgs().getString("general.prefix"))));
+                    return true;
 
                 }
 
@@ -149,58 +157,58 @@ public class SepareWorldItemsCMD implements CommandExecutor {
                     return true;
                 }
 
-                if (args[1].equalsIgnoreCase("on")){
+                    if (args[1].equalsIgnoreCase("on")) {
 
-                    p.sendMessage(MessageColors.getMsgColor(plugin.getMsgs().getString("general.bypass.bypass-warning-alert")
-                            .replaceAll(MessageColors.getMsgColor("%prefix%"), plugin.getMsgs().getString("general.prefix"))));
+                        p.sendMessage(MessageColors.getMsgColor(plugin.getMsgs().getString("general.bypass.bypass-warning-alert")
+                                .replaceAll(MessageColors.getMsgColor("%prefix%"), plugin.getMsgs().getString("general.prefix"))));
 
-                    plugin.getBypassSave().set("save-bypass." + p.getUniqueId() + ".name", p.getName());
+                        plugin.getBypassSave().set("save-bypass." + p.getUniqueId() + ".name", p.getName());
 
-                    System.out.println("worlds-1");
-                    System.out.println("save-bypass." + p.getUniqueId() + ".worlds." + p.getWorld().getName());
+                        System.out.println("worlds-1");
+                        System.out.println("save-bypass." + p.getUniqueId() + ".worlds." + p.getWorld().getName());
 
-                    plugin.getBypassSave().set("save-bypass." + p.getUniqueId() + ".worlds." + p.getWorld().getName() + ".inventory", p.getInventory().getContents());
-                    plugin.getBypassSave().set("save-bypass." + p.getUniqueId() + ".worlds." + p.getWorld().getName() + ".armor", p.getInventory().getArmorContents());
+                        plugin.getBypassSave().set("save-bypass." + p.getUniqueId() + ".worlds." + p.getWorld().getName() + ".inventory", p.getInventory().getContents());
+                        plugin.getBypassSave().set("save-bypass." + p.getUniqueId() + ".worlds." + p.getWorld().getName() + ".armor", p.getInventory().getArmorContents());
 
-                    plugin.getBypassSave().save();
-                    plugin.getBypassSave().reload();
+                        plugin.getBypassSave().save();
+                        plugin.getBypassSave().reload();
 
-                    plugin.playerlist1.add(p.getUniqueId());
+                        plugin.playerlist1.add(p.getUniqueId());
 
-                    p.sendMessage(MessageColors.getMsgColor(plugin.getMsgs().getString("general.bypass.bypass-enabled")
-                            .replaceAll(MessageColors.getMsgColor("%prefix%"), plugin.getMsgs().getString("general.prefix"))));
+                        p.sendMessage(MessageColors.getMsgColor(plugin.getMsgs().getString("general.bypass.bypass-enabled")
+                                .replaceAll(MessageColors.getMsgColor("%prefix%"), plugin.getMsgs().getString("general.prefix"))));
 
-                    return true;
+                        return true;
 
-                } else if (args[1].equalsIgnoreCase("off")){
+                    } else if (args[1].equalsIgnoreCase("off")) {
 
-                    plugin.getBypassSave().getString("save-bypass." + p.getUniqueId() + ".name");
-                    if (Objects.equals(plugin.getBypassSave().getString("save-bypass." + p.getUniqueId() + ".worlds." + p.getWorld().getName()), p.getWorld().getName())) {
+                        plugin.getBypassSave().getString("save-bypass." + p.getUniqueId() + ".name");
+                        if (Objects.equals(plugin.getBypassSave().getString("save-bypass." + p.getUniqueId() + ".worlds." + p.getWorld().getName()), p.getWorld().getName())) {
 
-                        String toConfig = plugin.getBypassSave().getString("save-bypass." + p.getUniqueId() + ".worlds.");
+                            String toConfig = plugin.getBypassSave().getString("save-bypass." + p.getUniqueId() + ".worlds.");
 
-                        if (toConfig.contains(p.getWorld().getName() + ".inventory"))
+                            if (toConfig.contains(p.getWorld().getName() + ".inventory"))
 
-                            for (String s : plugin.getBypassSave().getConfigurationSection("save-bypass." + p.getUniqueId() + ".worlds." + p.getWorld().getName() + ".inventory").getKeys(false)) {
+                                for (String s : plugin.getBypassSave().getConfigurationSection("save-bypass." + p.getUniqueId() + ".worlds." + p.getWorld().getName() + ".inventory").getKeys(false)) {
 
-                                p.getInventory().setItem(Integer.parseInt(s), plugin.getBypassSave().getItemStack("inventory." + s));
+                                    p.getInventory().setItem(Integer.parseInt(s), plugin.getBypassSave().getItemStack("inventory." + s));
+                                }
+
+                            for (String s : plugin.getBypassSave().getConfigurationSection("save-bypass." + p.getUniqueId() + ".worlds." + p.getWorld().getName() + ".armor").getKeys(false)) {
+
+                                p.getInventory().setItem(Integer.parseInt(s), plugin.getBypassSave().getItemStack("armor." + s));
                             }
 
-                        for (String s : plugin.getBypassSave().getConfigurationSection("save-bypass." + p.getUniqueId() + ".worlds." + p.getWorld().getName() + ".armor").getKeys(false)) {
-
-                            p.getInventory().setItem(Integer.parseInt(s), plugin.getBypassSave().getItemStack("armor." + s));
+                            plugin.playerlist1.remove(p.getUniqueId());
                         }
 
+                        plugin.getBypassSave().set("save-bypass." + p.getUniqueId() + ".worlds." + p.getWorld().getName(), null);
                         plugin.playerlist1.remove(p.getUniqueId());
-                    }
 
-                    plugin.getBypassSave().set("save-bypass." + p.getUniqueId() + ".worlds." + p.getWorld().getName(), null);
-                    plugin.playerlist1.remove(p.getUniqueId());
+                        p.sendMessage(MessageColors.getMsgColor(plugin.getMsgs().getString("general.bypass.bypass-disabled")
+                                .replaceAll(MessageColors.getMsgColor("%prefix%"), plugin.getMsgs().getString("general.prefix"))));
 
-                    p.sendMessage(MessageColors.getMsgColor(plugin.getMsgs().getString("general.bypass.bypass-disabled")
-                            .replaceAll(MessageColors.getMsgColor("%prefix%"), plugin.getMsgs().getString("general.prefix"))));
-
-                    return true;
+                        return true;
 
                 } else {
                     p.sendMessage(MessageColors.getMsgColor(plugin.getMsgs().getString("general.unknown-cmd-args")

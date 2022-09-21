@@ -1,5 +1,5 @@
 # Config Langs
-# Config = 1.2.19-DEV-112
+# Config = 1.2.19-DEV-116
 # Prefix Value: %prefix%
 general:
   prefix: "&8[&aSepareWorldItems&8]&r" #Value: %prefix%
