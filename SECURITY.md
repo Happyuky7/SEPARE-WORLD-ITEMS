@@ -7,21 +7,22 @@ currently being supported with security updates.
 
 **Official Verions | Security Update Support**
 
-| Version      | Supported          |
-|--------------|--------------------|
-| 1.2.18       | :white_check_mark: |
-| 1.2.18-Legacy | :white_check_mark: |
-| 1.2.17       | :x:                |
+| Version       | Supported          |
+|---------------|--------------------|
+| 1.2.19        | :white_check_mark: |
+| 1.2.18        | :x:                |
+| 1.2.18-Legacy | :x:                |
+| 1.2.17        | :x:                |
 | 1.2.17-Legacy | :x:                |
-| < 1.2.16     | :x:                |
+| < 1.2.16      | :x:                |
 
 **Dev Versions, Beta's, Alpha's | Security Update Support**
 
 | Version          | Supported          |
-|------------------| ------------------ |
+|------------------|--------------------|
 | 1.2.19-DEV-117   | :white_check_mark: |
-| 1.2.19-DEV-116   | :white_check_mark: |
-| < 1.2.19-DEV-115 | :x:                |
+| 1.2.19-DEV-116   | :x:                |
+| < 1.2.19-DEV-116 | :x:                |
 | < 1.2.16         | :x:                |
 
 ## Reporting a Vulnerability

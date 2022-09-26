@@ -119,7 +119,7 @@ public class SepareWorldItemsCMD implements CommandExecutor {
 
                 return true;
 
-            } else if (args[0].equalsIgnoreCase("bypass1")){
+            }/* else if (args[0].equalsIgnoreCase("bypass1")){
 
                 if (!p.hasPermission("separeworlditems.cmd.bypass1")) {
                     p.sendMessage(MessageColors.getMsgColor(plugin.getMsgs().getString("general.no-permission")
@@ -132,7 +132,7 @@ public class SepareWorldItemsCMD implements CommandExecutor {
 
                 return true;
 
-            } else if (args[0].equalsIgnoreCase("bypass")){
+            }*/ else if (args[0].equalsIgnoreCase("bypass")){
 
                 if (!p.hasPermission("separeworlditems.cmd.bypass")) {
                     p.sendMessage(MessageColors.getMsgColor(plugin.getMsgs().getString("general.no-permission")
