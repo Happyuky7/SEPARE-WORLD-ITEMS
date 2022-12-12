@@ -36,18 +36,6 @@ public class WorldChangeEvent implements Listener {
 
         Player p = event.getPlayer();
 
-        /*if (plugin.getConfig().getBoolean("Options.bypass-world-options.use_bypass", true)){
-            if (p.hasPermission("separeworlditems.bypass.bypass-warning-alert")){
-
-                p.sendMessage(MessagesUtils.getMsgColor(plugin.getMsgs().getString("general.bypass.bypass-warning-alert")));
-
-                /*p.sendMessage(MessagesUtils.getMsgColor("&8[&aSepareWorldItems&8]&r &c&lWarning! &fAt this moment you have the bypass "
-                        +"permission between world, this is the alpha which can cause you to lose your items."));
-                return;
-            }
-        }*/
-
-
             if (plugin.playerlist1.contains(p.getUniqueId())) {
 
                 if (plugin.getConfig().getBoolean("Options.bypass-world-options.use_bypass", true)) {

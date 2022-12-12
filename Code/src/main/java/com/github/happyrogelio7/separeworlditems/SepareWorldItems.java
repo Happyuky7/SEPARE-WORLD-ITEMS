@@ -26,18 +26,33 @@ import java.util.logging.Level;
 
 public final class SepareWorldItems extends JavaPlugin {
 
+
+    // Instance of plugin.
+
+    private static SepareWorldItems instance;
+
+    public static SepareWorldItems getInstance() {
+        return instance;
+    }
+
+    // Files Manager.
     private FileManager config;
     private FileManager msgs;
     private FileManager bypasssave;
 
-    public ArrayList<UUID> playerlist1 = new ArrayList<java.util.UUID>();
+    // List of bypass players.
+    public ArrayList<UUID> playerlist1 = new ArrayList<UUID>();
 
+    // Plugin info.
     PluginDescriptionFile pdffile = getDescription();
     public String version = this.pdffile.getVersion();
+
 
     @Override
     public void onEnable() {
         // Plugin startup logic
+
+        instance = this;
 
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&7&m------------------------------------"));
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&a On SepareWorldItems &b"+version));
@@ -54,27 +69,32 @@ public final class SepareWorldItems extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&r "));
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&3&m------------------------------------"));
 
+        // Load files.
         registerFileManager();
 
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&f [Register]: &aLoad Files."));
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&3&m------------------------------------"));
 
+        // Register Commands.
         registerCommands();
 
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&f [Register]: &aLoad Commands."));
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&3&m------------------------------------"));
 
+        // Register Events.
         registerEvents();
 
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&f [Register]: &aLoad Events."));
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&3&m------------------------------------"));
 
+        // Reload Configs.
         reloadConfig();
 
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&f [Register]: &aReload Files."));
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&3&m------------------------------------"));
 
-        if (!getConfig().getString("general.config").equals("1.2.19")) {
+        // Verify config version.
+        if (!getConfig().getString("general.config").equals("1.2.20-DEV-100")) {
             Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&3&m------------------------------------"));
             Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&f [Error]: &cConfig Version ERROR."));
             getLogger().log(Level.SEVERE, "[Error]: Config Version ERROR.");
@@ -83,6 +103,7 @@ public final class SepareWorldItems extends JavaPlugin {
             //onDisable();
         }
 
+        // Verify Java Build Version.
         if (!Objects.equals(getConfig().getString("general.java-version"), "17")) {
             Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&3&m------------------------------------"));
             Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&f [Error]: &cConfig Version JAVA ERROR."));
@@ -113,7 +134,7 @@ public final class SepareWorldItems extends JavaPlugin {
     }
 
     public void registerCommands(){
-        getCommand("separeworlditems").setExecutor((CommandExecutor)new SepareWorldItemsCMD(this));
+        getCommand("separeworlditems").setExecutor(new SepareWorldItemsCMD(this));
     }
 
     public void registerEvents() {
