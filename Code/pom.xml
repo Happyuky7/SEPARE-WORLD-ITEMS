@@ -38,6 +38,14 @@
         </dependency>
     </dependencies>
 
+    <distributionManagement>
+      <repository>
+       <id>github</id>
+       <name>GitHub OWNER Apache Maven Packages</name>
+       <url>https://maven.pkg.github.com/HappyRogelio7/SEPARE-WORLD-ITEMS</url>
+      </repository>
+    </distributionManagement>
+         
     <build>
         <!-- Name of your compiled artifact -->
         <finalName>${project.artifactId}-${project.version}</finalName>
