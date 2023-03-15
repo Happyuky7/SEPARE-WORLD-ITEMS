@@ -94,22 +94,10 @@ public final class SepareWorldItems extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&3&m------------------------------------"));
 
         // Verify config version.
-        if (!getConfig().getString("general.config").equals("1.2.20-DEV-100")) {
+        if (!getConfig().getString("general.config").equals("1.2.20-DEV-101")) {
             Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&3&m------------------------------------"));
             Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&f [Error]: &cConfig Version ERROR."));
             getLogger().log(Level.SEVERE, "[Error]: Config Version ERROR.");
-            Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&3&m------------------------------------"));
-            //Bukkit.getPluginManager().disablePlugin(this);
-            //onDisable();
-        }
-
-        // Verify Java Build Version.
-        if (!Objects.equals(getConfig().getString("general.java-version"), "17")) {
-            Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&3&m------------------------------------"));
-            Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&f [Error]: &cConfig Version JAVA ERROR."));
-            Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&f [Error]: &cJava Build 17"));
-            getLogger().log(Level.SEVERE, "[Error]: Config Version JAVA ERROR.");
-            getLogger().log(Level.SEVERE, "[Error]: Java Build 17");
             Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&3&m------------------------------------"));
             //Bukkit.getPluginManager().disablePlugin(this);
             //onDisable();

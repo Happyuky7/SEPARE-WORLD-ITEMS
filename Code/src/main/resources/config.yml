@@ -4,13 +4,14 @@
 # Discord OR Support: https://discord.gg/3EebYUyeUX
 # Config Plugin SepareWorldItems 1.2.20-DEV-100
 # Update = true
-# Config = 1.2.20-DEV-100
+# Config = 1.2.20-DEV-101
 #
 general:
   update: true
   update-link: "https://github.com/HappyRogelio7/SEPARE-WORLD-ITEMS/" #Do not change.
-  config: 1.2.20-DEV-100 #Do not change
-  java-version: 17 #Do not change, This version is build for Java 17.
+  config: 1.2.20-DEV-101 #Do not change
+
+experimental:
   lang: en_US #Change the language of the plugin.
 #
 # Options.
@@ -35,9 +36,6 @@ Options:
   bypass-world-options:
     use_bypass: false
 
-#
-# Config Plugin SepareWorldItems 1.2.20-DEV-100
-#
 groups:
   - default
 worlds:
