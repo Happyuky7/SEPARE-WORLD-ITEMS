@@ -62,7 +62,7 @@ SEPARE-WORLD-ITEMS/Code/target/
 
 ---
 
-© copyright HappyRogelio7 2017-2022 ©
+© copyright HappyRogelio7 2017-2023 ©
 RIGHTS RESERVED
 
 ## Special Thanks To
