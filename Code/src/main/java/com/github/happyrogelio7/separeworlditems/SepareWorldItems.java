@@ -12,7 +12,6 @@ import com.github.happyrogelio7.separeworlditems.filemanagers.FileManager;
 import com.github.happyrogelio7.separeworlditems.listeners.WorldChangeEvent;
 import com.github.happyrogelio7.separeworlditems.utils.MessageColors;
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -20,7 +19,6 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.UUID;
 import java.util.logging.Level;
 
@@ -39,6 +37,8 @@ public final class SepareWorldItems extends JavaPlugin {
     private FileManager config;
     private FileManager msgs;
     private FileManager bypasssave;
+
+    private FileManager langs;
 
     // List of bypass players.
     public ArrayList<UUID> playerlist1 = new ArrayList<UUID>();
@@ -75,6 +75,14 @@ public final class SepareWorldItems extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&f [Register]: &aLoad Files."));
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&3&m------------------------------------"));
 
+        // Load langs files.
+
+        langs = new FileManager(this, "langs/" + getConfig().getString("experimental.lang"));
+
+
+        Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&f [Register]: &aLoad Langs Files."));
+        Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&3&m------------------------------------"));
+
         // Register Commands.
         registerCommands();
 
@@ -94,13 +102,13 @@ public final class SepareWorldItems extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&3&m------------------------------------"));
 
         // Verify config version.
-        if (!getConfig().getString("general.config").equals("1.2.20-DEV-101")) {
+        if (!getConfig().getString("general.config").equals("1.2.20")) {
             Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&3&m------------------------------------"));
             Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&f [Error]: &cConfig Version ERROR."));
             getLogger().log(Level.SEVERE, "[Error]: Config Version ERROR.");
             Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&3&m------------------------------------"));
-            //Bukkit.getPluginManager().disablePlugin(this);
-            //onDisable();
+            Bukkit.getPluginManager().disablePlugin(this);
+            onDisable();
         }
 
     }
@@ -131,9 +139,13 @@ public final class SepareWorldItems extends JavaPlugin {
     }
 
     public void registerFileManager() {
-        this.config = new FileManager(this, "config");
-        this.bypasssave = new FileManager(this, "bypass-save");
-        this.msgs = new FileManager(this, "langs");
+        config = new FileManager(this, "config");
+        bypasssave = new FileManager(this, "bypass-save");
+        msgs = new FileManager(this, "langs");
+    }
+
+    public FileManager getLangs() {
+        return this.langs;
     }
 
     public FileManager getConfig() {

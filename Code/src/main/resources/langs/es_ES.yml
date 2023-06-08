@@ -15,7 +15,7 @@ general:
     &r 
     &r%prefix% &cNo Permission.
     &r &r
-  unknown-cmd-args: |- 
+  unknown-cmd-args: |-
     &r 
     &r%prefix% &cUsing:&f /separeworlditems help
     &r &r
@@ -33,7 +33,7 @@ general:
       %prefix% &cBypass Mode Disabled.
       &r &r
     bypass-world-options:
-          use_bypass: |-
-            &r 
-            %prefix% &fActivate the &euse_bypass &foption in the &aconfig.yml &fset it to &ctrue.
-            &r &r
+      use_bypass: |-
+        &r 
+        %prefix% &fActivate the &euse_bypass &foption in the &aconfig.yml &fset it to &ctrue.
+        &r &r

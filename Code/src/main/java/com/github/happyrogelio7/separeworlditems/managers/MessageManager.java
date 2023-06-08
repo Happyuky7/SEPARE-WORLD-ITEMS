@@ -1,11 +1,7 @@
 package com.github.happyrogelio7.separeworlditems.managers;
 
 import com.github.happyrogelio7.separeworlditems.SepareWorldItems;
-import com.github.happyrogelio7.separeworlditems.filemanagers.FileManager2;
 import com.github.happyrogelio7.separeworlditems.utils.MessageColors;
-import org.bukkit.configuration.file.FileConfiguration;
-
-import java.io.File;
 
 
 /*
@@ -21,18 +17,14 @@ public class MessageManager {
     // Get Message form file language.
     public static String getMessage(String path) {
 
-        String lang = SepareWorldItems.getInstance().getConfig().getString("general.lang");
+        if (SepareWorldItems.getInstance().getLangs().getString(path) == null) {
+            return MessageColors.getMsgColor("&cError: &7The path &b" + path + " &7does not exist in the file: &b"
+                    + SepareWorldItems.getInstance().getConfig().getString("experimental.lang") + ".yml&7.");
+        }
 
-        return MessageColors.getMsgColor(MessageManager.getFileLang(lang.toLowerCase(), path));
-    }
+        return MessageColors.getMsgColor(SepareWorldItems.getInstance().getLangs().getString(path));
 
-    // Get File Language.
-    public static String getFileLang(String lang, String path) {
 
-        File f = new File(SepareWorldItems.getInstance().getDataFolder(), "langs/" + lang.toLowerCase() + ".yml");
-        FileConfiguration fc = FileManager2.getYaml(f);
-
-        return fc.getString(path);
     }
 
 

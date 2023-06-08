@@ -8,6 +8,7 @@ package com.github.happyrogelio7.separeworlditems.commands;
  */
 
 import com.github.happyrogelio7.separeworlditems.SepareWorldItems;
+import com.github.happyrogelio7.separeworlditems.managers.MessageManager;
 import com.github.happyrogelio7.separeworlditems.utils.MessageColors;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -36,8 +37,8 @@ public class SepareWorldItemsCMD implements CommandExecutor {
         Player p = (Player) sender;
 
         if (args.length == 0){
-            p.sendMessage(MessageColors.getMsgColor(plugin.getMsgs().getString("general.unknown-cmd-args")
-                    .replaceAll(MessageColors.getMsgColor("%prefix%"), plugin.getMsgs().getString("general.prefix"))));
+            p.sendMessage(MessageManager.getMessage("general.unknown-cmd-args")
+                    .replaceAll(MessageColors.getMsgColor("%prefix%"), MessageManager.getMessage("general.prefix")));
             return true;
         }
 
@@ -51,11 +52,11 @@ public class SepareWorldItemsCMD implements CommandExecutor {
                 p.sendMessage(MessageColors.getMsgColor("&r "));
                 p.sendMessage(MessageColors.getMsgColor("&7  <> Required &7&l|&r&7 [] Optional"));
                 p.sendMessage(MessageColors.getMsgColor("&r "));
-                p.sendMessage(MessageColors.getMsgColor("&f * &a/separeworlditems help"));
-                p.sendMessage(MessageColors.getMsgColor("&f * &a/separeworlditems info"));
-                p.sendMessage(MessageColors.getMsgColor("&f * &a/separeworlditems api"));
-                p.sendMessage(MessageColors.getMsgColor("&f * &a/separeworlditems update"));
-                p.sendMessage(MessageColors.getMsgColor("&f * &a/separeworlditems reload"));
+                p.sendMessage(MessageColors.getMsgColor("&f * &a/separeworlditems help &7| &fShow this help."));
+                p.sendMessage(MessageColors.getMsgColor("&f * &a/separeworlditems info &7| &fShow plugin info."));
+                p.sendMessage(MessageColors.getMsgColor("&f * &a/separeworlditems api &7| &fShow info about the API."));
+                p.sendMessage(MessageColors.getMsgColor("&f * &a/separeworlditems update &7| &fUpdate the plugin info."));
+                p.sendMessage(MessageColors.getMsgColor("&f * &a/separeworlditems reload &7| &fReload the plugin, config and messages."));
                 p.sendMessage(MessageColors.getMsgColor("&r "));
                 return true;
 
@@ -74,11 +75,11 @@ public class SepareWorldItemsCMD implements CommandExecutor {
 
             } else if (args[0].equalsIgnoreCase("api")){
 
-                if (!p.hasPermission("separeworlditems.cmd.api")) {
-                    p.sendMessage(MessageColors.getMsgColor(plugin.getMsgs().getString("general.no-permission")
-                            .replaceAll(MessageColors.getMsgColor("%prefix%"), plugin.getMsgs().getString("general.prefix"))));
+                /*if (!p.hasPermission("separeworlditems.cmd.api")) {
+                    p.sendMessage(MessageManager.getMessage("general.no-permission")
+                            .replaceAll(MessageColors.getMsgColor("%prefix%"), MessageManager.getMessage("general.prefix")));
                     return true;
-                }
+                }*/
 
                 //API link using, add, etc.
                 p.sendMessage(MessageColors.getMsgColor("&r "));
@@ -90,8 +91,8 @@ public class SepareWorldItemsCMD implements CommandExecutor {
             } else if (args[0].equalsIgnoreCase("update")){
 
                 if (!p.hasPermission("separeworlditems.cmd.update")) {
-                    p.sendMessage(MessageColors.getMsgColor(plugin.getMsgs().getString("general.no-permission")
-                            .replaceAll(MessageColors.getMsgColor("%prefix%"), plugin.getMsgs().getString("general.prefix"))));
+                    p.sendMessage(MessageManager.getMessage("general.no-permission")
+                            .replaceAll(MessageColors.getMsgColor("%prefix%"), MessageManager.getMessage("general.prefix")));
                     return true;
                 }
 
@@ -104,8 +105,8 @@ public class SepareWorldItemsCMD implements CommandExecutor {
             } else if (args[0].equalsIgnoreCase("reload")){
 
                 if (!p.hasPermission("separeworlditems.cmd.reload")) {
-                    p.sendMessage(MessageColors.getMsgColor(plugin.getMsgs().getString("general.no-permission")
-                            .replaceAll(MessageColors.getMsgColor("%prefix%"), plugin.getMsgs().getString("general.prefix"))));
+                    p.sendMessage(MessageManager.getMessage("general.no-permission")
+                            .replaceAll(MessageColors.getMsgColor("%prefix%"), MessageManager.getMessage("general.prefix")));
                     return true;
                 }
 
@@ -113,9 +114,10 @@ public class SepareWorldItemsCMD implements CommandExecutor {
                 plugin.getConfig().reload();
                 //reload langs.yml
                 plugin.getMsgs().reload();
+                plugin.getLangs().reload();
 
-                p.sendMessage(MessageColors.getMsgColor(plugin.getMsgs().getString("general.reload")
-                        .replaceAll(MessageColors.getMsgColor("%prefix%"), plugin.getMsgs().getString("general.prefix"))));
+                p.sendMessage(MessageManager.getMessage("general.reload")
+                        .replaceAll(MessageColors.getMsgColor("%prefix%"), MessageManager.getMessage("general.prefix")));
 
                 return true;
 
@@ -135,8 +137,8 @@ public class SepareWorldItemsCMD implements CommandExecutor {
             }*/ else if (args[0].equalsIgnoreCase("bypass")){
 
                 if (!p.hasPermission("separeworlditems.cmd.bypass")) {
-                    p.sendMessage(MessageColors.getMsgColor(plugin.getMsgs().getString("general.no-permission")
-                            .replaceAll(MessageColors.getMsgColor("%prefix%"), plugin.getMsgs().getString("general.prefix"))));
+                    p.sendMessage(MessageManager.getMessage("general.no-permission")
+                            .replaceAll(MessageColors.getMsgColor("%prefix%"), MessageManager.getMessage("general.prefix")));
                     return true;
                 }
 

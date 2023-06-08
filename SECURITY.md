@@ -9,6 +9,7 @@ currently being supported with security updates.
 
 | Version       | Supported          |
 |---------------|--------------------|
+| 1.2.20        | :white_check_mark: |
 | 1.2.19        | :white_check_mark: |
 | 1.2.18        | :x:                |
 | 1.2.18-Legacy | :x:                |
@@ -20,8 +21,9 @@ currently being supported with security updates.
 
 | Version          | Supported          |
 |------------------|--------------------|
-| 1.2.20-DEV-100   | :white_check_mark: |
-| 1.2.19-DEV-117   | :white_check_mark: |
+| 1.2.20-DEV-101   | :white_check_mark: |
+| 1.2.20-DEV-100   | :x:                |
+| 1.2.19-DEV-117   | :x:                |
 | 1.2.19-DEV-116   | :x:                |
 | < 1.2.19-DEV-116 | :x:                |
 | < 1.2.16         | :x:                |

@@ -25,6 +25,7 @@ public class MessageColors {
                 || Bukkit.getVersion().contains("1.18.2") || Bukkit.getVersion().contains("1.19")
                 || Bukkit.getVersion().contains("1.19.1") || Bukkit.getVersion().contains("1.19.2")
                 || Bukkit.getVersion().contains("1.19.3") || Bukkit.getVersion().contains("1.19.4")
+                || Bukkit.getVersion().contains("1.20")
         ) {
             Pattern pattern = Pattern.compile("#[a-fA-F0-9]{6}");
             Matcher matcher = pattern.matcher(text);
