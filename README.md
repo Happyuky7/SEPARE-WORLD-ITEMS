@@ -3,7 +3,7 @@ SEPARE WORLD ITEMS,  It's a echo plugin to be for your invention by world.
 
 ## Download
 
-[Donwload 1.2.20 / Minecraft Version Support 1.8.8 - 1.20.1 ](https://github.com/HappyRogelio7/SEPARE-WORLD-ITEMS/blob/master/SepareWorldItems-Downloads/Updates/SepareWorldItems-1.2.20.jar)
+[Donwload 1.2.20 / Minecraft Version Support 1.8.8 - 1.20.2 ](https://github.com/HappyRogelio7/SEPARE-WORLD-ITEMS/blob/master/SepareWorldItems-Downloads/Updates/SepareWorldItems-1.2.20.jar)
 
 [Download / Dev Support (1.2.20-DEV-101)](https://github.com/HappyRogelio7/SEPARE-WORLD-ITEMS/blob/master/SepareWorldItems-Downloads/Dev-Version/SepareWorldItems-1.2.20-DEV-101.jar)
  
