@@ -3,9 +3,9 @@ SEPARE WORLD ITEMS,  It's a echo plugin to be for your invention by world.
 
 ## Download
 
-[Donwload 1.2.20 / Minecraft Version Support 1.8.8 - 1.20.2 ](https://github.com/HappyRogelio7/SEPARE-WORLD-ITEMS/blob/master/SepareWorldItems-Downloads/Updates/SepareWorldItems-1.2.20.jar)
+[Donwload 1.2.20 / Minecraft Version Support 1.8.8 - 1.20.4 ](https://github.com/Happyuky7/SEPARE-WORLD-ITEMS/blob/master/SepareWorldItems-Downloads/Updates/SepareWorldItems-1.2.20.jar)
 
-[Download / Dev Support (1.2.20-DEV-101)](https://github.com/HappyRogelio7/SEPARE-WORLD-ITEMS/blob/master/SepareWorldItems-Downloads/Dev-Version/SepareWorldItems-1.2.20-DEV-101.jar)
+[Download / Dev Support (1.2.20-DEV-101)](https://github.com/Happyuky7/SEPARE-WORLD-ITEMS/blob/master/SepareWorldItems-Downloads/Dev-Version/SepareWorldItems-1.2.20-DEV-101.jar)
  
 
 ---
@@ -16,7 +16,7 @@ To compile SEPARE WORLD ITEMS, you need JDK17, git, bash, maven.
 
 Clone the repository with the following command:
 ```bash
-$ git clone https://github.com/HappyRogelio7/SEPARE-WORLD-ITEMS.git
+$ git clone https://github.com/Happyuky7/SEPARE-WORLD-ITEMS.git
 ```
 
 Once downloaded in the git terminal use the following command:
@@ -59,7 +59,7 @@ SEPARE-WORLD-ITEMS/Code/target/
 
 ---
 
-© copyright HappyRogelio7 2017-2023 ©
+© copyright Happyuky7 2017-2024 ©
 RIGHTS RESERVED
 
 ## Special Thanks To
