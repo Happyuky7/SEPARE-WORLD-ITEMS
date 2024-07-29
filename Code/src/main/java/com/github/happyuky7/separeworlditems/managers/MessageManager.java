@@ -1,14 +1,14 @@
-package com.github.happyrogelio7.separeworlditems.managers;
+package com.github.happyuky7.separeworlditems.managers;
 
-import com.github.happyrogelio7.separeworlditems.SepareWorldItems;
-import com.github.happyrogelio7.separeworlditems.utils.MessageColors;
+import com.github.happyuky7.separeworlditems.SepareWorldItems;
+import com.github.happyuky7.separeworlditems.utils.MessageColors;
 
 
 /*
  * Code by: HappyRogelio7
- * Github: https://github.com/happyrogelio7/
+ * Github: https://github.com/Happyuky7/
  * License: Custom
- * Link: https://github.com/HappyRogelio7/SEPARE-WORLD-ITEMS
+ * Link: https://github.com/Happyuky7/SEPARE-WORLD-ITEMS
  */
 
 public class MessageManager {

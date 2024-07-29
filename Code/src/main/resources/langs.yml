@@ -1,10 +1,10 @@
 # Config Langs
-# Config = 1.2.20
+# Config = 1.2.21
 # Prefix Value: %prefix%
 # Lang: EN
 # Here you can find the list of languages to which the plugin is already translated:
-# Github: https://github.com/HappyRogelio7/SEPARE-WORLD-ITEMS/tree/master/langs
-# Translate by: https://github.com/HappyRogelio7/
+# Github: https://github.com/HHappyuky7/SEPARE-WORLD-ITEMS/tree/master/langs
+# Translate by: https://github.com/Happyuky7/
 general:
   prefix: "&8[&aSepareWorldItems&8]&r" #Value: %prefix%
   reload: |-

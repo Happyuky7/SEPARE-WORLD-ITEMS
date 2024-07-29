@@ -1,16 +1,16 @@
-package com.github.happyrogelio7.separeworlditems;
+package com.github.happyuky7.separeworlditems;
 
 /*
- * Code by: HappyRogelio7
- * Github: https://github.com/happyrogelio7
+ * Code by: Happyuky7
+ * Github: https://github.com/Happyuky7
  * License: Custom
- * Link: https://github.com/HappyRogelio7/SEPARE-WORLD-ITEMS
+ * Link: https://github.com/Happyuky7/SEPARE-WORLD-ITEMS
  */
 
-import com.github.happyrogelio7.separeworlditems.commands.SepareWorldItemsCMD;
-import com.github.happyrogelio7.separeworlditems.filemanagers.FileManager;
-import com.github.happyrogelio7.separeworlditems.listeners.WorldChangeEvent;
-import com.github.happyrogelio7.separeworlditems.utils.MessageColors;
+import com.github.happyuky7.separeworlditems.commands.SepareWorldItemsCMD;
+import com.github.happyuky7.separeworlditems.filemanagers.FileManager;
+import com.github.happyuky7.separeworlditems.listeners.WorldChangeEvent;
+import com.github.happyuky7.separeworlditems.utils.MessageColors;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
@@ -58,12 +58,12 @@ public final class SepareWorldItems extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&a On SepareWorldItems &b"+version));
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&r "));
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&a Thanks for using SepareWorldItems :D"));
-        Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&2 Created By: HappyRogelio7"));
+        Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&2 Created By: Happyuky7"));
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&r "));
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&a Version Server:&f "+Bukkit.getVersion()));
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&r "));
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&9&l Discord: &fhttps://discord.gg/3EebYUyeUX"));
-        Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&d&l GitHub: &fhttps://github.com/HappyRogelio7/SEPARE-WORLD-ITEMS"));
+        Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&d&l GitHub: &fhttps://github.com/Happyuky7/SEPARE-WORLD-ITEMS"));
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&7&m------------------------------------"));
 
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&r "));
@@ -102,7 +102,7 @@ public final class SepareWorldItems extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&3&m------------------------------------"));
 
         // Verify config version.
-        if (!getConfig().getString("general.config").equals("1.2.20")) {
+        if (!getConfig().getString("general.config").equals("1.2.21")) {
             Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&3&m------------------------------------"));
             Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&f [Error]: &cConfig Version ERROR."));
             getLogger().log(Level.SEVERE, "[Error]: Config Version ERROR.");
@@ -120,12 +120,12 @@ public final class SepareWorldItems extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&c OFF SepareWorldItems &b"+version));
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&r "));
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&a Thanks for using SepareWorldItems :D"));
-        Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&2 Created By: HappyRogelio7"));
+        Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&2 Created By: Happyuky7"));
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&r "));
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&a Version Server:&f "+Bukkit.getVersion()));
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&r "));
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&9&l Discord: &fhttps://discord.gg/3EebYUyeUX"));
-        Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&d&l GitHub: &fhttps://github.com/HappyRogelio7/SEPARE-WORLD-ITEMS"));
+        Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&d&l GitHub: &fhttps://github.com/Happyuky7/SEPARE-WORLD-ITEMS"));
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&7&m------------------------------------"));
     }
 

@@ -1,15 +1,15 @@
-package com.github.happyrogelio7.separeworlditems.commands;
+package com.github.happyuky7.separeworlditems.commands;
 
 /*
- * Code by: HappyRogelio7
- * Github: https://github.com/happyrogelio7
+ * Code by: Happyuky7
+ * Github: https://github.com/Happyuky7
  * License: Custom
- * Link: https://github.com/HappyRogelio7/SEPARE-WORLD-ITEMS
+ * Link: https://github.com/Happyuky7/SEPARE-WORLD-ITEMS
  */
 
-import com.github.happyrogelio7.separeworlditems.SepareWorldItems;
-import com.github.happyrogelio7.separeworlditems.managers.MessageManager;
-import com.github.happyrogelio7.separeworlditems.utils.MessageColors;
+import com.github.happyuky7.separeworlditems.SepareWorldItems;
+import com.github.happyuky7.separeworlditems.managers.MessageManager;
+import com.github.happyuky7.separeworlditems.utils.MessageColors;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -68,8 +68,8 @@ public class SepareWorldItemsCMD implements CommandExecutor {
                 p.sendMessage(MessageColors.getMsgColor("&r "));
                 p.sendMessage(MessageColors.getMsgColor("&f * &9version: &f" + plugin.version));
                 p.sendMessage(MessageColors.getMsgColor("&f * &aCreated: &fHappyRogelio7"));
-                p.sendMessage(MessageColors.getMsgColor("&f * &dGitHub: &fhttps://github.com/HappyRogelio7"));
-                p.sendMessage(MessageColors.getMsgColor("&f * &6Website: &fhttps://happyrogelio7.github.io/index.html"));
+                p.sendMessage(MessageColors.getMsgColor("&f * &dGitHub: &fhttps://github.com/Happyuky7"));
+                p.sendMessage(MessageColors.getMsgColor("&f * &6Website: &fhttps://happyuky7.github.io/"));
                 p.sendMessage(MessageColors.getMsgColor("&r "));
                 return true;
 
@@ -83,7 +83,7 @@ public class SepareWorldItemsCMD implements CommandExecutor {
 
                 //API link using, add, etc.
                 p.sendMessage(MessageColors.getMsgColor("&r "));
-                p.sendMessage(MessageColors.getMsgColor("&8[&aSepareWorldItems&8]&r https://github.com/HappyRogelio7/SEPARE-WORLD-ITEMS/wiki/API"));
+                p.sendMessage(MessageColors.getMsgColor("&8[&aSepareWorldItems&8]&r https://github.com/Happyuky7/SEPARE-WORLD-ITEMS/wiki/API"));
                 p.sendMessage(MessageColors.getMsgColor("&r "));
 
                 return true;
@@ -98,7 +98,7 @@ public class SepareWorldItemsCMD implements CommandExecutor {
 
                 //update link msg cmd
                 p.sendMessage(MessageColors.getMsgColor("&r "));
-                p.sendMessage(MessageColors.getMsgColor("&8[&aSepareWorldItems&8]&r https://github.com/HappyRogelio7/SEPARE-WORLD-ITEMS/wiki#download"));
+                p.sendMessage(MessageColors.getMsgColor("&8[&aSepareWorldItems&8]&r https://github.com/Happyuky7/SEPARE-WORLD-ITEMS/wiki#download"));
                 p.sendMessage(MessageColors.getMsgColor("&r "));
                 return true;
 

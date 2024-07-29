@@ -1,10 +1,10 @@
-package com.github.happyrogelio7.separeworlditems.filemanagers;
+package com.github.happyuky7.separeworlditems.filemanagers;
 
 /*
- * Code by: HappyRogelio7
- * Github: https://github.com/happyrogelio7
+ * Code by: Happyuky7
+ * Github: https://github.com/Happyuky7
  * License: Custom
- * Link: https://github.com/HappyRogelio7/SEPARE-WORLD-ITEMS
+ * Link: https://github.com/Happyuky7/SEPARE-WORLD-ITEMS
  */
 
 import org.bukkit.configuration.file.FileConfiguration;

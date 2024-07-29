@@ -1,4 +1,4 @@
-package com.github.happyrogelio7.separeworlditems.utils;
+package com.github.happyuky7.separeworlditems.utils;
 
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
@@ -9,10 +9,10 @@ import java.util.regex.Pattern;
 public class MessageColors {
 
     /*
-     Code by: HappyRogelio7
-     Github: https://github.com/HappyRogelio7
+     Code by: Happyuky7
+     Github: https://github.com/Happyuky7
      License: Custom
-     Link: https://github.com/HappyRogelio7/getMsgColorSpigotClass1
+     Link: https://github.com/Happyuky7/getMsgColorSpigotClass1
      */
 
     public static String getMsgColor(String text) {
@@ -25,8 +25,12 @@ public class MessageColors {
                 || Bukkit.getVersion().contains("1.18.2") || Bukkit.getVersion().contains("1.19")
                 || Bukkit.getVersion().contains("1.19.1") || Bukkit.getVersion().contains("1.19.2")
                 || Bukkit.getVersion().contains("1.19.3") || Bukkit.getVersion().contains("1.19.4")
-                || Bukkit.getVersion().contains("1.20")
+                || Bukkit.getVersion().contains("1.20") || Bukkit.getVersion().contains("1.20.1")
+                || Bukkit.getVersion().contains("1.20.2") || Bukkit.getVersion().contains("1.20.3")
+                || Bukkit.getVersion().contains("1.20.4") || Bukkit.getVersion().contains("1.20.5")
+                || Bukkit.getVersion().contains("1.20.6") || Bukkit.getVersion().contains("1.21")
         ) {
+
             Pattern pattern = Pattern.compile("#[a-fA-F0-9]{6}");
             Matcher matcher = pattern.matcher(text);
 

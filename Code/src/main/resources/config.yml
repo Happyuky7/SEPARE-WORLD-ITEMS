@@ -1,15 +1,15 @@
 #
-# SepareWorldItems 1.2.20
+# SepareWorldItems 1.2.21
 # Tutorial: https://github.com/HappyRogelio7/SEPARE-WORLD-ITEMS/wiki
 # Discord OR Support: https://discord.gg/3EebYUyeUX
-# Config Plugin SepareWorldItems 1.2.20
+# Config Plugin SepareWorldItems 1.2.21
 # Update = true
-# Config = 1.2.20
+# Config = 1.2.21
 #
 general:
   update: true
   update-link: "https://github.com/HappyRogelio7/SEPARE-WORLD-ITEMS/" #Do not change.
-  config: 1.2.20 #Do not change
+  config: 1.2.21 #Do not change
 
 experimental:
   lang: en_US #Change the language of the plugin.

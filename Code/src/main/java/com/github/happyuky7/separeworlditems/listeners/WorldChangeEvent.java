@@ -1,15 +1,15 @@
-package com.github.happyrogelio7.separeworlditems.listeners;
+package com.github.happyuky7.separeworlditems.listeners;
 
 /*
- * Code by: HappyRogelio7
- * Github: https://github.com/happyrogelio7
+ * Code by: Happyuky7
+ * Github: https://github.com/Happyuky7
  * License: Custom
- * Link: https://github.com/HappyRogelio7/SEPARE-WORLD-ITEMS
+ * Link: https://github.com/Happyuky7/SEPARE-WORLD-ITEMS
  */
 
-import com.github.happyrogelio7.separeworlditems.SepareWorldItems;
-import com.github.happyrogelio7.separeworlditems.filemanagers.FileManager2;
-import com.github.happyrogelio7.separeworlditems.utils.MessageColors;
+import com.github.happyuky7.separeworlditems.SepareWorldItems;
+import com.github.happyuky7.separeworlditems.filemanagers.FileManager2;
+import com.github.happyuky7.separeworlditems.utils.MessageColors;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
