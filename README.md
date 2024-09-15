@@ -52,7 +52,7 @@ SEPARE-WORLD-ITEMS/Code/target/
 
 ## Aditional Information
 
-[My website](https://happyuky7.xyz), My website
+[My website](https://happy7.xyz), My website
 
 [Discord](https://discord.gg/3EebYUyeUX), Support My Server Discord
 
