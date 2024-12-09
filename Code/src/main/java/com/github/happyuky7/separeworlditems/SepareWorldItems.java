@@ -100,7 +100,7 @@ public final class SepareWorldItems extends JavaPlugin {
      */
     private void configureBackups() {
         // Static configuration for backups
-        boolean backupsEnabled = false; // Enables or disables backups
+        boolean backupsEnabled = true; // Enables or disables backups
         File userDataFolder = new File(getDataFolder(), "groups"); // Folder containing user data
         File backupFolder = new File(getDataFolder(), "backups"); // Folder for storing backups
         int maxBackups = 5; // Maximum number of backups to retain
