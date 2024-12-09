@@ -2,113 +2,183 @@ package com.github.happyuky7.separeworlditems.filemanagers;
 
 /*
  * Code by: Happyuky7
- * Github: https://github.com/Happyuky7
+ * GitHub: https://github.com/Happyuky7
  * License: Custom
  * Link: https://github.com/Happyuky7/SEPARE-WORLD-ITEMS
  */
+
+import org.bukkit.ChatColor;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
-import org.bukkit.ChatColor;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.java.JavaPlugin;
 
+/**
+ * A custom file manager class to handle YAML configuration files.
+ * Extends {@link YamlConfiguration} to provide additional utility methods for
+ * configuration management.
+ */
 public class FileManager extends YamlConfiguration {
+
     private final String fileName;
-
     private final JavaPlugin plugin;
-
     private final File folder;
 
+    /**
+     * Constructs a FileManager with the specified plugin, file name, and folder.
+     *
+     * @param plugin   the plugin instance
+     * @param fileName the name of the file (with or without the extension)
+     * @param folder   the folder where the file will be stored
+     */
     public FileManager(JavaPlugin plugin, String fileName, File folder) {
         this(plugin, fileName, ".yml", folder);
     }
 
-    public FileManager(JavaPlugin plugin, String filename, String fileextension, File folder) {
+    /**
+     * Constructs a FileManager with a custom file extension.
+     *
+     * @param plugin        the plugin instance
+     * @param fileName      the name of the file (without the extension)
+     * @param fileExtension the file extension (e.g., ".yml")
+     * @param folder        the folder where the file will be stored
+     */
+    public FileManager(JavaPlugin plugin, String fileName, String fileExtension, File folder) {
         this.folder = folder;
         this.plugin = plugin;
-        this.fileName = filename + (filename.endsWith(fileextension) ? "" : fileextension);
+        this.fileName = fileName + (fileName.endsWith(fileExtension) ? "" : fileExtension);
         createFile();
     }
 
+    /**
+     * Constructs a FileManager using the default plugin data folder and ".yml"
+     * extension.
+     *
+     * @param plugin   the plugin instance
+     * @param fileName the name of the file
+     */
     public FileManager(JavaPlugin plugin, String fileName) {
         this(plugin, fileName, ".yml");
     }
 
+    /**
+     * Constructs a FileManager using the default plugin data folder with a custom
+     * file extension.
+     *
+     * @param plugin        the plugin instance
+     * @param fileName      the name of the file (without the extension)
+     * @param fileExtension the file extension
+     */
     public FileManager(JavaPlugin plugin, String fileName, String fileExtension) {
         this(plugin, fileName, fileExtension, plugin.getDataFolder());
     }
 
+    /**
+     * Returns the plugin instance associated with this FileManager.
+     *
+     * @return the plugin instance
+     */
     public JavaPlugin getPlugin() {
         return this.plugin;
     }
 
+    /**
+     * Retrieves a string from the configuration and applies color codes.
+     *
+     * @param path the path to the string in the configuration
+     * @return the colored string, or the path itself if not found
+     */
     public String getColouredString(String path) {
-        String getted;
-        try {
-            getted = getString(path);
-        } catch (NullPointerException e) {
-            getted = path;
-        }
-        return ChatColor.translateAlternateColorCodes('&', getted);
+        String value = getString(path);
+        return ChatColor.translateAlternateColorCodes('&', value != null ? value : path);
     }
 
+    /**
+     * Retrieves a list of strings from the configuration and applies color codes to
+     * each entry.
+     *
+     * @param path the path to the string list in the configuration
+     * @return a list of colored strings
+     */
     public List<String> getColouredStringList(String path) {
-        List<String> f = new ArrayList<>();
-        for (String l : getStringList(path))
-            f.add(l.replace('&', '&'));
-        return f;
+        List<String> originalList = getStringList(path);
+        List<String> coloredList = new ArrayList<>();
+        for (String line : originalList) {
+            coloredList.add(ChatColor.translateAlternateColorCodes('&', line));
+        }
+        return coloredList;
     }
 
+    /**
+     * Retrieves a configuration value as the specified type.
+     *
+     * @param <T>   the type to cast the value to
+     * @param clazz the class of the desired type
+     * @param path  the path to the value in the configuration
+     * @return the value cast to the specified type
+     */
     public <T> T get(Class<T> clazz, String path) {
-        Object obj = get(path);
-        return clazz.cast(obj);
+        Object value = get(path);
+        return clazz.cast(value);
     }
 
+    /**
+     * Creates the configuration file if it doesn't exist.
+     * If a resource file with the same name exists in the plugin jar, it will be
+     * copied.
+     */
     private void createFile() {
+        File file = new File(this.folder, this.fileName);
         try {
-            File file = new File(this.folder, this.fileName);
             if (!file.exists()) {
                 if (this.plugin.getResource(this.fileName) != null) {
                     this.plugin.saveResource(this.fileName, false);
                 } else {
                     save(file);
                 }
-                load(file);
-            } else {
-                load(file);
-                save(file);
             }
+            load(file);
         } catch (Exception ex) {
-            this.plugin.getLogger().log(Level.SEVERE, "error occurred creating the " + this.fileName + " file");
-            this.plugin.getLogger().log(Level.SEVERE, "");
-            this.plugin.getLogger().log(Level.SEVERE, "Error:" + ex.getMessage());
+            logSevereError("An error occurred while creating the file.", ex);
         }
     }
 
+    /**
+     * Saves the current configuration to the file.
+     */
     public void save() {
-        File folder = this.plugin.getDataFolder();
+        File file = new File(this.folder, this.fileName);
         try {
-            save(new File(folder, this.fileName));
-        } catch (Exception ex) {
-            this.plugin.getLogger().log(Level.SEVERE, "error occurred while saving the " + this.fileName + " file");
-            this.plugin.getLogger().log(Level.SEVERE, "");
-            this.plugin.getLogger().log(Level.SEVERE, "Error:" + ex.getMessage());
+            save(file);
+        } catch (IOException ex) {
+            logSevereError("An error occurred while saving the file.", ex);
         }
     }
 
+    /**
+     * Reloads the configuration file.
+     */
     public void reload() {
-        File folder = this.plugin.getDataFolder();
-        File file = new File(folder, this.fileName);
+        File file = new File(this.folder, this.fileName);
         try {
             load(file);
-        } catch (IOException|org.bukkit.configuration.InvalidConfigurationException e) {
-            this.plugin.getLogger().log(Level.SEVERE, "error occurred while reloading the " + this.fileName + " file");
-            this.plugin.getLogger().log(Level.SEVERE, "");
-            this.plugin.getLogger().log(Level.SEVERE, "Error:" + e.getMessage());
+        } catch (IOException | org.bukkit.configuration.InvalidConfigurationException ex) {
+            logSevereError("An error occurred while reloading the file.", ex);
         }
+    }
+
+    /**
+     * Logs a severe error to the plugin logger.
+     *
+     * @param message the error message
+     * @param ex      the exception that was thrown
+     */
+    private void logSevereError(String message, Exception ex) {
+        this.plugin.getLogger().log(Level.SEVERE, message);
+        this.plugin.getLogger().log(Level.SEVERE, "Error: " + ex.getMessage());
     }
 }
