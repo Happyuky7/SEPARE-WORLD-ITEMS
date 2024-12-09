@@ -231,13 +231,13 @@ public class SepareWorldItemsCMD implements CommandExecutor {
      * @param player The player enabling the bypass mode.
      */
     private void enableBypass(Player player) {
-        plugin.getBypassSave().set("save-bypass." + player.getUniqueId() + ".name", player.getName());
-        plugin.getBypassSave().set(
-                "save-bypass." + player.getUniqueId() + ".worlds." + player.getWorld().getName() + ".inventory",
-                player.getInventory().getContents());
-        plugin.getBypassSave().set(
-                "save-bypass." + player.getUniqueId() + ".worlds." + player.getWorld().getName() + ".armor",
-                player.getInventory().getArmorContents());
+        String playerPath = "save-bypass." + player.getUniqueId() + ".name";
+        String worldPath = "save-bypass." + player.getUniqueId() + ".worlds." + player.getWorld().getName();
+
+        plugin.getBypassSave().set(playerPath, player.getName());
+        plugin.getBypassSave().set(worldPath + ".inventory", player.getInventory().getContents());
+        plugin.getBypassSave().set(worldPath + ".armor", player.getInventory().getArmorContents());
+        plugin.getBypassSave().set(worldPath + ".off_hand", player.getInventory().getItemInOffHand());
 
         plugin.getBypassSave().save();
         plugin.getBypassSave().reload();
@@ -263,12 +263,32 @@ public class SepareWorldItemsCMD implements CommandExecutor {
         }
 
         restorePlayerInventory(player, worldPath);
+        restorePlayerOffHand(player, worldPath);
 
         plugin.getBypassSave().set(worldPath, null);
         plugin.playerlist1.remove(player.getUniqueId());
 
         player.sendMessage(MessageColors.getMsgColor(plugin.getMsgs().getString("general.bypass.bypass-disabled")
                 .replace("%prefix%", plugin.getMsgs().getString("general.prefix"))));
+    }
+
+    /**
+     * Restores the player's off-hand item from the saved data in the configuration
+     * file
+     * for the specified world.
+     *
+     * @param player    The player whose off-hand item is being restored.
+     * @param worldPath The path in the configuration file where the off-hand item
+     *                  data is stored.
+     *                  This path should correspond to the player's unique ID and
+     *                  the world they were in
+     *                  when the bypass mode was enabled.
+     */
+    private void restorePlayerOffHand(Player player, String worldPath) {
+        ItemStack offHandItem = plugin.getBypassSave().getItemStack(worldPath + ".off_hand");
+        if (offHandItem != null) {
+            player.getInventory().setItemInOffHand(offHandItem);
+        }
     }
 
     /**

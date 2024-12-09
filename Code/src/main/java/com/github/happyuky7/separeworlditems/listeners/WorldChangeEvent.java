@@ -91,6 +91,7 @@ public class WorldChangeEvent implements Listener {
         saveInventory(player, config);
         savePlayerAttributes(player, config);
         savePotionEffects(player, config);
+        saveOffHandItem(player, config);
 
         FileManager2.saveConfiguration(file, config);
 
@@ -111,6 +112,7 @@ public class WorldChangeEvent implements Listener {
         loadInventory(player, config);
         loadPlayerAttributes(player, config);
         loadPotionEffects(player, config);
+        loadOffHandItem(player, config);
     }
 
     /**
@@ -184,6 +186,28 @@ public class WorldChangeEvent implements Listener {
             config.set("potion_effect." + index + ".level", effect.getAmplifier());
             config.set("potion_effect." + index + ".duration", effect.getDuration());
             index++;
+        }
+    }
+
+    /**
+     * Saves the player's off-hand item to the configuration file.
+     *
+     * @param player The player whose off-hand item is being saved.
+     * @param config The configuration file where the data is saved.
+     */
+    private void saveOffHandItem(Player player, FileConfiguration config) {
+        config.set("off_hand_item", player.getInventory().getItemInOffHand());
+    }
+
+    /**
+     * Loads the player's off-hand item from the configuration file.
+     *
+     * @param player The player whose off-hand item is being loaded.
+     * @param config The configuration file where the data is loaded from.
+     */
+    private void loadOffHandItem(Player player, FileConfiguration config) {
+        if (config.contains("off_hand_item")) {
+            player.getInventory().setItemInOffHand(config.getItemStack("off_hand_item"));
         }
     }
 
