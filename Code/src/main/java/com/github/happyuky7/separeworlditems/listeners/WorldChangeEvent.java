@@ -179,6 +179,7 @@ public class WorldChangeEvent implements Listener {
      * @param player The player whose potion effects are being saved.
      * @param config The configuration file where the data is saved.
      */
+    @SuppressWarnings("deprecation")
     private void savePotionEffects(Player player, FileConfiguration config) {
         int index = 0;
         for (PotionEffect effect : player.getActivePotionEffects()) {
@@ -274,6 +275,7 @@ public class WorldChangeEvent implements Listener {
     private void loadPotionEffects(Player player, FileConfiguration config) {
         if (config.contains("potion_effect")) {
             for (String key : config.getConfigurationSection("potion_effect").getKeys(false)) {
+                @SuppressWarnings("deprecation")
                 PotionEffect effect = new PotionEffect(
                         PotionEffectType.getByName(config.getString("potion_effect." + key + ".type")),
                         config.getInt("potion_effect." + key + ".duration"),

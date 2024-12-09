@@ -10,12 +10,14 @@ package com.github.happyuky7.separeworlditems;
 import com.github.happyuky7.separeworlditems.commands.SepareWorldItemsCMD;
 import com.github.happyuky7.separeworlditems.filemanagers.FileManager;
 import com.github.happyuky7.separeworlditems.listeners.WorldChangeEvent;
+import com.github.happyuky7.separeworlditems.utils.BackupManager;
 import com.github.happyuky7.separeworlditems.utils.MessageColors;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -44,6 +46,7 @@ public final class SepareWorldItems extends JavaPlugin {
     private FileManager msgs;
     private FileManager bypasssave;
     private FileManager langs;
+    private BackupManager backupManager;
 
     // List of bypass players.
     public ArrayList<UUID> playerlist1 = new ArrayList<>();
@@ -56,6 +59,9 @@ public final class SepareWorldItems extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
         instance = this;
+
+        // Configure backups
+        configureBackups();
 
         // Log plugin details to console
         logPluginDetails();
@@ -87,6 +93,32 @@ public final class SepareWorldItems extends JavaPlugin {
     public void onDisable() {
         // Plugin shutdown logic
         logPluginShutdownDetails();
+    }
+
+    /**
+     * Configures and starts the backup process for the user data folder.
+     */
+    private void configureBackups() {
+        // Static configuration for backups
+        boolean backupsEnabled = false; // Enables or disables backups
+        File userDataFolder = new File(getDataFolder(), "groups"); // Folder containing user data
+        File backupFolder = new File(getDataFolder(), "backups"); // Folder for storing backups
+        int maxBackups = 5; // Maximum number of backups to retain
+        long backupInterval = 86400000L; // Backup interval in milliseconds (1 day)
+
+        // Ensure that the user data folder exists
+        if (!userDataFolder.exists()) {
+            userDataFolder.mkdirs(); // Create the folder if it does not exist
+        }
+
+        // Initialize and start the backup system if backups are enabled
+        if (backupsEnabled) {
+            backupManager = new BackupManager(this, backupFolder, maxBackups, backupInterval);
+            backupManager.startAutoBackup(userDataFolder); // Creates backups of the entire folder
+            getLogger().info("Backups are enabled and running for the user data folder.");
+        } else {
+            getLogger().info("Backups are disabled.");
+        }
     }
 
     /**
