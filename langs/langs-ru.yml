@@ -1,0 +1,40 @@
+# Config Langs
+# Config = 1.2.19
+# Prefix Value: %prefix%
+# Lang: RU
+# Here you can find the list of languages to which the plugin is already translated:
+# Github: https://github.com/HappyRogelio7/SEPARE-WORLD-ITEMS/tree/master/langs
+# Translate by: https://github.com/HyperekDerg || https://gitlab.com/HyperekDerg
+general:
+  prefix: "&8[&aSepareWorldItems&8]&r"
+  reload: |-
+    &r  
+    &r%prefix% &2Конфигурация успешно перезагружена.
+    &r &r
+  no-permission: |-
+    &r 
+    &r%prefix% &cНет прав.
+    &r &r
+  unknown-cmd-args: |- 
+    &r 
+    &r%prefix% &cИспользование:&f /separeworlditems help
+    &r &r
+  bypass:
+    bypass-warning-alert: |-
+      &r 
+      &r%prefix% &cПредупреждение! &fВы можете потерять свои вещи, будьте осторожны. Эта команда предназначена только для администраторов или персонала сервера, а не для пользователей.
+      &r &r
+    bypass-enabled: |-
+      &r 
+      %prefix% &aРежим обхода включен.
+      &r &r
+    bypass-disabled: |-
+      &r 
+      %prefix% &cРежим обхода выключен.
+      &r &r
+    bypass-world-options:
+          use_bypass: |-
+            &r 
+            %prefix% &fВключите опцию &euse_bypass &fв файле &aconfig.yml &fустановите ее на &ctrue.
+            &r &r
+
