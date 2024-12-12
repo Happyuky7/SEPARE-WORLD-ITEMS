@@ -10,7 +10,9 @@ package com.github.happyuky7.separeworlditems;
 import com.github.happyuky7.separeworlditems.commands.SepareWorldItemsCMD;
 import com.github.happyuky7.separeworlditems.filemanagers.FileManager;
 import com.github.happyuky7.separeworlditems.listeners.WorldChangeEvent;
+import com.github.happyuky7.separeworlditems.managers.DownloadTranslations;
 import com.github.happyuky7.separeworlditems.utils.BackupManager;
+import com.github.happyuky7.separeworlditems.utils.ConvertTime;
 import com.github.happyuky7.separeworlditems.utils.MessageColors;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -60,8 +62,23 @@ public final class SepareWorldItems extends JavaPlugin {
         // Plugin startup logic
         instance = this;
 
+        // Reload config files.
+        // requires this to be here in order to validate the other options in code.
+        config = new FileManager(this, "config");
+        //reloadConfig();
+        //Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&f [Register]: &aReload Files."));
+
+        // Verify config version.
+        verifyConfigVersion();
+
         // Configure backups
-        configureBackups();
+        configureBackups(getConfig().getBoolean("experimental.backups.enable"));
+
+        // Auto download lang.
+        if (getConfig().getBoolean("experimental.auto-download-lang")) {
+            DownloadTranslations.downloadTranslations();
+            Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&f [Register]: &aAuto Download Lang Enabled."));
+        }
 
         // Log plugin details to console
         logPluginDetails();
@@ -81,12 +98,7 @@ public final class SepareWorldItems extends JavaPlugin {
         registerEvents();
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&f [Register]: &aLoad Events."));
 
-        // Reload config files.
-        reloadConfig();
-        Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&f [Register]: &aReload Files."));
 
-        // Verify config version.
-        verifyConfigVersion();
     }
 
     @Override
@@ -98,13 +110,15 @@ public final class SepareWorldItems extends JavaPlugin {
     /**
      * Configures and starts the backup process for the user data folder.
      */
-    private void configureBackups() {
+    private void configureBackups(Boolean backupsEnabled) {
+
         // Static configuration for backups
-        boolean backupsEnabled = true; // Enables or disables backups
+        //boolean backupsEnabled = true; // Enables or disables backups
         File userDataFolder = new File(getDataFolder(), "groups"); // Folder containing user data
         File backupFolder = new File(getDataFolder(), "backups"); // Folder for storing backups
         int maxBackups = 5; // Maximum number of backups to retain
-        long backupInterval = 86400000L; // Backup interval in milliseconds (1 day)
+        //long backupInterval = 86400000L; // Backup interval in milliseconds (1 day)
+        long backupInterval = ConvertTime.convertTimeToMilliseconds(1, "d"); // Backup interval in milliseconds (1 day)
 
         // Ensure that the user data folder exists
         if (!userDataFolder.exists()) {
@@ -166,7 +180,7 @@ public final class SepareWorldItems extends JavaPlugin {
      * does not match the required version.
      */
     private void verifyConfigVersion() {
-        if (!getConfig().getString("general.config").equals("1.2.21")) {
+        if (!getConfig().getString("config-version").equalsIgnoreCase("1.2.22-DEV-100")) {
             Bukkit.getConsoleSender()
                     .sendMessage(MessageColors.getMsgColor("&3&m------------------------------------"));
             Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&f [Error]: &cConfig Version ERROR."));
@@ -197,7 +211,7 @@ public final class SepareWorldItems extends JavaPlugin {
      * Registers the file managers for the plugin.
      */
     public void registerFileManager() {
-        config = new FileManager(this, "config");
+        //config = new FileManager(this, "config");
         bypasssave = new FileManager(this, "bypass-save");
         msgs = new FileManager(this, "langs");
     }

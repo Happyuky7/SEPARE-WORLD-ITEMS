@@ -1,41 +1,27 @@
 #
-# SepareWorldItems
-# Version: 1.2.22-DEV-100
-# Tutorial: https://github.com/Happyuky7/SEPARE-WORLD-ITEMS/wiki
+# SepareWorldItems 1.2.22-DEV-100
+# Tutorial: https://github.com/HappyRogelio7/SEPARE-WORLD-ITEMS/wiki
 # Discord OR Support: https://discord.gg/3EebYUyeUX
+# Config Plugin SepareWorldItems 1.2.22-DEV-100
+# Update = true
+# Config = 1.2.22-DEV-100
 #
-
-# Config Version: 1.2.22-DEV-100
-config-version: 1.2.22-DEV-100
+general:
+  update: true
+  update-link: "https://github.com/HappyRogelio7/SEPARE-WORLD-ITEMS/" #Do not change.
+  config: 1.2.22-DEV-100 #Do not change
 
 experimental:
-  lang: en_US
-  auto-download-lang: true
-  backups:
+  lang: en_US #Change the language of the plugin.
+  auto-download-lang: true #Automatic download of the language file.
+  backups: # Automatic backup of the plugin.
     enable: true #Enable or disable automatic backup.
-    #time: 1 #Time in days. | In development.
-    #max-backups: 5 #No recommended to change, maximum number of backups. | In development.
-
-# Basic Config for functions.
-
-# Groups:
-# Recommended: default, no remove or change.
-# You can add more groups.
-groups:
-  - default
-  - otherworldgroup
-
-# Worlds:
-# In the worlds section you can set the group for each world.
-# Worlds is case sensitive.
-# Format --> world: group
-worlds:
-  world: default
-  world_nether: otherworldgroup
-  world_the_end: default
-
-# Options:
-options:
+    time: 1 #Time in minutes.
+    max-backups: 5 #Maximum number of backups.
+#
+# Options.
+#
+Options:
   default-groups: "default" #This function is in the testing phase.
   gamemode: false #Save Gamemode player.
   gamemode-default: "SURVIVAL" # SURVIVAL, CREATIVE, ADVENTURE, SPECTATOR
@@ -54,3 +40,10 @@ options:
   #
   bypass-world-options:
     use_bypass: false
+
+groups:
+  - default
+worlds:
+  world: default
+  world_nether: default
+  world_the_end: default

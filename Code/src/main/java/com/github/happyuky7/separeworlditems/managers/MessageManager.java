@@ -4,7 +4,7 @@ import com.github.happyuky7.separeworlditems.SepareWorldItems;
 import com.github.happyuky7.separeworlditems.utils.MessageColors;
 
 /*
- * Code by: HappyRogelio7
+ * Code by: Happyuky7
  * GitHub: https://github.com/Happyuky7/
  * License: Custom
  * Link: https://github.com/Happyuky7/SEPARE-WORLD-ITEMS

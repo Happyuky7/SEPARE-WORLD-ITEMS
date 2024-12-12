@@ -1,20 +1,21 @@
 package com.github.happyuky7.separeworlditems.filemanagers;
 
 /*
- * Code by: Happyuky7
- * GitHub: https://github.com/Happyuky7
- * License: Custom
- * Link: https://github.com/Happyuky7/SEPARE-WORLD-ITEMS
- */
+   Code by: Happyuky7
+   Github: https://github.com/Happyuky7
+   License: MIT
+   Link: https://github.com/Happyuky7/FileManagerBukkit1
+*/
 
-import org.bukkit.ChatColor;
+/*
+   FileManager Link: https://github.com/Happyuky7/FileManagerBukkit1
+*/
+
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 
 /**
@@ -87,33 +88,6 @@ public class FileManager extends YamlConfiguration {
     }
 
     /**
-     * Retrieves a string from the configuration and applies color codes.
-     *
-     * @param path the path to the string in the configuration
-     * @return the colored string, or the path itself if not found
-     */
-    public String getColouredString(String path) {
-        String value = getString(path);
-        return ChatColor.translateAlternateColorCodes('&', value != null ? value : path);
-    }
-
-    /**
-     * Retrieves a list of strings from the configuration and applies color codes to
-     * each entry.
-     *
-     * @param path the path to the string list in the configuration
-     * @return a list of colored strings
-     */
-    public List<String> getColouredStringList(String path) {
-        List<String> originalList = getStringList(path);
-        List<String> coloredList = new ArrayList<>();
-        for (String line : originalList) {
-            coloredList.add(ChatColor.translateAlternateColorCodes('&', line));
-        }
-        return coloredList;
-    }
-
-    /**
      * Retrieves a configuration value as the specified type.
      *
      * @param <T>   the type to cast the value to
@@ -181,4 +155,35 @@ public class FileManager extends YamlConfiguration {
         this.plugin.getLogger().log(Level.SEVERE, message);
         this.plugin.getLogger().log(Level.SEVERE, "Error: " + ex.getMessage());
     }
+
+    /* You can remove this if you are using versions higher than 1.16,
+     soon I will implement a new improved FileManager stay tuned to the
+     Github repository: https://github.com/Happyuky7/FileManagerBukkit1
+     START | Use only for legacy colors i.e. below Minecraft version 1.16.X
+    /**
+     * Retrieves a string from the configuration and applies color codes.
+     *
+     * @param path the path to the string in the configuration
+     * @return the colored string, or the path itself if not found
+     *
+    public String getColouredString(String path) {
+        String value = getString(path);
+        return ChatColor.translateAlternateColorCodes('&', value != null ? value : path);
+    }
+
+    /**
+     * Retrieves a list of strings from the configuration and applies color codes to
+     * each entry.
+     *
+     * @param path the path to the string list in the configuration
+     * @return a list of colored strings
+     *
+    public List<String> getColouredStringList(String path) {
+        List<String> originalList = getStringList(path);
+        List<String> coloredList = new ArrayList<>();
+        for (String line : originalList) {
+            coloredList.add(ChatColor.translateAlternateColorCodes('&', line));
+        }
+        return coloredList;
+    }*/
 }

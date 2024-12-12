@@ -35,7 +35,11 @@ public class BackupManager {
         this.backupInterval = backupInterval;
 
         if (!backupFolder.exists()) {
-            backupFolder.mkdirs();
+            try {
+                backupFolder.mkdirs();
+            } catch (SecurityException e) {
+                plugin.getLogger().log(Level.SEVERE, "Failed to create backup folder: " + backupFolder.getName(), e);
+            }
         }
 
         // Initialize the backup queue with existing backups
