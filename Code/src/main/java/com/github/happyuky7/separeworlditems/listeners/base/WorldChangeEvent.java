@@ -1,4 +1,4 @@
-package com.github.happyuky7.separeworlditems.listeners.Integration.EssentialsX;
+package com.github.happyuky7.separeworlditems.listeners.base;
 
 import com.github.happyuky7.separeworlditems.SepareWorldItems;
 import com.github.happyuky7.separeworlditems.data.loaders.InventoryLoader;
@@ -6,63 +6,67 @@ import com.github.happyuky7.separeworlditems.data.loaders.PlayerDataLoader;
 import com.github.happyuky7.separeworlditems.data.savers.InventorySaver;
 import com.github.happyuky7.separeworlditems.data.savers.PlayerDataSaver;
 import com.github.happyuky7.separeworlditems.filemanagers.FileManager2;
+import com.github.happyuky7.separeworlditems.utils.MessageColors;
 
-import net.ess3.api.events.UserTeleportHomeEvent;
-
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-
+import org.bukkit.event.player.PlayerChangedWorldEvent;
 
 import java.io.File;
 
 /**
- * Event listener for handling player teleport events related to home teleports.
- * Integrates with EssentialsX plugin.
+ * Event listener for handling player world change events and managing player
+ * data specific to different worlds.
  */
-public class HomeEvent implements Listener {
+public class WorldChangeEvent implements Listener {
 
     private final SepareWorldItems plugin;
 
     /**
-     * Constructor for UserTeleportHomeEvent.
+     * Constructor for WorldChangeEvent.
      *
      * @param plugin The main plugin instance.
      */
-    public HomeEvent(SepareWorldItems plugin) {
+    public WorldChangeEvent(SepareWorldItems plugin) {
         this.plugin = plugin;
     }
 
     /**
-     * Event handler for PlayerTeleportEvent. Handles the specific teleportation
-     * behavior when a player teleports to their home.
+     * Event handler for PlayerChangedWorldEvent. Manages inventory and player state
+     * when a player changes worlds.
      *
-     * @param event The PlayerTeleportEvent.
+     * @param event The PlayerChangedWorldEvent.
      */
     @EventHandler
-    public void onUserTeleportHome(UserTeleportHomeEvent event) {
-        Player player = event.getUser().getBase().getPlayer();
-        String fromWorld = player.getWorld().getName(); // Current world
-        String toWorld = event.getHomeLocation().getWorld().getName(); // Target world (home)
+    public void onWorldChange(PlayerChangedWorldEvent event) {
+        Player player = event.getPlayer();
 
-        // Check if the target world is configured
+        // Handle bypass option
+        if (plugin.playerlist1.contains(player.getUniqueId())) {
+            if (plugin.getConfig().getBoolean("Options.bypass-world-options.use_bypass", true)) {
+                player.sendMessage(
+                        MessageColors.getMsgColor(plugin.getLangs().getString("general.bypass.bypass-warning-alert")));
+                return;
+            }
+            plugin.playerlist1.remove(player.getUniqueId());
+        }
+
+        // Get source and target world names
+        String fromWorld = event.getFrom().getName();
+        String toWorld = player.getWorld().getName();
+
         FileConfiguration config = plugin.getConfig();
 
         if (config.contains("worlds." + fromWorld) && config.contains("worlds." + toWorld)) {
             String fromGroup = config.getString("worlds." + fromWorld);
             String toGroup = config.getString("worlds." + toWorld);
 
-            // Save current player data before proceeding
-            savePlayerData(player, fromGroup);
-
             if (!fromGroup.equals(toGroup)) {
                 savePlayerData(player, fromGroup);
                 loadPlayerData(player, toGroup);
-            } else {
-                reloadAllPlayerData(player, fromGroup);
             }
         }
     }
@@ -120,46 +124,5 @@ public class HomeEvent implements Listener {
         player.setFoodLevel(20);
         player.setExp(0.0F);
         player.setLevel(0);
-    }
-
-    /**
-     * Reloads the player's full data (inventory, attributes, potion effects, etc.) from
-     * the group-specific configuration file.
-     *
-     * @param player    The player whose full data is being reloaded.
-     * @param groupName The group name associated with the player's data.
-     */
-    private void reloadAllPlayerData(Player player, String groupName) {
-        File file = new File(plugin.getDataFolder() + File.separator + "groups"
-                + File.separator + groupName + File.separator + player.getName() + "-" + player.getUniqueId() + ".yml");
-        FileConfiguration config = FileManager2.getYaml(file);
-
-        // Reload all player data (inventory, attributes, potion effects, off-hand, etc.)
-        InventoryLoader.load(player, config);
-        PlayerDataLoader.loadAttributes(player, config);
-        PlayerDataLoader.loadPotionEffects(player, config);
-        PlayerDataLoader.loadOffHandItem(player, config);
-
-        // Reload experience and level separately if needed
-        reloadExperienceAndLevel(player, config);
-    }
-
-    /**
-     * Reloads the player's experience and level from a group-specific configuration
-     * file.
-     *
-     * @param player    The player whose experience and level are being reloaded.
-     * @param config    The configuration file containing the player's data.
-     */
-    private void reloadExperienceAndLevel(Player player, FileConfiguration config) {
-        // Check if experience and level data are present
-        if (config.contains("exp") && config.contains("exp-level")) {
-            float experience = (float) config.getDouble("exp", 0.0F);
-            int level = config.getInt("exp-level", 0);
-
-            // Reload experience and level
-            player.setExp(experience);
-            player.setLevel(level);
-        }
     }
 }
