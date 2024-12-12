@@ -1,4 +1,12 @@
-package com.github.happyuky7.separeworlditems.managers;
+package com.github.happyuky7.separeworlditems.utils;
+
+/*
+ * Code by: Happyuky7
+ * GitHub: https://github.com/Happyuky7
+ * License: Custom
+ * Link: https://github.com/Happyuky7/DownloadTranslationsJavaClassFromGitHub
+ */
+
 
 import java.io.*;
 import java.net.*;
@@ -65,9 +73,13 @@ public class DownloadTranslations {
         return languages;
     }
 
-
     private static void downloadTranslationFile(String fileUrl, String savePath) {
         File localFile = new File(savePath);
+        File parentDir = localFile.getParentFile();
+
+        if (!parentDir.exists()) {
+            parentDir.mkdirs();
+        }
 
         if (localFile.exists()) {
             System.out.println("File already exists: " + savePath);
@@ -79,7 +91,6 @@ public class DownloadTranslations {
             URL url = new URL(fileUrl);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestProperty("User-Agent", "Mozilla/5.0");
-
 
             try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
                  BufferedWriter out = new BufferedWriter(new FileWriter(savePath))) {

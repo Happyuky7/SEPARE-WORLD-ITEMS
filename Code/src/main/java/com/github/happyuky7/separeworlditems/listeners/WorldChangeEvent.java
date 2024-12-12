@@ -54,7 +54,7 @@ public class WorldChangeEvent implements Listener {
         if (plugin.playerlist1.contains(player.getUniqueId())) {
             if (plugin.getConfig().getBoolean("Options.bypass-world-options.use_bypass", true)) {
                 player.sendMessage(
-                        MessageColors.getMsgColor(plugin.getMsgs().getString("general.bypass.bypass-warning-alert")));
+                        MessageColors.getMsgColor(plugin.getLangs().getString("general.bypass.bypass-warning-alert")));
                 return;
             }
             plugin.playerlist1.remove(player.getUniqueId());

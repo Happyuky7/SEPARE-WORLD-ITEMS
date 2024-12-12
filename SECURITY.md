@@ -9,23 +9,16 @@ currently being supported with security updates.
 
 | Version       | Supported          |
 |---------------|--------------------|
-| 1.2.20        | :white_check_mark: |
-| 1.2.19        | :white_check_mark: |
-| 1.2.18        | :x:                |
-| 1.2.18-Legacy | :x:                |
-| 1.2.17        | :x:                |
-| 1.2.17-Legacy | :x:                |
-| < 1.2.16      | :x:                |
+| 1.2.22        | :white_check_mark: |
+| 1.2.21        | :x:                |
+| < 1.2.20      | :x:                |
 
 **Dev Versions, Beta's, Alpha's | Security Update Support**
 
 | Version          | Supported          |
 |------------------|--------------------|
-| 1.2.20-DEV-101   | :white_check_mark: |
-| 1.2.20-DEV-100   | :x:                |
-| 1.2.19-DEV-117   | :x:                |
-| 1.2.19-DEV-116   | :x:                |
-| < 1.2.19-DEV-116 | :x:                |
+| 1.2.22-DEV-102   | :white_check_mark: |
+| < 1.2.20-DEV-100 | :x:                |
 | < 1.2.16         | :x:                |
 
 ## Reporting a Vulnerability

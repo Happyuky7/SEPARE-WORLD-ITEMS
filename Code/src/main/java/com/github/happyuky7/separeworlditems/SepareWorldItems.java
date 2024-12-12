@@ -10,9 +10,9 @@ package com.github.happyuky7.separeworlditems;
 import com.github.happyuky7.separeworlditems.commands.SepareWorldItemsCMD;
 import com.github.happyuky7.separeworlditems.filemanagers.FileManager;
 import com.github.happyuky7.separeworlditems.listeners.WorldChangeEvent;
-import com.github.happyuky7.separeworlditems.managers.DownloadTranslations;
-import com.github.happyuky7.separeworlditems.utils.BackupManager;
 import com.github.happyuky7.separeworlditems.utils.ConvertTime;
+import com.github.happyuky7.separeworlditems.utils.DownloadTranslations;
+import com.github.happyuky7.separeworlditems.utils.BackupManager;
 import com.github.happyuky7.separeworlditems.utils.MessageColors;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -45,7 +45,7 @@ public final class SepareWorldItems extends JavaPlugin {
 
     // Files Manager.
     private FileManager config;
-    private FileManager msgs;
+    //private FileManager msgs;
     private FileManager bypasssave;
     private FileManager langs;
     private BackupManager backupManager;
@@ -72,7 +72,7 @@ public final class SepareWorldItems extends JavaPlugin {
         verifyConfigVersion();
 
         // Configure backups
-        configureBackups(getConfig().getBoolean("experimental.backups.enable"));
+        configureBackups(getConfig().getBoolean("experimental.backups.enable"), getConfig().getInt("experimental.backups.interval"));
 
         // Auto download lang.
         if (getConfig().getBoolean("experimental.auto-download-lang")) {
@@ -110,15 +110,14 @@ public final class SepareWorldItems extends JavaPlugin {
     /**
      * Configures and starts the backup process for the user data folder.
      */
-    private void configureBackups(Boolean backupsEnabled) {
+    private void configureBackups(Boolean backupsEnabled, Integer backupInterval) {
 
         // Static configuration for backups
-        //boolean backupsEnabled = true; // Enables or disables backups
         File userDataFolder = new File(getDataFolder(), "groups"); // Folder containing user data
         File backupFolder = new File(getDataFolder(), "backups"); // Folder for storing backups
         int maxBackups = 5; // Maximum number of backups to retain
         //long backupInterval = 86400000L; // Backup interval in milliseconds (1 day)
-        long backupInterval = ConvertTime.convertTimeToMilliseconds(1, "d"); // Backup interval in milliseconds (1 day)
+        long backupIntervallong = ConvertTime.convertTimeToMilliseconds(backupInterval, "d"); // Backup interval in milliseconds (1 day)
 
         // Ensure that the user data folder exists
         if (!userDataFolder.exists()) {
@@ -127,7 +126,7 @@ public final class SepareWorldItems extends JavaPlugin {
 
         // Initialize and start the backup system if backups are enabled
         if (backupsEnabled) {
-            backupManager = new BackupManager(this, backupFolder, maxBackups, backupInterval);
+            backupManager = new BackupManager(this, backupFolder, maxBackups, backupIntervallong);
             backupManager.startAutoBackup(userDataFolder); // Creates backups of the entire folder
             getLogger().info("Backups are enabled and running for the user data folder.");
         } else {
@@ -180,7 +179,7 @@ public final class SepareWorldItems extends JavaPlugin {
      * does not match the required version.
      */
     private void verifyConfigVersion() {
-        if (!getConfig().getString("config-version").equalsIgnoreCase("1.2.22-DEV-100")) {
+        if (!getConfig().getString("config-version").equalsIgnoreCase("1.2.22")) {
             Bukkit.getConsoleSender()
                     .sendMessage(MessageColors.getMsgColor("&3&m------------------------------------"));
             Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&f [Error]: &cConfig Version ERROR."));
@@ -213,7 +212,7 @@ public final class SepareWorldItems extends JavaPlugin {
     public void registerFileManager() {
         //config = new FileManager(this, "config");
         bypasssave = new FileManager(this, "bypass-save");
-        msgs = new FileManager(this, "langs");
+        //msgs = new FileManager(this, "langs");
     }
 
     /**
@@ -238,10 +237,10 @@ public final class SepareWorldItems extends JavaPlugin {
      * Gets the messages file manager.
      *
      * @return the messages file manager.
-     */
+     *
     public FileManager getMsgs() {
         return msgs;
-    }
+    }*/
 
     /**
      * Gets the bypass save file manager.
@@ -257,7 +256,7 @@ public final class SepareWorldItems extends JavaPlugin {
      */
     public void reloadConfig() {
         this.getConfig().reload();
-        this.getMsgs().reload();
+        //this.getMsgs().reload();
         this.getBypassSave().reload();
     }
 }

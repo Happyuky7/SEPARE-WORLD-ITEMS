@@ -109,8 +109,8 @@ public class SepareWorldItemsCMD implements CommandExecutor {
         player.sendMessage(MessageColors.getMsgColor("&f * &a/separeworlditems info &7| &fShow plugin info."));
         player.sendMessage(MessageColors.getMsgColor("&f * &a/separeworlditems api &7| &fShow info about the API."));
         player.sendMessage(MessageColors.getMsgColor("&f * &a/separeworlditems update &7| &fUpdate the plugin info."));
-        player.sendMessage(MessageColors
-                .getMsgColor("&f * &a/separeworlditems reload &7| &fReload the plugin, config, and messages."));
+        player.sendMessage(MessageColors.getMsgColor("&f * &a/separeworlditems reload &7| &fReload the plugin, config, and language files."));
+        player.sendMessage(MessageColors.getMsgColor("&f * &a/separeworlditems bypass <on/off> &7| &fEnable or disable bypass mode. &7(&cExperimental&7)"));
         player.sendMessage(MessageColors.getMsgColor("&r "));
     }
 
@@ -173,7 +173,7 @@ public class SepareWorldItemsCMD implements CommandExecutor {
         }
 
         plugin.getConfig().reload();
-        plugin.getMsgs().reload();
+        //plugin.getLangs().reload();
         plugin.getLangs().reload();
 
         player.sendMessage(MessageManager.getMessage("general.reload")
@@ -191,8 +191,8 @@ public class SepareWorldItemsCMD implements CommandExecutor {
     private void handleBypassCommand(Player player, String[] args) {
         if (!plugin.getConfig().getBoolean("Options.bypass-world-options.use_bypass", false)) {
             player.sendMessage(MessageColors
-                    .getMsgColor(plugin.getMsgs().getString("general.bypass.bypass-world-options.use_bypass")
-                            .replace("%prefix%", plugin.getMsgs().getString("general.prefix"))));
+                    .getMsgColor(plugin.getLangs().getString("general.bypass.bypass-world-options.use_bypass")
+                            .replace("%prefix%", plugin.getLangs().getString("general.prefix"))));
             return;
         }
 
@@ -220,8 +220,8 @@ public class SepareWorldItemsCMD implements CommandExecutor {
      * @param player The player to send the message to.
      */
     private void sendBypassUsageMessage(Player player) {
-        player.sendMessage(MessageColors.getMsgColor(plugin.getMsgs().getString("general.bypass.bypass-warning-alert")
-                .replace("%prefix%", plugin.getMsgs().getString("general.prefix"))));
+        player.sendMessage(MessageColors.getMsgColor(plugin.getLangs().getString("general.bypass.bypass-warning-alert")
+                .replace("%prefix%", plugin.getLangs().getString("general.prefix"))));
     }
 
     /**
@@ -243,8 +243,8 @@ public class SepareWorldItemsCMD implements CommandExecutor {
         plugin.getBypassSave().reload();
         plugin.playerlist1.add(player.getUniqueId());
 
-        player.sendMessage(MessageColors.getMsgColor(plugin.getMsgs().getString("general.bypass.bypass-enabled")
-                .replace("%prefix%", plugin.getMsgs().getString("general.prefix"))));
+        player.sendMessage(MessageColors.getMsgColor(plugin.getLangs().getString("general.bypass.bypass-enabled")
+                .replace("%prefix%", plugin.getLangs().getString("general.prefix"))));
     }
 
     /**
@@ -257,8 +257,8 @@ public class SepareWorldItemsCMD implements CommandExecutor {
         String worldPath = "save-bypass." + player.getUniqueId() + ".worlds." + player.getWorld().getName();
 
         if (!Objects.equals(plugin.getBypassSave().getString(worldPath), player.getWorld().getName())) {
-            player.sendMessage(MessageColors.getMsgColor(plugin.getMsgs().getString("general.bypass.no-data")
-                    .replace("%prefix%", plugin.getMsgs().getString("general.prefix"))));
+            player.sendMessage(MessageColors.getMsgColor(plugin.getLangs().getString("general.bypass.no-data")
+                    .replace("%prefix%", plugin.getLangs().getString("general.prefix"))));
             return;
         }
 
@@ -268,8 +268,8 @@ public class SepareWorldItemsCMD implements CommandExecutor {
         plugin.getBypassSave().set(worldPath, null);
         plugin.playerlist1.remove(player.getUniqueId());
 
-        player.sendMessage(MessageColors.getMsgColor(plugin.getMsgs().getString("general.bypass.bypass-disabled")
-                .replace("%prefix%", plugin.getMsgs().getString("general.prefix"))));
+        player.sendMessage(MessageColors.getMsgColor(plugin.getLangs().getString("general.bypass.bypass-disabled")
+                .replace("%prefix%", plugin.getLangs().getString("general.prefix"))));
     }
 
     /**
