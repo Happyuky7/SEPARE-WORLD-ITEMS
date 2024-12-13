@@ -180,7 +180,7 @@ public final class SepareWorldItems extends JavaPlugin {
      * does not match the required version.
      */
     private void verifyConfigVersion() {
-        if (!getConfig().getString("config-version").equalsIgnoreCase("1.2.22")) {
+        if (!getConfig().getString("config-version").equalsIgnoreCase("1.2.23-DEV")) {
             Bukkit.getConsoleSender()
                     .sendMessage(MessageColors.getMsgColor("&3&m------------------------------------"));
             Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&f [Error]: &cConfig Version ERROR."));
