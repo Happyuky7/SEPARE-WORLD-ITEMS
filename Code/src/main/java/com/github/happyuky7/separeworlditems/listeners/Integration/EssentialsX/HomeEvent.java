@@ -9,13 +9,11 @@ import com.github.happyuky7.separeworlditems.filemanagers.FileManager2;
 
 import net.ess3.api.events.UserTeleportHomeEvent;
 
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-
 
 import java.io.File;
 
@@ -123,7 +121,8 @@ public class HomeEvent implements Listener {
     }
 
     /**
-     * Reloads the player's full data (inventory, attributes, potion effects, etc.) from
+     * Reloads the player's full data (inventory, attributes, potion effects, etc.)
+     * from
      * the group-specific configuration file.
      *
      * @param player    The player whose full data is being reloaded.
@@ -134,7 +133,8 @@ public class HomeEvent implements Listener {
                 + File.separator + groupName + File.separator + player.getName() + "-" + player.getUniqueId() + ".yml");
         FileConfiguration config = FileManager2.getYaml(file);
 
-        // Reload all player data (inventory, attributes, potion effects, off-hand, etc.)
+        // Reload all player data (inventory, attributes, potion effects, off-hand,
+        // etc.)
         InventoryLoader.load(player, config);
         PlayerDataLoader.loadAttributes(player, config);
         PlayerDataLoader.loadPotionEffects(player, config);
@@ -148,8 +148,8 @@ public class HomeEvent implements Listener {
      * Reloads the player's experience and level from a group-specific configuration
      * file.
      *
-     * @param player    The player whose experience and level are being reloaded.
-     * @param config    The configuration file containing the player's data.
+     * @param player The player whose experience and level are being reloaded.
+     * @param config The configuration file containing the player's data.
      */
     private void reloadExperienceAndLevel(Player player, FileConfiguration config) {
         // Check if experience and level data are present

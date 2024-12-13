@@ -4,7 +4,19 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 
+/**
+ * Utility class for saving player data such as attributes, potion effects, and
+ * off-hand items to a configuration file.
+ */
 public class PlayerDataSaver {
+
+    /**
+     * Saves the player's attributes such as gamemode, flying state, health, hunger,
+     * and experience to the configuration file.
+     *
+     * @param player The player whose attributes are being saved.
+     * @param config The configuration file where the data is saved.
+     */
     public static void saveAttributes(Player player, FileConfiguration config) {
         // Save gamemode
         if (config.getBoolean("Options.gamemode", true)) {
@@ -25,6 +37,12 @@ public class PlayerDataSaver {
         ExperienceSaver.save(player, config);
     }
 
+    /**
+     * Saves the player's active potion effects to the configuration file.
+     *
+     * @param player The player whose potion effects are being saved.
+     * @param config The configuration file where the data is saved.
+     */
     public static void savePotionEffects(Player player, FileConfiguration config) {
         int index = 0;
         for (PotionEffect effect : player.getActivePotionEffects()) {
@@ -35,6 +53,12 @@ public class PlayerDataSaver {
         }
     }
 
+    /**
+     * Saves the player's off-hand item to the configuration file.
+     *
+     * @param player The player whose off-hand item is being saved.
+     * @param config The configuration file where the data is saved.
+     */
     public static void saveOffHandItem(Player player, FileConfiguration config) {
         config.set("off_hand_item", player.getInventory().getItemInOffHand());
     }

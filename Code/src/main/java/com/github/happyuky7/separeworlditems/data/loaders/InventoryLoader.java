@@ -2,9 +2,19 @@ package com.github.happyuky7.separeworlditems.data.loaders;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
+/**
+ * Utility class for loading player inventory data from a configuration file.
+ */
 public class InventoryLoader {
+
+    /**
+     * Loads the player's inventory, ender chest, and armor contents from the
+     * configuration file.
+     *
+     * @param player The player whose inventory is being loaded.
+     * @param config The configuration file where the data is loaded from.
+     */
     public static void load(Player player, FileConfiguration config) {
         if (config.contains("inventory")) {
             for (String key : config.getConfigurationSection("inventory").getKeys(false)) {
