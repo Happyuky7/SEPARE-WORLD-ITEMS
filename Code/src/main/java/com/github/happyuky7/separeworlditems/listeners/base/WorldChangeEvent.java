@@ -47,17 +47,12 @@ public class WorldChangeEvent implements Listener {
         // Check if the teleportation flag is set
         if (TeleportationManager.isTeleporting(player.getUniqueId())) {
             TeleportationManager.setTeleporting(player.getUniqueId(), false); // Reset flag after check
-            player.getServer().broadcastMessage(
-                    "§7[Debug] Teleport flag cleared for player " + player.getName() + " after world change.");
             return; // Prevent further onWorldChange execution
         }
 
         // Continue with the world change handling
         String fromWorld = event.getFrom().getName();
         String toWorld = player.getWorld().getName();
-
-        player.getServer().broadcastMessage(
-                "§7[Debug] Player " + player.getName() + " is changing worlds from " + fromWorld + " to " + toWorld);
 
         FileConfiguration config = plugin.getConfig();
 
@@ -68,11 +63,8 @@ public class WorldChangeEvent implements Listener {
             savePlayerData(player, fromGroup); // Change here
 
             if (!fromGroup.equals(toGroup)) {
-                player.getServer()
-                        .broadcastMessage("§7[Debug] Worlds are in different groups. Saving and loading player data.");
                 loadPlayerData(player, toGroup);
             } else {
-                player.getServer().broadcastMessage("§7[Debug] Worlds are in the same group. Reloading user Data.");
                 reloadAllPlayerData(player, fromGroup);
             }
         }

@@ -48,7 +48,6 @@ public class HomeEvent implements Listener {
     
         // Check if the player is already teleporting to avoid double handling
         if (TeleportationManager.isTeleporting(player.getUniqueId())) {
-            player.getServer().broadcastMessage("§7[Debug] Player " + player.getName() + " is already teleporting, skipping.");
             return; // Player is already in teleport process, so skip
         }
     
@@ -63,24 +62,15 @@ public class HomeEvent implements Listener {
     
             // Only mark the player as teleporting if the worlds are different
             if (!fromWorld.equals(toWorld)) {
-                player.getServer().broadcastMessage("§7[Debug] Player " + player.getName() + " set flag as true.");
                 TeleportationManager.setTeleporting(player.getUniqueId(), true);
             }
     
-                            // Save current player data before proceeding (e.g., EXP, inventory)
+            // Save current player data before proceeding (e.g., EXP, inventory)
             savePlayerData(player, fromGroup);
             // Check if the worlds belong to different groups
             if (!fromGroup.equals(toGroup)) {
-                player.getServer().broadcastMessage("§7[Debug] Player " + player.getName() + " is teleporting to home.");
-    
-
-    
-                player.getServer().broadcastMessage("§7[Debug] Worlds are in different groups. Saving data and loading home data.");
                 loadPlayerData(player, toGroup);
             } else {
-                player.getServer().broadcastMessage("§7[Debug] Player " + player.getName() + " is in the same group, not setting teleport flag.");
-    
-                // Flag is not set, just reload data without changing the teleportation flag
                 reloadAllPlayerData(player, fromGroup);
             }
         }
