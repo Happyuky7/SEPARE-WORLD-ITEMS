@@ -36,6 +36,7 @@ public class PlayerDataLoader {
     public static void loadPotionEffects(Player player, FileConfiguration config) {
         if (config.contains("potion_effect")) {
             for (String key : config.getConfigurationSection("potion_effect").getKeys(false)) {
+                @SuppressWarnings("deprecation")
                 PotionEffect effect = new PotionEffect(
                         PotionEffectType.getByName(config.getString("potion_effect." + key + ".type")),
                         config.getInt("potion_effect." + key + ".duration"),
