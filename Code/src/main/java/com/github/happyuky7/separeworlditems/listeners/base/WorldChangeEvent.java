@@ -6,7 +6,7 @@ import com.github.happyuky7.separeworlditems.data.loaders.PlayerDataLoader;
 import com.github.happyuky7.separeworlditems.data.savers.InventorySaver;
 import com.github.happyuky7.separeworlditems.data.savers.PlayerDataSaver;
 import com.github.happyuky7.separeworlditems.filemanagers.FileManager2;
-import com.github.happyuky7.separeworlditems.utils.MessageColors;
+import com.github.happyuky7.separeworlditems.utils.TeleportationManager;
 
 import org.bukkit.GameMode;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -44,19 +44,18 @@ public class WorldChangeEvent implements Listener {
     public void onWorldChange(PlayerChangedWorldEvent event) {
         Player player = event.getPlayer();
 
-        // Handle bypass option
-        if (plugin.playerlist1.contains(player.getUniqueId())) {
-            if (plugin.getConfig().getBoolean("Options.bypass-world-options.use_bypass", true)) {
-                player.sendMessage(
-                        MessageColors.getMsgColor(plugin.getLangs().getString("general.bypass.bypass-warning-alert")));
-                return;
-            }
-            plugin.playerlist1.remove(player.getUniqueId());
-        }
+        // Check if the teleportation flag is set
+       if (TeleportationManager.isTeleporting(player.getUniqueId())) {
+        TeleportationManager.setTeleporting(player.getUniqueId(), false); // Reset flag after check
+        player.getServer().broadcastMessage("§7[Debug] Teleport flag cleared for player " + player.getName() + " after world change.");
+        return; // Prevent further onWorldChange execution
+    }
 
-        // Get source and target world names
+        // Continue with the world change handling
         String fromWorld = event.getFrom().getName();
         String toWorld = player.getWorld().getName();
+
+        player.getServer().broadcastMessage("§7[Debug] Player " + player.getName() + " is changing worlds from " + fromWorld + " to " + toWorld);
 
         FileConfiguration config = plugin.getConfig();
 
@@ -65,8 +64,11 @@ public class WorldChangeEvent implements Listener {
             String toGroup = config.getString("worlds." + toWorld);
 
             if (!fromGroup.equals(toGroup)) {
+                player.getServer().broadcastMessage("§7[Debug] Worlds are in different groups. Saving and loading player data.");
                 savePlayerData(player, fromGroup);
                 loadPlayerData(player, toGroup);
+            } else {
+                player.getServer().broadcastMessage("§7[Debug] Worlds are in the same group. No need to reload data.");
             }
         }
     }

@@ -43,6 +43,7 @@ public class PlayerDataSaver {
      * @param player The player whose potion effects are being saved.
      * @param config The configuration file where the data is saved.
      */
+    @SuppressWarnings("deprecation")
     public static void savePotionEffects(Player player, FileConfiguration config) {
         int index = 0;
         for (PotionEffect effect : player.getActivePotionEffects()) {

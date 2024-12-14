@@ -6,6 +6,7 @@ import com.github.happyuky7.separeworlditems.data.loaders.PlayerDataLoader;
 import com.github.happyuky7.separeworlditems.data.savers.InventorySaver;
 import com.github.happyuky7.separeworlditems.data.savers.PlayerDataSaver;
 import com.github.happyuky7.separeworlditems.filemanagers.FileManager2;
+import com.github.happyuky7.separeworlditems.utils.TeleportationManager;
 
 import net.ess3.api.events.UserTeleportHomeEvent;
 
@@ -42,24 +43,37 @@ public class HomeEvent implements Listener {
      */
     @EventHandler
     public void onUserTeleportHome(UserTeleportHomeEvent event) {
+        @SuppressWarnings("deprecation")
         Player player = event.getUser().getBase().getPlayer();
+    
+        // Check if the player is already teleporting to avoid double handling
+        if (TeleportationManager.isTeleporting(player.getUniqueId())) {
+            player.getServer().broadcastMessage("§7[Debug] Player " + player.getName() + " is already teleporting, skipping.");
+            return; // Player is already in teleport process, so skip
+        }
+    
         String fromWorld = player.getWorld().getName(); // Current world
         String toWorld = event.getHomeLocation().getWorld().getName(); // Target world (home)
-
+    
         // Check if the target world is configured
         FileConfiguration config = plugin.getConfig();
-
         if (config.contains("worlds." + fromWorld) && config.contains("worlds." + toWorld)) {
             String fromGroup = config.getString("worlds." + fromWorld);
             String toGroup = config.getString("worlds." + toWorld);
-
-            // Save current player data before proceeding
-            savePlayerData(player, fromGroup);
-
+    
+            // Only mark the player as teleporting if the groups are different
             if (!fromGroup.equals(toGroup)) {
+                TeleportationManager.setTeleporting(player.getUniqueId(), true);
+                player.getServer().broadcastMessage("§7[Debug] Player " + player.getName() + " is teleporting to home.");
+    
+                // Save current player data before proceeding
                 savePlayerData(player, fromGroup);
+    
+                player.getServer().broadcastMessage("§7[Debug] Worlds are in different groups. Saving data and loading home data.");
                 loadPlayerData(player, toGroup);
             } else {
+                player.getServer().broadcastMessage("§7[Debug] Player " + player.getName() + " is in the same group, not setting teleport flag.");
+                // Flag is not set, just reload data without changing the teleportation flag
                 reloadAllPlayerData(player, fromGroup);
             }
         }
