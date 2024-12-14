@@ -45,17 +45,19 @@ public class WorldChangeEvent implements Listener {
         Player player = event.getPlayer();
 
         // Check if the teleportation flag is set
-       if (TeleportationManager.isTeleporting(player.getUniqueId())) {
-        TeleportationManager.setTeleporting(player.getUniqueId(), false); // Reset flag after check
-        player.getServer().broadcastMessage("§7[Debug] Teleport flag cleared for player " + player.getName() + " after world change.");
-        return; // Prevent further onWorldChange execution
-    }
+        if (TeleportationManager.isTeleporting(player.getUniqueId())) {
+            TeleportationManager.setTeleporting(player.getUniqueId(), false); // Reset flag after check
+            player.getServer().broadcastMessage(
+                    "§7[Debug] Teleport flag cleared for player " + player.getName() + " after world change.");
+            return; // Prevent further onWorldChange execution
+        }
 
         // Continue with the world change handling
         String fromWorld = event.getFrom().getName();
         String toWorld = player.getWorld().getName();
 
-        player.getServer().broadcastMessage("§7[Debug] Player " + player.getName() + " is changing worlds from " + fromWorld + " to " + toWorld);
+        player.getServer().broadcastMessage(
+                "§7[Debug] Player " + player.getName() + " is changing worlds from " + fromWorld + " to " + toWorld);
 
         FileConfiguration config = plugin.getConfig();
 
@@ -63,12 +65,15 @@ public class WorldChangeEvent implements Listener {
             String fromGroup = config.getString("worlds." + fromWorld);
             String toGroup = config.getString("worlds." + toWorld);
 
+            savePlayerData(player, fromGroup); // Change here
+
             if (!fromGroup.equals(toGroup)) {
-                player.getServer().broadcastMessage("§7[Debug] Worlds are in different groups. Saving and loading player data.");
-                savePlayerData(player, fromGroup);
+                player.getServer()
+                        .broadcastMessage("§7[Debug] Worlds are in different groups. Saving and loading player data.");
                 loadPlayerData(player, toGroup);
             } else {
-                player.getServer().broadcastMessage("§7[Debug] Worlds are in the same group. No need to reload data.");
+                player.getServer().broadcastMessage("§7[Debug] Worlds are in the same group. Reloading user Data.");
+                reloadAllPlayerData(player, fromGroup);
             }
         }
     }
@@ -126,5 +131,48 @@ public class WorldChangeEvent implements Listener {
         player.setFoodLevel(20);
         player.setExp(0.0F);
         player.setLevel(0);
+    }
+
+    /**
+     * Reloads the player's full data (inventory, attributes, potion effects, etc.)
+     * from
+     * the group-specific configuration file.
+     *
+     * @param player    The player whose full data is being reloaded.
+     * @param groupName The group name associated with the player's data.
+     */
+    private void reloadAllPlayerData(Player player, String groupName) {
+        File file = new File(plugin.getDataFolder() + File.separator + "groups"
+                + File.separator + groupName + File.separator + player.getName() + "-" + player.getUniqueId() + ".yml");
+        FileConfiguration config = FileManager2.getYaml(file);
+
+        // Reload all player data (inventory, attributes, potion effects, off-hand,
+        // etc.)
+        InventoryLoader.load(player, config);
+        PlayerDataLoader.loadAttributes(player, config);
+        PlayerDataLoader.loadPotionEffects(player, config);
+        PlayerDataLoader.loadOffHandItem(player, config);
+
+        // Reload experience and level separately if needed
+        reloadExperienceAndLevel(player, config);
+    }
+
+    /**
+     * Reloads the player's experience and level from a group-specific configuration
+     * file.
+     *
+     * @param player The player whose experience and level are being reloaded.
+     * @param config The configuration file containing the player's data.
+     */
+    private void reloadExperienceAndLevel(Player player, FileConfiguration config) {
+        // Check if experience and level data are present
+        if (config.contains("exp") && config.contains("exp-level")) {
+            float experience = (float) config.getDouble("exp", 0.0F);
+            int level = config.getInt("exp-level", 0);
+
+            // Reload experience and level
+            player.setExp(experience);
+            player.setLevel(level);
+        }
     }
 }

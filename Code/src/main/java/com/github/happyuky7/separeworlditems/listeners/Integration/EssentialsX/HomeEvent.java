@@ -61,18 +61,25 @@ public class HomeEvent implements Listener {
             String fromGroup = config.getString("worlds." + fromWorld);
             String toGroup = config.getString("worlds." + toWorld);
     
-            // Only mark the player as teleporting if the groups are different
-            if (!fromGroup.equals(toGroup)) {
+            // Only mark the player as teleporting if the worlds are different
+            if (!fromWorld.equals(toWorld)) {
+                player.getServer().broadcastMessage("§7[Debug] Player " + player.getName() + " set flag as true.");
                 TeleportationManager.setTeleporting(player.getUniqueId(), true);
+            }
+    
+                            // Save current player data before proceeding (e.g., EXP, inventory)
+            savePlayerData(player, fromGroup);
+            // Check if the worlds belong to different groups
+            if (!fromGroup.equals(toGroup)) {
                 player.getServer().broadcastMessage("§7[Debug] Player " + player.getName() + " is teleporting to home.");
     
-                // Save current player data before proceeding
-                savePlayerData(player, fromGroup);
+
     
                 player.getServer().broadcastMessage("§7[Debug] Worlds are in different groups. Saving data and loading home data.");
                 loadPlayerData(player, toGroup);
             } else {
                 player.getServer().broadcastMessage("§7[Debug] Player " + player.getName() + " is in the same group, not setting teleport flag.");
+    
                 // Flag is not set, just reload data without changing the teleportation flag
                 reloadAllPlayerData(player, fromGroup);
             }
