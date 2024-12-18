@@ -9,7 +9,8 @@ package com.github.happyuky7.separeworlditems;
 
 import com.github.happyuky7.separeworlditems.commands.SepareWorldItemsCMD;
 import com.github.happyuky7.separeworlditems.filemanagers.FileManager;
-import com.github.happyuky7.separeworlditems.listeners.WorldChangeEvent;
+import com.github.happyuky7.separeworlditems.listeners.Integration.EssentialsX.HomeEvent;
+import com.github.happyuky7.separeworlditems.listeners.base.WorldChangeEvent;
 import com.github.happyuky7.separeworlditems.utils.ConvertTime;
 import com.github.happyuky7.separeworlditems.utils.DownloadTranslations;
 import com.github.happyuky7.separeworlditems.utils.BackupManager;
@@ -179,7 +180,7 @@ public final class SepareWorldItems extends JavaPlugin {
      * does not match the required version.
      */
     private void verifyConfigVersion() {
-        if (!getConfig().getString("config-version").equalsIgnoreCase("1.2.22")) {
+        if (!getConfig().getString("config-version").equalsIgnoreCase("1.2.23-DEV")) {
             Bukkit.getConsoleSender()
                     .sendMessage(MessageColors.getMsgColor("&3&m------------------------------------"));
             Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&f [Error]: &cConfig Version ERROR."));
@@ -204,6 +205,7 @@ public final class SepareWorldItems extends JavaPlugin {
     public void registerEvents() {
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(new WorldChangeEvent(this), this);
+        pm.registerEvents(new HomeEvent(this), this);
     }
 
     /**
