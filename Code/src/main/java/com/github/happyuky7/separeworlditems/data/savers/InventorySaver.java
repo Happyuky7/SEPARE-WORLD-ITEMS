@@ -24,7 +24,7 @@ public class InventorySaver {
         }
 
         // Save ender chest contents if enabled
-        if (config.getBoolean("Options.ender-chest", true)) {
+        if (config.getBoolean("options.ender-chest", true)) {
             index = 0;
             for (ItemStack item : player.getEnderChest().getContents()) {
                 config.set("ender_chest." + index++, item);

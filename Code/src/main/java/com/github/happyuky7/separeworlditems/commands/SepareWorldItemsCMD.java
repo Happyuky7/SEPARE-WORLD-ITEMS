@@ -123,10 +123,10 @@ public class SepareWorldItemsCMD implements CommandExecutor {
         player.sendMessage(MessageColors.getMsgColor("&r "));
         player.sendMessage(MessageColors.getMsgColor("&aSepareWorldItems &7| &3Info:"));
         player.sendMessage(MessageColors.getMsgColor("&r "));
-        player.sendMessage(MessageColors.getMsgColor("&f * &9Version: &f" + plugin.version));
+        player.sendMessage(MessageColors.getMsgColor("&f * &aVersion: &f" + plugin.version));
         player.sendMessage(MessageColors.getMsgColor("&f * &aCreated By: &fHappyuky7"));
-        player.sendMessage(MessageColors.getMsgColor("&f * &dGitHub: &fhttps://github.com/Happyuky7"));
-        player.sendMessage(MessageColors.getMsgColor("&f * &6Website: &fhttps://happyuky7.github.io/"));
+        player.sendMessage(MessageColors.getMsgColor("&f * &aGitHub: &fhttps://github.com/Happyuky7"));
+        player.sendMessage(MessageColors.getMsgColor("&f * &aWebsite: &fhttps://happyuky7.github.io/"));
         player.sendMessage(MessageColors.getMsgColor("&r "));
     }
 

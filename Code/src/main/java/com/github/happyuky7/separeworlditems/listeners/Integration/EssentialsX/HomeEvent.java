@@ -5,7 +5,7 @@ import com.github.happyuky7.separeworlditems.data.loaders.InventoryLoader;
 import com.github.happyuky7.separeworlditems.data.loaders.PlayerDataLoader;
 import com.github.happyuky7.separeworlditems.data.savers.InventorySaver;
 import com.github.happyuky7.separeworlditems.data.savers.PlayerDataSaver;
-import com.github.happyuky7.separeworlditems.filemanagers.FileManager2;
+import com.github.happyuky7.separeworlditems.filemanagers.FileManagerData;
 import com.github.happyuky7.separeworlditems.utils.TeleportationManager;
 
 import net.ess3.api.events.UserTeleportHomeEvent;
@@ -91,7 +91,7 @@ public class HomeEvent implements Listener {
     private void savePlayerData(Player player, String groupName) {
         File file = new File(plugin.getDataFolder() + File.separator + "groups"
                 + File.separator + groupName + File.separator + player.getName() + "-" + player.getUniqueId() + ".yml");
-        FileConfiguration config = FileManager2.getYaml(file);
+        FileConfiguration config = FileManagerData.getYaml(file);
 
         // Save various player data into the configuration file
         InventorySaver.save(player, config);
@@ -100,7 +100,7 @@ public class HomeEvent implements Listener {
         PlayerDataSaver.saveOffHandItem(player, config);
 
         // Save the updated configuration to disk
-        FileManager2.saveConfiguration(file, config);
+        FileManagerData.saveConfiguration(file, config);
 
         // Clear the player's state in preparation for the teleportation
         clearPlayerState(player);
@@ -116,7 +116,7 @@ public class HomeEvent implements Listener {
     private void loadPlayerData(Player player, String groupName) {
         File file = new File(plugin.getDataFolder() + File.separator + "groups"
                 + File.separator + groupName + File.separator + player.getName() + "-" + player.getUniqueId() + ".yml");
-        FileConfiguration config = FileManager2.getYaml(file);
+        FileConfiguration config = FileManagerData.getYaml(file);
 
         // Load player data (inventory, attributes, potion effects, etc.)
         InventoryLoader.load(player, config);
@@ -158,7 +158,7 @@ public class HomeEvent implements Listener {
     private void reloadAllPlayerData(Player player, String groupName) {
         File file = new File(plugin.getDataFolder() + File.separator + "groups"
                 + File.separator + groupName + File.separator + player.getName() + "-" + player.getUniqueId() + ".yml");
-        FileConfiguration config = FileManager2.getYaml(file);
+        FileConfiguration config = FileManagerData.getYaml(file);
 
         // Reload the player's data (inventory, attributes, potion effects, off-hand,
         // etc.)

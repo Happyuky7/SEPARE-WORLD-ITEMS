@@ -1,12 +1,12 @@
 #
 # SepareWorldItems
-# Version: 1.2.23-DEV
+# Version: 1.2.23
 # Tutorial: https://github.com/Happyuky7/SEPARE-WORLD-ITEMS/wiki
 # Discord OR Support: https://discord.gg/3EebYUyeUX
 #
 
-# Config Version: 1.2.23-DEV
-config-version: 1.2.23-DEV
+# Config Version: 1.2.23
+config-version: 1.2.23
 
 experimental:
   lang: en_US
@@ -14,7 +14,7 @@ experimental:
   backups:
     enable: true #Enable or disable automatic backup.
     interval: 1 # Interval in days.
-    #max-backups: 5 #No recommended to change, maximum number of backups. | In development.
+    max-backups: 5 #No recommended to change, maximum number of backups.
 
 # Basic Config for functions.
 
@@ -35,7 +35,7 @@ worlds:
   world_the_end: default
 
 # Options:
-Options:
+options:
   default-groups: "default" #This function is in the testing phase.
   gamemode: false #Save Gamemode player.
   gamemode-default: "SURVIVAL" # SURVIVAL, CREATIVE, ADVENTURE, SPECTATOR

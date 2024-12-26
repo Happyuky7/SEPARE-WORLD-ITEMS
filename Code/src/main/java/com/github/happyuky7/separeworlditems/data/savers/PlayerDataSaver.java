@@ -19,12 +19,12 @@ public class PlayerDataSaver {
      */
     public static void saveAttributes(Player player, FileConfiguration config) {
         // Save gamemode
-        if (config.getBoolean("Options.gamemode", true)) {
+        if (config.getBoolean("options.gamemode", true)) {
             config.set("gamemode", player.getGameMode().toString());
         }
 
         // Save flying state
-        if (config.getBoolean("Options.flying", true)) {
+        if (config.getBoolean("options.flying", true)) {
             config.set("flying", player.isFlying());
         }
 

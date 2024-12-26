@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  * A utility class for managing YAML configuration files.
  * Provides methods to load and save configurations to/from files.
  */
-public class FileManager2 {
+public class FileManagerData {
 
     /**
      * Loads a YAML configuration file into a {@link FileConfiguration}.
@@ -41,7 +41,7 @@ public class FileManager2 {
         try {
             configuration.save(file);
         } catch (IOException e) {
-            Logger.getLogger(FileManager2.class.getName()).log(Level.SEVERE,
+            Logger.getLogger(FileManagerData.class.getName()).log(Level.SEVERE,
                     "An error occurred while saving the configuration file: " + file.getName(), e);
         }
     }

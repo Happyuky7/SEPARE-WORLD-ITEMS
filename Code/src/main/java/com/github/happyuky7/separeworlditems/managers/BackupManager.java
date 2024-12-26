@@ -1,4 +1,4 @@
-package com.github.happyuky7.separeworlditems.utils;
+package com.github.happyuky7.separeworlditems.managers;
 
 import org.bukkit.plugin.java.JavaPlugin;
 

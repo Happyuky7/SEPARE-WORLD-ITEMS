@@ -22,7 +22,7 @@ public class InventoryLoader {
             }
         }
 
-        if (config.getBoolean("Options.ender-chest", true) && config.contains("ender_chest")) {
+        if (config.getBoolean("options.ender-chest", true) && config.contains("ender_chest")) {
             for (String key : config.getConfigurationSection("ender_chest").getKeys(false)) {
                 player.getEnderChest().setItem(Integer.parseInt(key), config.getItemStack("ender_chest." + key));
             }
