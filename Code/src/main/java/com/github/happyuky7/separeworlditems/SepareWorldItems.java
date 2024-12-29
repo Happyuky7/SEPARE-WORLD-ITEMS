@@ -78,7 +78,7 @@ public final class SepareWorldItems extends JavaPlugin {
                 );
 
         // Auto download lang.
-        if (getConfig().getBoolean("experimental.langs.auto-download-lang")) {
+        if (getConfig().getBoolean("settings.langs.auto-download")) {
             DownloadTranslations.downloadTranslations();
             Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&f [Register]: &aAuto Download Lang Enabled."));
         }
@@ -91,8 +91,15 @@ public final class SepareWorldItems extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&f [Register]: &aLoad Files."));
 
         // Load language files.
-        langs = new FileManager(this, "langs/" + getConfig().getString("experimental.lang"));
-        Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&f [Register]: &aLoad Langs Files."));
+        // Validate if the lang file exists. (BETA)
+        if (!checkLangFileExists(getConfig().getString("settings.langs.lang"))) {
+            Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&f [Register]: &cLang File not found."));
+            Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&f [Register]: &cDisable Plugin."));
+            Bukkit.getPluginManager().disablePlugin(this);
+        } else {
+            langs = new FileManager(this, "langs/" + getConfig().getString("settings.langs.lang"));
+            Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&f [Register]: &aLoad Lang Files."));
+        }
 
 
         // Register commands and events.
@@ -112,11 +119,28 @@ public final class SepareWorldItems extends JavaPlugin {
     }
 
     /**
+     * Checks if the language file exists in the langs folder.
+     *
+     * @param langId the language file ID.
+     * @return true if the file exists, false otherwise.
+     */
+    public static boolean checkLangFileExists(String langId) {
+
+        File langsDir = new File(instance.getDataFolder(), "langs");
+        if (!langsDir.exists()) {
+            langsDir.mkdirs();
+        }
+
+        File langFile = new File(langsDir, langId + ".yml");
+        return langFile.exists();
+    }
+
+    /**
      * Verifies the configuration version and disables the plugin if the version
      * does not match the required version.
      */
     private void verifyConfigVersion() {
-        if (!getConfig().getString("config-version").equalsIgnoreCase("1.2.24")) {
+        if (!getConfig().getString("config-version").equalsIgnoreCase("1.2.25-DEV-100")) {
             Bukkit.getConsoleSender()
                     .sendMessage(MessageColors.getMsgColor("&3&m------------------------------------"));
             Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&f [Error]: &cConfig Version ERROR."));
