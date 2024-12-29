@@ -6,7 +6,7 @@
 
     <groupId>com.github.happyuky7</groupId>
     <artifactId>SepareWorldItems</artifactId>
-    <version>1.2.23</version>
+    <version>1.2.24</version>
     <packaging>jar</packaging>
 
     <name>SepareWorldItems</name>
@@ -38,10 +38,11 @@
     </repositories>
 
     <dependencies>
+        <!-- SpigotMC -->
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.21-R0.1-SNAPSHOT</version>
+            <version>1.21.4-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.json/json -->
@@ -50,6 +51,7 @@
             <artifactId>json</artifactId>
             <version>20240303</version>
         </dependency>
+        <!-- EssentialsX -->
         <dependency>
             <groupId>net.essentialsx</groupId>
             <artifactId>EssentialsX</artifactId>
@@ -58,13 +60,13 @@
         </dependency>
     </dependencies>
 
-    <distributionManagement>
+    <!--distributionManagement>
       <repository>
        <id>github</id>
        <name>Happyuky7</name>
        <url>https://maven.pkg.github.com/Happyuky7/SEPARE-WORLD-ITEMS</url>
       </repository>
-    </distributionManagement>
+    </distributionManagement-->
          
     <build>
         <!-- Name of your compiled artifact -->
@@ -118,7 +120,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.21-R0.1-SNAPSHOT</version>
+            <version>1.21.4-R0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.google.errorprone</groupId>

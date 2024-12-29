@@ -7,18 +7,19 @@ currently being supported with security updates.
 
 **Official Verions | Security Update Support**
 
-| Version       | Supported          |
-|---------------|--------------------|
-| 1.2.23        | :white_check_mark: |
-| 1.2.22        | :white_check_mark: |
-| 1.2.21        | :x:                |
-| < 1.2.20      | :x:                |
+| Version  | Supported          |
+|----------|--------------------|
+| 1.2.24   | :white_check_mark: |
+| 1.2.23   | :x:                |
+| 1.2.22   | :white_check_mark: |
+| 1.2.21   | :x:                |
+| < 1.2.20 | :x:                |
 
 **Dev Versions, Beta's, Alpha's | Security Update Support**
 
 | Version          | Supported          |
 |------------------|--------------------|
-| 1.2.22-DEV-102   | :white_check_mark: |
+| 1.2.25-DEV-100   | :white_check_mark: |
 | < 1.2.20-DEV-100 | :x:                |
 | < 1.2.16         | :x:                |
 

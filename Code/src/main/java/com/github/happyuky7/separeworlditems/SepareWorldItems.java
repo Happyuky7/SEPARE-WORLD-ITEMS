@@ -78,7 +78,7 @@ public final class SepareWorldItems extends JavaPlugin {
                 );
 
         // Auto download lang.
-        if (getConfig().getBoolean("experimental.auto-download-lang")) {
+        if (getConfig().getBoolean("experimental.langs.auto-download-lang")) {
             DownloadTranslations.downloadTranslations();
             Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&f [Register]: &aAuto Download Lang Enabled."));
         }
@@ -94,6 +94,7 @@ public final class SepareWorldItems extends JavaPlugin {
         langs = new FileManager(this, "langs/" + getConfig().getString("experimental.lang"));
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&f [Register]: &aLoad Langs Files."));
 
+
         // Register commands and events.
         registerCommands();
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&f [Register]: &aLoad Commands."));
@@ -108,6 +109,23 @@ public final class SepareWorldItems extends JavaPlugin {
     public void onDisable() {
         // Plugin shutdown logic
         logPluginShutdownDetails();
+    }
+
+    /**
+     * Verifies the configuration version and disables the plugin if the version
+     * does not match the required version.
+     */
+    private void verifyConfigVersion() {
+        if (!getConfig().getString("config-version").equalsIgnoreCase("1.2.24")) {
+            Bukkit.getConsoleSender()
+                    .sendMessage(MessageColors.getMsgColor("&3&m------------------------------------"));
+            Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&f [Error]: &cConfig Version ERROR."));
+            getLogger().log(Level.SEVERE, "[Error]: Config Version ERROR.");
+            Bukkit.getConsoleSender()
+                    .sendMessage(MessageColors.getMsgColor("&3&m------------------------------------"));
+            Bukkit.getPluginManager().disablePlugin(this);
+            onDisable();
+        }
     }
 
     /**
@@ -175,23 +193,6 @@ public final class SepareWorldItems extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage(
                 MessageColors.getMsgColor("&d&l GitHub: &fhttps://github.com/Happyuky7/SEPARE-WORLD-ITEMS"));
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&7&m------------------------------------"));
-    }
-
-    /**
-     * Verifies the configuration version and disables the plugin if the version
-     * does not match the required version.
-     */
-    private void verifyConfigVersion() {
-        if (!getConfig().getString("config-version").equalsIgnoreCase("1.2.23-DEV")) {
-            Bukkit.getConsoleSender()
-                    .sendMessage(MessageColors.getMsgColor("&3&m------------------------------------"));
-            Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&f [Error]: &cConfig Version ERROR."));
-            getLogger().log(Level.SEVERE, "[Error]: Config Version ERROR.");
-            Bukkit.getConsoleSender()
-                    .sendMessage(MessageColors.getMsgColor("&3&m------------------------------------"));
-            Bukkit.getPluginManager().disablePlugin(this);
-            onDisable();
-        }
     }
 
     /**
