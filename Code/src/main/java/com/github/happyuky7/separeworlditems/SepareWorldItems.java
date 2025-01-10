@@ -10,6 +10,7 @@ package com.github.happyuky7.separeworlditems;
 import com.github.happyuky7.separeworlditems.commands.SepareWorldItemsCMD;
 import com.github.happyuky7.separeworlditems.filemanagers.FileManager;
 import com.github.happyuky7.separeworlditems.listeners.Integration.EssentialsX.HomeEvent;
+import com.github.happyuky7.separeworlditems.listeners.base.MVTeleport;
 import com.github.happyuky7.separeworlditems.listeners.base.WorldChangeEvent;
 import com.github.happyuky7.separeworlditems.utils.ConvertTime;
 import com.github.happyuky7.separeworlditems.utils.DownloadTranslations;
@@ -233,6 +234,7 @@ public final class SepareWorldItems extends JavaPlugin {
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(new WorldChangeEvent(this), this);
         pm.registerEvents(new HomeEvent(this), this);
+        pm.registerEvents(new MVTeleport(this), this);
     }
 
     /**
