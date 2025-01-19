@@ -29,7 +29,7 @@ public class PlayerDataSaver {
         }
 
         // Save health and hunger
-        config.set("health", config.getBoolean("Options.health-options.health-default-save", true)
+        config.set("health", config.getBoolean("options.health-options.health-default-save", true)
                 ? player.getHealth()
                 : 20.0D);
         config.set("hunger", player.getFoodLevel());

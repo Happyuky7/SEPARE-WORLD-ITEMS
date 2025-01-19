@@ -6,7 +6,7 @@
 
     <groupId>com.github.happyuky7</groupId>
     <artifactId>SepareWorldItems</artifactId>
-    <version>1.2.25-DEV-102</version>
+    <version>1.2.25</version>
     <packaging>jar</packaging>
 
     <name>SepareWorldItems</name>

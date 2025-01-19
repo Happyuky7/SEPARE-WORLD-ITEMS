@@ -41,7 +41,7 @@ public class MVTeleport implements Listener {
 
             // Retrieve the world names the player is transitioning between
             String fromWorld = event.getFrom().getWorld().getName(); // Previous world
-            String toWorld = player.getWorld().getName(); // Target world
+            String toWorld = event.getTo().getWorld().getName();
 
             FileConfiguration config = plugin.getConfig();
 

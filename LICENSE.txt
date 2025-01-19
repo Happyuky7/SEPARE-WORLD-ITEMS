@@ -1,6 +1,6 @@
 License
 
-Copyright (c) 2017-2023 HappyRogelio7
+Copyright (c) 2017-2025 Happyuky7
 
 He use of this Repository is Free but its Sale or distribution is not allowed as you created it.
 
@@ -22,4 +22,4 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-Web: https://happyrogelio7.github.io/
+Web: https://happyuky7.github.io/
