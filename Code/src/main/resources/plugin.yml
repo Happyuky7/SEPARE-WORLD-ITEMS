@@ -9,3 +9,6 @@ commands:
   separeworlditems:
     aliases: [swi, swis]
     usage: /<command> help
+  swimohist:
+    aliases: [swimoh]
+    usage: /<command> help

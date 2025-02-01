@@ -51,8 +51,13 @@ public class HomeEvent implements Listener {
         Player player = event.getUser().getBase().getPlayer();
 
         // Skip handling if the player is already in a teleportation process
-        if (TeleportationManager.isTeleporting(player.getUniqueId())) {
+        /*if (TeleportationManager.isTeleporting(player.getUniqueId())) {
             return; // Player is already teleporting, skip further handling
+        }*/
+
+        if (TeleportationManager.isTeleporting(player.getUniqueId())) {
+            TeleportationManager.setTeleporting(player.getUniqueId(), false); // Reset the teleportation flag
+            return; // Skip further processing
         }
 
         String fromWorld = player.getWorld().getName(); // Current world

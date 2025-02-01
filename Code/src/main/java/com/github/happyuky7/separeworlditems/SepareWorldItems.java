@@ -7,6 +7,7 @@ package com.github.happyuky7.separeworlditems;
  * Link: https://github.com/Happyuky7/SEPARE-WORLD-ITEMS
  */
 
+import com.github.happyuky7.separeworlditems.commands.SWITeleportMoHist;
 import com.github.happyuky7.separeworlditems.commands.SepareWorldItemsCMD;
 import com.github.happyuky7.separeworlditems.filemanagers.FileManager;
 import com.github.happyuky7.separeworlditems.listeners.Integration.EssentialsX.HomeEvent;
@@ -141,7 +142,7 @@ public final class SepareWorldItems extends JavaPlugin {
      * does not match the required version.
      */
     private void verifyConfigVersion() {
-        if (!getConfig().getString("config-version").equalsIgnoreCase("1.2.25")) {
+        if (!getConfig().getString("config-version").equalsIgnoreCase("1.2.26-DEV-100")) {
             Bukkit.getConsoleSender()
                     .sendMessage(MessageColors.getMsgColor("&3&m------------------------------------"));
             Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&f [Error]: &cConfig Version ERROR."));
@@ -225,6 +226,11 @@ public final class SepareWorldItems extends JavaPlugin {
      */
     public void registerCommands() {
         getCommand("separeworlditems").setExecutor(new SepareWorldItemsCMD(this));
+
+        if (getConfig().getBoolean("experimental.mohist.enable")) {
+            getCommand("swimohist").setExecutor(new SWITeleportMoHist());
+        }
+
     }
 
     /**
