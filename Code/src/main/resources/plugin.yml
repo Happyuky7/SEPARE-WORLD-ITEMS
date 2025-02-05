@@ -5,6 +5,7 @@ api-version: 1.16
 authors: [ Happyuky7 ]
 description: Separe World Items
 website: https://github.com/Happyuky7
+folia-supported: true
 commands:
   separeworlditems:
     aliases: [swi, swis]

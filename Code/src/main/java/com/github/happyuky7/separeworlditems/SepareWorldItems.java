@@ -284,4 +284,16 @@ public final class SepareWorldItems extends JavaPlugin {
         this.getConfig().reload();
         this.getBypassSave().reload();
     }
+    
+    /**
+     * Checks if server is Folia.
+     */
+    public boolean isFolia() {
+        try {
+            Class.forName("io.papermc.paper.threadedregions.RegionizedServer");
+            return true;
+        } catch (ClassNotFoundException e) {
+            return false;
+        }
+    }
 }
