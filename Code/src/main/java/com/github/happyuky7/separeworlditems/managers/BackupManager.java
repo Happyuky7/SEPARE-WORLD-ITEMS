@@ -2,6 +2,8 @@ package com.github.happyuky7.separeworlditems.managers;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.github.happyuky7.separeworlditems.SepareWorldItems;
+
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -137,7 +139,12 @@ public class BackupManager {
      * @param sourceFolder the folder to back up
      */
     public void startAutoBackup(File sourceFolder) {
-        plugin.getServer().getScheduler().runTaskTimerAsynchronously(plugin, () -> createBackup(sourceFolder), 0L,
-                backupInterval / 50);
+    	if (SepareWorldItems.getInstance().isFolia()) {
+    		plugin.getServer().getGlobalRegionScheduler().runAtFixedRate(plugin, (task) -> createBackup(sourceFolder), 1L,
+    				backupInterval / 50);
+    	} else {
+    		plugin.getServer().getScheduler().runTaskTimerAsynchronously(plugin, () -> createBackup(sourceFolder), 0L,
+                    backupInterval / 50);
+    	}
     }
 }

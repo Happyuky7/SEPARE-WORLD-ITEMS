@@ -42,6 +42,13 @@
     </repositories>
 
     <dependencies>
+        <!-- Folia -->
+        <dependency>
+            <groupId>dev.folia</groupId>
+            <artifactId>folia-api</artifactId>
+            <version>1.21.4-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
         <!-- SpigotMC -->
         <dependency>
             <groupId>org.spigotmc</groupId>
