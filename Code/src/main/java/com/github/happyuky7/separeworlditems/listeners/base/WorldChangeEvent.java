@@ -59,7 +59,18 @@ public class WorldChangeEvent implements Listener {
         String toWorld = player.getWorld().getName(); // Target world
 
         FileConfiguration config = plugin.getConfig();
-
+        
+        // Check if we should add missing worlds to the config
+        if (config.getBoolean("settings.auto-configure-worlds", false)) {
+        	String default_group = config.getString("options.default-groups");
+        	if (!config.contains("worlds." + fromWorld)) {
+        		config.set("worlds." + fromWorld, default_group);
+        	}
+        	if (!config.contains("worlds." + toWorld)) {
+        		config.set("worlds." + toWorld, default_group);
+        	}
+        }
+        
         // Check if the worlds are configured in the plugin's settings
         if (config.contains("worlds." + fromWorld) && config.contains("worlds." + toWorld)) {
             // Retrieve the world groups the player is switching between
