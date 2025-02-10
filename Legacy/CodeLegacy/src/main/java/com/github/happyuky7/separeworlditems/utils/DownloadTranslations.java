@@ -18,7 +18,7 @@ import org.json.JSONObject;
 public class DownloadTranslations {
 
     // URL Base for the GitHub API to get the list of available translations
-    private static final String GITHUB_LANGS_API_URL = "https://api.github.com/repos/Happyuky7/SEPARE-WORLD-ITEMS/contents/langs";
+    private static final String GITHUB_LANGS_API_URL = "https://api.github.com/repos/Happyuky7/SEPARE-WORLD-ITEMS/contents/Legacy/langs";
     private static final String LOCAL_LANGS_PATH = "plugins/SepareWorldItems/langs/";
 
     // Download the translations from GitHub
@@ -28,7 +28,7 @@ public class DownloadTranslations {
 
         for (String lang : availableLanguages) {
             String filePath = LOCAL_LANGS_PATH + lang + ".yml";
-            downloadTranslationFile("https://raw.githubusercontent.com/Happyuky7/SEPARE-WORLD-ITEMS/master/langs/" + lang + ".yml", filePath);
+            downloadTranslationFile("https://raw.githubusercontent.com/Happyuky7/SEPARE-WORLD-ITEMS/master/Legacy/langs/" + lang + ".yml", filePath);
         }
     }
 

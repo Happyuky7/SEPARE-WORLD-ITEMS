@@ -51,6 +51,7 @@ public final class SepareWorldItems extends JavaPlugin {
     //private FileManager msgs;
     private FileManager bypasssave;
     private FileManager langs;
+    private FileManager langenUS;
     private BackupManager backupManager;
 
     // List of bypass players.
@@ -84,6 +85,9 @@ public final class SepareWorldItems extends JavaPlugin {
             DownloadTranslations.downloadTranslations();
             Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&f [Register]: &aAuto Download Lang Enabled."));
         }
+        // Check if lang file exists and create it if not.
+        langenUS = new FileManager(this, "langs/en_US");
+
 
         // Log plugin details to console
         logPluginDetails();
@@ -111,6 +115,27 @@ public final class SepareWorldItems extends JavaPlugin {
         registerEvents();
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&f [Register]: &aLoad Events."));
 
+
+        // UPDATE REQUIRED NEW VERSION 2.0.0 (ADDING THIS MESSAGE IN 1.2.27)
+        /*Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&8[&aSepareWorldItems&8] &cREQUIRED UPDATE! &8| &7Please update to the new version 2.0.0"));
+        Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&8[&aSepareWorldItems&8] &cDownload Link: &7https://github.com/Happyuky7/SEPARE-WORLD-ITEMS/releases"));
+        Bukkit.getlogger().log(Level.SEVERE, "[Error]: REQUIRED UPDATE! Please update to the new version 2.0.0");
+        Bukkit.getlogger().log(Level.SEVERE, "[Error]: REQUIRED UPDATE! Please update to the new version 2.0.0");
+        Bukkit.getlogger().log(Level.SEVERE, "[Error]: REQUIRED UPDATE! Please update to the new version 2.0.0");
+        Bukkit.getlogger().log(Level.SEVERE, "[Error]: REQUIRED UPDATE! Please update to the new version 2.0.0");
+        Bukkit.getlogger().log(Level.SEVERE, "[Error]: REQUIRED UPDATE! Please update to the new version 2.0.0");
+        Bukkit.getlogger().log(Level.SEVERE, "[Error]: REQUIRED UPDATE! Please update to the new version 2.0.0");
+        Bukkit.getlogger().log(Level.SEVERE, "[Error]: REQUIRED UPDATE! Please update to the new version 2.0.0");
+        Bukkit.getlogger().log(Level.SEVERE, "[Error]: REQUIRED UPDATE! Please update to the new version 2.0.0");
+        Bukkit.getlogger().log(Level.SEVERE, "[Error]: REQUIRED UPDATE! Please update to the new version 2.0.0");
+        Bukkit.getlogger().log(Level.SEVERE, "[Error]: REQUIRED UPDATE! Please update to the new version 2.0.0");
+        Bukkit.getlogger().log(Level.SEVERE, "[Error]: REQUIRED UPDATE! Please update to the new version 2.0.0");
+        Bukkit.getlogger().log(Level.SEVERE, "[Error]: REQUIRED UPDATE! Please update to the new version 2.0.0");
+        Bukkit.getlogger().log(Level.SEVERE, "[Error]: Download Link: https://github.com/Happyuky7/SEPARE-WORLD-ITEMS/releases");
+        Bukkit.getlogger().log(Level.SEVERE, "[Error]: Download Link: https://github.com/Happyuky7/SEPARE-WORLD-ITEMS/releases");
+        Bukkit.getlogger().log(Level.SEVERE, "[Error]: Download Link: https://github.com/Happyuky7/SEPARE-WORLD-ITEMS/releases");
+        Bukkit.getlogger().log(Level.SEVERE, "[Error]: Download Link: https://github.com/Happyuky7/SEPARE-WORLD-ITEMS/releases");
+        Bukkit.getlogger().log(Level.SEVERE, "[Error]: Download Link: https://github.com/Happyuky7/SEPARE-WORLD-ITEMS/releases");*/
 
     }
 
@@ -142,7 +167,7 @@ public final class SepareWorldItems extends JavaPlugin {
      * does not match the required version.
      */
     private void verifyConfigVersion() {
-        if (!getConfig().getString("config-version").equalsIgnoreCase("1.2.26-DEV-100")) {
+        if (!getConfig().getString("config-version").equalsIgnoreCase("1.2.26")) {
             Bukkit.getConsoleSender()
                     .sendMessage(MessageColors.getMsgColor("&3&m------------------------------------"));
             Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&f [Error]: &cConfig Version ERROR."));
