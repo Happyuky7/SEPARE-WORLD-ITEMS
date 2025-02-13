@@ -1,0 +1,12 @@
+name: SepareWorldItems
+version: ${project.version}
+main: com.github.happyuky7.separeWorldItems.SepareWorldItems
+api-version: '1.16'
+authors: [ Happyuky7 ]
+description: test
+website: https://github.com/Happyuky7
+folia-supported: true
+commands:
+  separeworlditems:
+    description: test
+    usage: /<command>

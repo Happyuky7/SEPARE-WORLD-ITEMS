@@ -3,8 +3,38 @@ SEPARE WORLD ITEMS,  It's a echo plugin to be for your invention by world.
 
 ## Download
 
-[Donwload 1.2.25 / Minecraft Version Support 1.8.8 - 1.21.X ](https://github.com/Happyuky7/SEPARE-WORLD-ITEMS/blob/master/SepareWorldItems-Downloads/Updates/SepareWorldItems-1.2.25.jar)
+[Donwload 2.0.0-DEV-100 (DEV-VERSION) / Minecraft Version Support 1.8.8 - 1.21.X ](https://github.com/Happyuky7/SEPARE-WORLD-ITEMS/releases/tag/2.0.0-DEV-100)
+
+[Donwload 1.2.26 / Minecraft Version Support 1.8.8 - 1.21.X ](https://github.com/Happyuky7/SEPARE-WORLD-ITEMS/releases/tag/1.2.26)
  
+
+---
+
+## Install
+
+- Download Lasted Plugin Version.
+- Move you plugin folder `/plugins`.
+- Start or Restart your server.
+- Join a plugin folder `/plugins/SepareWorldItems`.
+- Configure plugin in `config.yml`.
+- Restart Your Server.
+
+**Note:** If you use any `DEV-VERSION` of the plugin,
+I **recommend** you to make a **backup** and **check** the **changelist** of
+
+---
+
+## Commands
+
+- `/swi` - Main Command.
+- `/swi reload` - Reload the plugin.
+- `/swi forcebackup` - Force a backup.
+
+---
+
+## Permissions
+
+- `separeworlditems.admin` - Permission to use the admin commands.
 
 ---
 
@@ -57,7 +87,8 @@ SEPARE-WORLD-ITEMS/Code/target/
 
 - [**Happyuky7**](https://github.com/Happyuky7) - Main Developer and Maintainer.
 - [**InfoBlock**](https://github.com/InfoBlock) - German Translator.
-- [**HyperekDerg**](https://github.com/HyperekDerg) - Refactor Code, Add Multi-Language Support, and Implement Backup Utility. Polish Translator.
+- [**HyperekDerg**](https://github.com/HyperekDerg) - Implement Backup Utility. Polish Translator.
+- [**wildmaster84**](https://github.com/wildmaster84) - Fix Folia Support and Implement auto worlds adding to config.
 
 
 ---

@@ -1,0 +1,94 @@
+
+config-version: 2.0.0-DEV-100
+
+# Settings for the plugin.
+settings:
+
+  # Debug mode.
+  # This is designed more for developers.
+  # Default: false
+  debug: false
+
+  langs:
+
+    # Auto download the language file from the GitHub repository. (Recommended enabled)
+    # Default: true
+    autoDownload: true
+
+    # NOTE: 'langs' is a file that allows you to translate the plugin
+    #       to any language that is not in the list of available languages yet.
+    lang: "en_US" # Language file. (Default: en_US) | Change REQUIRED restart.
+
+  # Auto configure worlds.
+  # Should we add missing worlds to the config?
+  # REQUIRED: options.default-group.group to be enabled.
+  # Default: false
+  auto-configure-worlds: false
+
+  backups:
+    # Enable backups.
+    # Default: true
+    enabled: true
+
+    # Backup interval in days.
+    # Default: 1
+    interval: 1
+
+    # Maximum number of backups to keep.
+    # Default: 5
+    # NOTE: After all 5 are completed, the last of these will be removed so that a new one can be added.
+    max-backups: 5
+
+  # Options for the plugin.
+  options:
+
+    # Default group.
+    # This group is used when the world is not in the list of worlds.
+    # ----------------------------------------
+    # NOTE: In case you delete the default group in the “groups” list change the group below.
+    #       Example: group: otherworldgroup
+    # NOTE 2: You can also change the default group if you want to use a group other than “default”.
+    # ----------------------------------------
+    # Default: enabled and group: default
+    default-group:
+      enabled: true
+      group: default
+
+    # Save options.
+    # This option is used to save the player's status when they leave the world
+    # ----------------------------------------
+    # NOTE: If you disable this option, the player will lose their status when they leave the world.
+    # WARNING: If you change any of this when you have time with player inventories make a backup
+    #          of your server in case any errors occur.
+    # ----------------------------------------
+    saves:
+      gamemode: true
+      # Flying (Include AllowFlight)
+      flying: true
+      fly-speed: true
+      exp: true
+      enderchest: true
+      inventory: true
+      potion-effects: true
+      food-level: true
+      off-hand: true
+
+
+# Groups:
+# Recommended: default, no remove or change.
+# You can add more groups.
+groups:
+  - default
+  - otherworldgroup
+
+# Worlds:
+# In the worlds section you can set the group for each world.
+# Worlds is case sensitive.
+# Format --> world: group
+worlds:
+  world: default
+  world_nether: orthworldgroup
+  world_the_end: default
+
+
+
