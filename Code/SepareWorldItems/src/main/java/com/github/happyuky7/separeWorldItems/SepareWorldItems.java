@@ -50,7 +50,7 @@ public final class SepareWorldItems extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor(" "));
 
         // Version config check
-        if (!getConfig().getString("config-version").equalsIgnoreCase("2.0.0-DEV-100")) {
+        if (!getConfig().getString("config-version").equalsIgnoreCase("2.0.0-DEV-102")) {
 
             Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&c[SepareWorldItems] Your config is outdated! Please delete your config.yml and restart the server!"));
             Bukkit.getPluginManager().disablePlugin(this);

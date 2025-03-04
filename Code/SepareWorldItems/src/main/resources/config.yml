@@ -1,5 +1,5 @@
 
-config-version: 2.0.0-DEV-100
+config-version: 2.0.0-DEV-102
 
 # Settings for the plugin.
 settings:
@@ -72,7 +72,28 @@ settings:
       potion-effects: true
       food-level: true
       off-hand: true
+      health: true
 
+  health-options:
+    # TYPES:
+    # - BUKKIT
+    # - CUSTOM (BYPASS)
+    # - AURA_SKILLS (Requires AuraSkills (AureliumSkills) plugin and integration enabled)
+    type: BUKKIT
+
+# Integrations:
+integrations:
+  placeholderapi:
+    # Enable PlaceholderAPI support.
+    # Default: true
+    # Required: PlaceholderAPI plugin.
+    enabled: true
+  auraskills:
+    # Enable AuraSkills (AureliumSkills) support.
+    # Default: false
+    # Required: AuraSkills (AureliumSkills) plugin.
+    # NOTE: NOT AVAILABLE IN THIS VERSION
+    enabled: false
 
 # Groups:
 # Recommended: default, no remove or change.

@@ -12,6 +12,7 @@ import java.io.File;
 
 public class PlayerDataManager {
 
+    // Save player data to a file
     public static void save(Player player, String groupName) {
 
         File file = new File(SepareWorldItems.getInstance().getDataFolder() + File.separator
@@ -58,12 +59,18 @@ public class PlayerDataManager {
             }
         }
 
+        if (SepareWorldItems.getInstance().getConfig().getBoolean("settings.options.saves.health")) {
+            HealthData.save(player, config, SepareWorldItems.getInstance().getConfig().getString("settings.health-options.type"));
+        }
+
         FileManagerData.saveConfiguration(file, config);
 
         cleardataState(player);
 
     }
 
+
+    // Load player data from a file
     public static void load(Player player, String groupName) {
 
         File file = new File(SepareWorldItems.getInstance().getDataFolder() + File.separator
@@ -110,8 +117,14 @@ public class PlayerDataManager {
             }
         }
 
+        if (SepareWorldItems.getInstance().getConfig().getBoolean("settings.options.saves.health")) {
+            HealthData.load(player, config, SepareWorldItems.getInstance().getConfig().getString("settings.health-options.type"));
+        }
+
     }
 
+
+    // Clear player state
     public static void cleardataState(Player player) {
 
         player.setExp(0);
@@ -132,6 +145,59 @@ public class PlayerDataManager {
 
         player.getActivePotionEffects().forEach(potionEffect -> player.removePotionEffect(potionEffect.getType()));
 
+    }
+
+
+    // Reload all player data
+    public static void reloadAllPlayerData(Player player, String groupName) {
+
+        File file = new File(SepareWorldItems.getInstance().getDataFolder() + File.separator
+                + "groups" + File.separator + groupName + File.separator
+                + player.getName() + "-" + player.getUniqueId() + ".yml");
+
+        FileConfiguration config = FileManagerData.getYaml(file);
+
+        if (SepareWorldItems.getInstance().getConfig().getBoolean("settings.options.saves.gamemode")) {
+            GamemodeData.load(player, config);
+        }
+
+        if (SepareWorldItems.getInstance().getConfig().getBoolean("settings.options.saves.flying")) {
+            FlyingData.load(player, config);
+        }
+
+        if (SepareWorldItems.getInstance().getConfig().getBoolean("settings.options.saves.fly-speed")) {
+            FlySpeedData.load(player, config);
+        }
+
+        if (SepareWorldItems.getInstance().getConfig().getBoolean("settings.options.saves.exp")) {
+            ExpData.reload(player, config);
+        }
+
+        if (SepareWorldItems.getInstance().getConfig().getBoolean("settings.options.saves.enderchest")) {
+            EnderChestData.load(player, config);
+        }
+
+        if (SepareWorldItems.getInstance().getConfig().getBoolean("settings.options.saves.inventory")) {
+            InventoryData.load(player, config);
+        }
+
+        if (SepareWorldItems.getInstance().getConfig().getBoolean("settings.options.saves.potion-effects")) {
+            PotionEffectsData.load(player, config);
+        }
+
+        if (SepareWorldItems.getInstance().getConfig().getBoolean("settings.options.saves.food-level")) {
+            FoodLevelData.load(player, config);
+        }
+
+        if (MCVersionChecker.isOffHandSupported()) {
+            if (SepareWorldItems.getInstance().getConfig().getBoolean("settings.options.saves.off-hand")) {
+                OffHandItemData.load(player, config);
+            }
+        }
+
+        if (SepareWorldItems.getInstance().getConfig().getBoolean("settings.options.saves.health")) {
+            HealthData.load(player, config, SepareWorldItems.getInstance().getConfig().getString("settings.health-options.type"));
+        }
 
     }
 

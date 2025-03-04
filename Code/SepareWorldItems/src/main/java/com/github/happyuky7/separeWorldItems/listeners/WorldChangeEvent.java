@@ -14,7 +14,7 @@ public class WorldChangeEvent implements Listener {
 
         Player player = event.getPlayer();
 
-        String default_group = SepareWorldItems.getInstance().getConfig().getString("settings.options.default_group.group");
+        String default_group = SepareWorldItems.getInstance().getConfig().getString("settings.options.default-group.group");
 
         String fromWorld = event.getFrom().getName();
         String toWorld = player.getWorld().getName();
@@ -22,7 +22,7 @@ public class WorldChangeEvent implements Listener {
 
         if (SepareWorldItems.getInstance().getConfig().getBoolean("settings.auto-configure-worlds", false)) {
 
-            if (SepareWorldItems.getInstance().getConfig().getBoolean("settings.options.default_group.enabled", false)) {
+            if (SepareWorldItems.getInstance().getConfig().getBoolean("settings.options.default-group.enabled", false)) {
 
                 if (SepareWorldItems.getInstance().getConfig().getString("worlds." + fromWorld) == null
                         || SepareWorldItems.getInstance().getConfig().getString("worlds." + fromWorld).isEmpty()) {
@@ -53,6 +53,7 @@ public class WorldChangeEvent implements Listener {
                 PlayerDataManager.load(player, toGroup);
             } else {
                 //PlayerDataManager.load(player, fromGroup);
+                PlayerDataManager.reloadAllPlayerData(player, fromGroup);
             }
         }
     }
