@@ -8,5 +8,5 @@ website: https://github.com/Happyuky7
 folia-supported: true
 commands:
   separeworlditems:
-    description: test
+    description: SepareWorldItems command
     usage: /<command>

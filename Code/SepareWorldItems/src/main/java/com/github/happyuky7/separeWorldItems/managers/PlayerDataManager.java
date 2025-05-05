@@ -162,7 +162,12 @@ public class PlayerDataManager {
         }
 
         if (SepareWorldItems.getInstance().getConfig().getBoolean("settings.options.saves.flying")) {
-            FlyingData.load(player, config);
+            try {
+                FlyingData.load(player, config);
+                System.out.println("Flying data loaded successfully.");
+            } catch (Exception e) {
+                System.out.println("Error loading flying data: " + e.getMessage());
+            }
         }
 
         if (SepareWorldItems.getInstance().getConfig().getBoolean("settings.options.saves.fly-speed")) {
