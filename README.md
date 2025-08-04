@@ -3,9 +3,9 @@ SEPARE WORLD ITEMS,  It's a echo plugin to be for your invention by world.
 
 ## Download
 
-[Donwload 2.0.0-DEV-104 (DEV-VERSION) / Minecraft Version Support 1.8.8 - 1.21.8 ](https://github.com/Happyuky7/SEPARE-WORLD-ITEMS/releases/)
+[Donwload 2.0.0-DEV-100 (DEV-VERSION) / Minecraft Version Support 1.8.8 - 1.21.X ](https://github.com/Happyuky7/SEPARE-WORLD-ITEMS/releases/tag/2.0.0-DEV-100)
 
-[Donwload 1.2.26 / Minecraft Version Support 1.8.8 - 1.21.4 ](https://github.com/Happyuky7/SEPARE-WORLD-ITEMS/releases/tag/1.2.26)
+[Donwload 1.2.26 / Minecraft Version Support 1.8.8 - 1.21.X ](https://github.com/Happyuky7/SEPARE-WORLD-ITEMS/releases/tag/1.2.26)
  
 
 ---
@@ -86,7 +86,8 @@ SEPARE-WORLD-ITEMS/Code/target/
 ## Contributors
 
 - [**Happyuky7**](https://github.com/Happyuky7) - Main Developer and Maintainer.
-- [**HyperekDerg**](https://github.com/HyperekDerg) - Implement Backup Utility.
+- [**InfoBlock**](https://github.com/InfoBlock) - German Translator.
+- [**HyperekDerg**](https://github.com/HyperekDerg) - Implement Backup Utility. Polish Translator.
 - [**wildmaster84**](https://github.com/wildmaster84) - Fix Folia Support and Implement auto worlds adding to config.
 
 
