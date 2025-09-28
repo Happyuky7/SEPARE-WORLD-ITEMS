@@ -3,6 +3,8 @@ package com.github.happyuky7.separeWorldItems.data;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
+import com.github.happyuky7.separeWorldItems.integrations.IntegrationAuraSkills;
+
 public class HealthData {
 
     public static void save(Player player, FileConfiguration config, String type) {
@@ -17,7 +19,7 @@ public class HealthData {
         }
 
         if (type.equalsIgnoreCase("AURA_SKILLS")) {
-            System.out.println(System.Logger.Level.ERROR + "NOT IMPLEMENTED IN THIS VERSION");
+            config.set("auraskills.health", IntegrationAuraSkills.getHealth(player));
         }
 
     }
@@ -38,9 +40,28 @@ public class HealthData {
         }
 
         if (type.equalsIgnoreCase("AURA_SKILLS")) {
-            System.out.println(System.Logger.Level.ERROR + "NOT IMPLEMENTED IN THIS VERSION");
+            if (config.contains("auraskills.health")) {
+                IntegrationAuraSkills.setHealth(player, config.getDouble("auraskills.health"));
+            }
         }
 
+    }
+
+    public static void cleardataState(Player player, String type) {
+        if (type.equalsIgnoreCase("BUKKIT")) {
+            player.setHealth(20);
+            player.setMaxHealth(20);
+        }
+
+        if (type.equalsIgnoreCase("CUSTOM")) {
+            System.out.println(System.Logger.Level.INFO + "Not loading health data for custom type (bypassing)");
+        }
+
+        if (type.equalsIgnoreCase("AURA_SKILLS")) {
+           
+            IntegrationAuraSkills.setHealth(player, (double) 20);
+            
+        }
     }
 
 }

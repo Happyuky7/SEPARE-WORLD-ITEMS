@@ -1,8 +1,7 @@
-package com.github.happyuky7.separeWorldItems.managers;
+package com.github.happyuky7.separeWorldItems.managers.integrations;
 
 import com.github.happyuky7.separeWorldItems.SepareWorldItems;
 import com.github.happyuky7.separeWorldItems.data.*;
-import com.github.happyuky7.separeWorldItems.data.integrations.AuraSkillsManaData;
 import com.github.happyuky7.separeWorldItems.files.FileManagerData;
 import com.github.happyuky7.separeWorldItems.utils.MCVersionChecker;
 import org.bukkit.GameMode;
@@ -11,12 +10,13 @@ import org.bukkit.entity.Player;
 
 import java.io.File;
 
-public class PlayerDataManager {
+public class PlayerDataManagerWG {
 
     // Save player data to a file
     public static void save(Player player, String groupName) {
 
-        File file = new File(SepareWorldItems.getInstance().getDataFolder() + File.separator
+        File file = new File(SepareWorldItems.getInstance().getDataFolder() + File.separator +
+                "worldguard" + File.separator
                 + "groups" + File.separator + groupName + File.separator
                 + player.getName() + "-" + player.getUniqueId() + ".yml");
 
@@ -64,13 +64,6 @@ public class PlayerDataManager {
             HealthData.save(player, config, SepareWorldItems.getInstance().getConfig().getString("settings.health-options.type"));
         }
 
-        if (SepareWorldItems.getInstance().getConfig().getBoolean("integrations.auraskills.enabled")) {
-
-            if (SepareWorldItems.getInstance().getConfig().getBoolean("auraskills.save-mana")) {
-                AuraSkillsManaData.save(player, config);
-            }
-        }
-
         FileManagerData.saveConfiguration(file, config);
 
         cleardataState(player);
@@ -82,6 +75,7 @@ public class PlayerDataManager {
     public static void load(Player player, String groupName) {
 
         File file = new File(SepareWorldItems.getInstance().getDataFolder() + File.separator
+                + "worldguard" + File.separator
                 + "groups" + File.separator + groupName + File.separator
                 + player.getName() + "-" + player.getUniqueId() + ".yml");
 
@@ -129,14 +123,6 @@ public class PlayerDataManager {
             HealthData.load(player, config, SepareWorldItems.getInstance().getConfig().getString("settings.health-options.type"));
         }
 
-        if (SepareWorldItems.getInstance().getConfig().getBoolean("integrations.auraskills.enabled")) {
-
-            if (SepareWorldItems.getInstance().getConfig().getBoolean("auraskills.save-mana")) {
-                AuraSkillsManaData.load(player, config);
-            }
-        }
-
-
     }
 
 
@@ -147,9 +133,8 @@ public class PlayerDataManager {
         player.setLevel(0);
 
         player.setFoodLevel(20);
+        player.setHealth(20);
 
-        HealthData.cleardataState(player, SepareWorldItems.getInstance().getConfig().getString("settings.health-options.type"));
-    
         player.setAllowFlight(false);
         player.setFlying(false);
         player.setFlySpeed(0.1f);
@@ -162,14 +147,6 @@ public class PlayerDataManager {
 
         player.getActivePotionEffects().forEach(potionEffect -> player.removePotionEffect(potionEffect.getType()));
 
-        if (SepareWorldItems.getInstance().getConfig().getBoolean("integrations.auraskills.enabled")) {
-
-            if (SepareWorldItems.getInstance().getConfig().getBoolean("auraskills.save-mana")) {
-                AuraSkillsManaData.cleardataState(player);
-            }
-        }
-
-
     }
 
 
@@ -177,6 +154,7 @@ public class PlayerDataManager {
     public static void reloadAllPlayerData(Player player, String groupName) {
 
         File file = new File(SepareWorldItems.getInstance().getDataFolder() + File.separator
+                + "worldguard" + File.separator
                 + "groups" + File.separator + groupName + File.separator
                 + player.getName() + "-" + player.getUniqueId() + ".yml");
 
@@ -227,13 +205,6 @@ public class PlayerDataManager {
 
         if (SepareWorldItems.getInstance().getConfig().getBoolean("settings.options.saves.health")) {
             HealthData.load(player, config, SepareWorldItems.getInstance().getConfig().getString("settings.health-options.type"));
-        }
-
-        if (SepareWorldItems.getInstance().getConfig().getBoolean("integrations.auraskills.enabled")) {
-
-            if (SepareWorldItems.getInstance().getConfig().getBoolean("auraskills.save-mana")) {
-                AuraSkillsManaData.load(player, config);
-            }
         }
 
     }

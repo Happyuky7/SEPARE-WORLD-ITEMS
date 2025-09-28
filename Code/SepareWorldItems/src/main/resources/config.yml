@@ -1,5 +1,5 @@
 
-config-version: 2.0.0-DEV-104
+config-version: 2.0.0-DEV-105
 
 # Settings for the plugin.
 settings:
@@ -30,9 +30,22 @@ settings:
     # Default: true
     enabled: true
 
-    # Backup interval in days.
+    # Backup interval (default in days).
     # Default: 1
     interval: 1
+
+    # Interval type:
+    # Case sensitive.
+    # Recommended: d (days), If you have many players for greater security 
+    #              You could use hours but it is recommended only every 6 or 12 hours as a minimum.
+    #
+    # Default: DAYS
+    # TYPES:
+    # - SECONDS = s
+    # - MINUTES = m
+    # - HOURS = h
+    # - DAYS = d
+    interval-type: d
 
     # Maximum number of backups to keep.
     # Default: 5
@@ -74,10 +87,11 @@ settings:
       off-hand: true
       health: true
 
+
   health-options:
     # TYPES:
     # - BUKKIT
-    # - CUSTOM (BYPASS)
+    # - CUSTOM (BYPASS) | (Use it if the plugin you're using isn't supported here, if you want support added, contact us via Discord and create a ticket.)
     # - AURA_SKILLS (Requires AuraSkills (AureliumSkills) plugin and integration enabled)
     type: BUKKIT
 
@@ -92,8 +106,19 @@ integrations:
     # Enable AuraSkills (AureliumSkills) support.
     # Default: false
     # Required: AuraSkills (AureliumSkills) plugin.
-    # NOTE: NOT AVAILABLE IN THIS VERSION
+    # NOTE: BETA!
     enabled: false
+  worldguard:
+    # Enable WorldGuard support.
+    # Default: false
+    # Required: WorldGuard plugin.
+    enabled: false
+  essentials:
+    # Enable Essentials support.
+    # Default: false
+    # Required: Essentials plugin.
+    enabled: false
+  
 
 # Groups:
 # Recommended: default, no remove or change.
@@ -108,8 +133,56 @@ groups:
 # Format --> world: group
 worlds:
   world: default
-  world_nether: orthworldgroup
+  world_nether: otherworldgroup
   world_the_end: default
+
+
+# WorldGuard Regions: (BETA!)
+# 
+# WARNING: This section is only available if the WorldGuard integration is enabled.
+# WARNING 2: NEW IMPLEMENTATION, THIS IS NO FULLY TESTED.
+# WARNING 3: MAKE A BACKUP OF YOUR SERVER IN CASE ANY ERRORS OCCUR
+worldguard-regions:
+  # In the worldguard-regions section you can set the group for each WorldGuard region.
+  #
+  # NOTE: This is only available if the WorldGuard integration is enabled.
+  # NOTE 2: Regions is case sensitive.
+  # NOTE 3: If a player is in multiple regions, the region with the highest priority will be used.
+  # NOTE 4: If a player is not in any region, the world group will be used.
+  # NOTE 5: If a region is not in the list, the world group will
+  #
+
+  # Groups for regions.
+  groups:
+  - defaultregiongroup
+  - otherregiongroup
+
+  # Regions and their groups.
+  # Format --> region: group
+  # Regions is case sensitive.
+  # INFO: If the same region is in another world it will also affect.
+  regions:
+    spawn: defaultregiongroup
+    pvp: otherregiongroup
+
+
+# EssentialsX (BETA!)
+essentialsx:
+  vanish-bypass: true # Allow players in vanish to bypass the plugin restrictions.
+
+
+auraskills:
+  save-mana: true # Save Mana to change world
+  # Others Skills and in comming soon update.
+  # save-skillnamehere: boolean
+
+
+# Metrics:
+# Should we enable metrics?
+# Default: true
+# NOTE: This no implemented in this version. It will be available in future versions.
+metrics:
+  enabled: true
 
 
 
