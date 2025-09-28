@@ -1,0 +1,37 @@
+# SepareWorldItems
+# Lang Translation: Simplified Chinese
+# Original Author: https://github.com/Happyuky7/
+# Contributors:
+# - https://github.com/Happyuky7/
+# Lasted Update Version (Plugin): 2.0.0-DEV-105
+
+# Lang ID | NOTE: Do not change this value.
+lang-id: zh_CN # Example: en_US, pt_BR, es_ES, jp_JP, etc.
+# Lang Version | NOTE: Do not change this value.
+lang-version: 2.0.0-DEV-105 # Internal check update this file.
+
+# Basic
+prefix: "&8[&aSepareWorldItems&8] &r" # Variable: %prefix%
+no-permission: "%prefix% &c你没有权限执行此操作。"
+
+reload: "%prefix% &a插件已重新加载。"
+
+backups:
+  force-backup:
+    start: "%prefix% &a开始备份..."
+    end: "%prefix% &a备份已完成。"
+    completed:
+      - ""
+      - "%prefix% &a备份已完成。"
+      - "&a备份保存在 &f%backup_path%"
+      - ""
+    error:
+      - ""
+      - "%prefix% &c备份时发生错误。"
+      - "&c请检查控制台以获取更多信息。"
+      - ""
+
+integration:
+  essentialsx:
+    vanish-reactivated: "%prefix% &a你的 EssentialsX 隐身已重新激活&a。"
+    vanish-deactivated: "%prefix% &c你的 EssentialsX 隐身已停用&c。"

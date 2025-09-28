@@ -1,0 +1,37 @@
+# SepareWorldItems
+# Lang Translation: Japanese
+# Original Author: https://github.com/Happyuky7/
+# Contributors:
+# - https://github.com/Happyuky7/
+# Lasted Update Version (Plugin): 2.0.0-DEV-105
+
+# Lang ID | NOTE: Do not change this value.
+lang-id: jp_JP # Example: en_US, pt_BR, es_ES, jp_JP, etc.
+# Lang Version | NOTE: Do not change this value.
+lang-version: 2.0.0-DEV-105 # Internal check update this file.
+
+# Basic
+prefix: "&8[&aSepareWorldItems&8] &r" # Variable: %prefix%
+no-permission: "%prefix% &cその操作を行う権限がありません。"
+
+reload: "%prefix% &aプラグインが再読み込みされました。"
+
+backups:
+  force-backup:
+    start: "%prefix% &aバックアップを開始しています..."
+    end: "%prefix% &aバックアップが完了しました。"
+    completed:
+      - ""
+      - "%prefix% &aバックアップが完了しました。"
+      - "&aバックアップが &f%backup_path% &aに保存されました"
+      - ""
+    error:
+      - ""
+      - "%prefix% &cバックアップ中にエラーが発生しました。"
+      - "&c詳細についてはコンソールを確認してください。"
+      - ""
+
+integration:
+  essentialsx:
+    vanish-reactivated: "%prefix% &aEssentialsXの透明化が再有効化されました&a。"
+    vanish-deactivated: "%prefix% &cEssentialsXの透明化が無効化されました&c。"

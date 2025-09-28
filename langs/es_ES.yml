@@ -1,0 +1,37 @@
+# SepareWorldItems
+# Lang Translation: Spanish
+# Original Author: https://github.com/Happyuky7/
+# Contributors:
+# - https://github.com/Happyuky7/
+# Lasted Update Version (Plugin): 2.0.0-DEV-105
+
+# Lang ID | NOTE: Do not change this value.
+lang-id: en_ES # Example: en_US, pt_BR, es_ES, jp_JP, etc.
+# Lang Version | NOTE: Do not change this value.
+lang-version: 2.0.0-DEV-105 # Internal check update this file.
+
+# Basic
+prefix: "&8[&aSepareWorldItems&8] &r" # Variable: %prefix%
+no-permission: "%prefix% &cNo tienes permisos para hacer eso."
+
+reload: "%prefix% &aPlugin recargado."
+
+backups:
+  force-backup:
+    start: "%prefix% &aIniciando respaldo..."
+    end: "%prefix% &aRespaldo completado."
+    completed:
+      - ""
+      - "%prefix% &aRespaldo completado."
+      - "&aRespaldo guardado en &f%backup_path%"
+      - ""
+    error:
+      - ""
+      - "%prefix% &cOcurrió un error al realizar el respaldo."
+      - "&cPor favor revisa la consola para más información."
+      - ""
+
+integration:
+  essentialsx:
+    vanish-reactivated: "%prefix% &aTu invisibilidad de EssentialsX ha sido reactivada&a."
+    vanish-deactivated: "%prefix% &cTu invisibilidad de EssentialsX ha sido desactivada&c."

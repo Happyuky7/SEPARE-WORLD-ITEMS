@@ -1,0 +1,37 @@
+# SepareWorldItems
+# Lang Translation: Filipino
+# Original Author: https://github.com/Happyuky7/
+# Contributors:
+# - https://github.com/Happyuky7/
+# Lasted Update Version (Plugin): 2.0.0-DEV-105
+
+# Lang ID | NOTE: Do not change this value.
+lang-id: fil_PH # Example: en_US, pt_BR, es_ES, jp_JP, etc.
+# Lang Version | NOTE: Do not change this value.
+lang-version: 2.0.0-DEV-105 # Internal check update this file.
+
+# Basic
+prefix: "&8[&aSepareWorldItems&8] &r" # Variable: %prefix%
+no-permission: "%prefix% &cWalang ka pang pahintulot para gawin iyan."
+
+reload: "%prefix% &aNa-reload na ang plugin."
+
+backups:
+  force-backup:
+    start: "%prefix% &aNagsisimula ang backup..."
+    end: "%prefix% &aNatapos na ang backup."
+    completed:
+      - ""
+      - "%prefix% &aNatapos na ang backup."
+      - "&aNa-save ang backup sa &f%backup_path%"
+      - ""
+    error:
+      - ""
+      - "%prefix% &cMay naganap na error habang nag-backup."
+      - "&cPaki-check ang console para sa karagdagang impormasyon."
+      - ""
+
+integration:
+  essentialsx:
+    vanish-reactivated: "%prefix% &aNa-activate ulit ang inyong EssentialsX vanish&a."
+    vanish-deactivated: "%prefix% &cNa-deactivate ang inyong EssentialsX vanish&c."

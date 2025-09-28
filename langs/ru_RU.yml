@@ -1,0 +1,37 @@
+# SepareWorldItems
+# Lang Translation: Russian
+# Original Author: https://github.com/Happyuky7/
+# Contributors:
+# - https://github.com/Happyuky7/
+# Lasted Update Version (Plugin): 2.0.0-DEV-105
+
+# Lang ID | NOTE: Do not change this value.
+lang-id: ru_RU # Example: en_US, pt_BR, es_ES, jp_JP, etc.
+# Lang Version | NOTE: Do not change this value.
+lang-version: 2.0.0-DEV-105 # Internal check update this file.
+
+# Basic
+prefix: "&8[&aSepareWorldItems&8] &r" # Variable: %prefix%
+no-permission: "%prefix% &cУ вас нет разрешения на это действие."
+
+reload: "%prefix% &aПлагин перезагружен."
+
+backups:
+  force-backup:
+    start: "%prefix% &aНачало резервного копирования..."
+    end: "%prefix% &aРезервное копирование завершено."
+    completed:
+      - ""
+      - "%prefix% &aРезервное копирование завершено."
+      - "&aРезервная копия сохранена в &f%backup_path%"
+      - ""
+    error:
+      - ""
+      - "%prefix% &cПроизошла ошибка при создании резервной копии."
+      - "&cПожалуйста, проверьте консоль для получения дополнительной информации."
+      - ""
+
+integration:
+  essentialsx:
+    vanish-reactivated: "%prefix% &aВаша невидимость EssentialsX была активирована&a."
+    vanish-deactivated: "%prefix% &cВаша невидимость EssentialsX была деактивирована&c."

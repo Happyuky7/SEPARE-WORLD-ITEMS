@@ -1,0 +1,37 @@
+# SepareWorldItems
+# Lang Translation: Korean
+# Original Author: https://github.com/Happyuky7/
+# Contributors:
+# - https://github.com/Happyuky7/
+# Lasted Update Version (Plugin): 2.0.0-DEV-105
+
+# Lang ID | NOTE: Do not change this value.
+lang-id: ko_KR # Example: en_US, pt_BR, es_ES, jp_JP, etc.
+# Lang Version | NOTE: Do not change this value.
+lang-version: 2.0.0-DEV-105 # Internal check update this file.
+
+# Basic
+prefix: "&8[&aSepareWorldItems&8] &r" # Variable: %prefix%
+no-permission: "%prefix% &c해당 작업에 대한 권한이 없습니다."
+
+reload: "%prefix% &a플러그인이 다시 로드되었습니다."
+
+backups:
+  force-backup:
+    start: "%prefix% &a백업을 시작합니다..."
+    end: "%prefix% &a백업이 완료되었습니다."
+    completed:
+      - ""
+      - "%prefix% &a백업이 완료되었습니다."
+      - "&a백업이 &f%backup_path%에 저장되었습니다"
+      - ""
+    error:
+      - ""
+      - "%prefix% &c백업 중에 오류가 발생했습니다."
+      - "&c자세한 정보는 콘솔을 확인해주세요."
+      - ""
+
+integration:
+  essentialsx:
+    vanish-reactivated: "%prefix% &aEssentialsX 투명화가 다시 활성화되었습니다&a."
+    vanish-deactivated: "%prefix% &cEssentialsX 투명화가 비활성화되었습니다&c."

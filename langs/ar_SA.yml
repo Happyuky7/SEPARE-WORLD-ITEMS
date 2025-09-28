@@ -1,0 +1,37 @@
+# SepareWorldItems
+# Lang Translation: Arabic
+# Original Author: https://github.com/Happyuky7/
+# Contributors:
+# - https://github.com/Happyuky7/
+# Lasted Update Version (Plugin): 2.0.0-DEV-105
+
+# Lang ID | NOTE: Do not change this value.
+lang-id: ar_SA # Example: en_US, pt_BR, es_ES, jp_JP, etc.
+# Lang Version | NOTE: Do not change this value.
+lang-version: 2.0.0-DEV-105 # Internal check update this file.
+
+# Basic
+prefix: "&8[&aSepareWorldItems&8] &r" # Variable: %prefix%
+no-permission: "%prefix% &cليس لديك إذن للقيام بذلك."
+
+reload: "%prefix% &aتم إعادة تحميل الإضافة."
+
+backups:
+  force-backup:
+    start: "%prefix% &aبدء النسخ الاحتياطي..."
+    end: "%prefix% &aاكتمل النسخ الاحتياطي."
+    completed:
+      - ""
+      - "%prefix% &aاكتمل النسخ الاحتياطي."
+      - "&aتم حفظ النسخة الاحتياطية في &f%backup_path%"
+      - ""
+    error:
+      - ""
+      - "%prefix% &cحدث خطأ أثناء النسخ الاحتياطي."
+      - "&cيرجى مراجعة وحدة التحكم للحصول على مزيد من المعلومات."
+      - ""
+
+integration:
+  essentialsx:
+    vanish-reactivated: "%prefix% &aتم إعادة تفعيل الاختفاء EssentialsX الخاص بك&a."
+    vanish-deactivated: "%prefix% &cتم إلغاء تفعيل الاختفاء EssentialsX الخاص بك&c."
