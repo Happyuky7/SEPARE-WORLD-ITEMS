@@ -81,21 +81,21 @@ public class WorldChangeEvent implements Listener {
                     }
                 }
             }
+        }
 
-            if (SepareWorldItems.getInstance().getConfig().contains("worlds." + fromWorld)
-                    && SepareWorldItems.getInstance().getConfig().contains("worlds." + toWorld)) {
+        if (SepareWorldItems.getInstance().getConfig().contains("worlds." + fromWorld)
+                && SepareWorldItems.getInstance().getConfig().contains("worlds." + toWorld)) {
 
-                String fromGroup = SepareWorldItems.getInstance().getConfig().getString("worlds." + fromWorld);
-                String toGroup = SepareWorldItems.getInstance().getConfig().getString("worlds." + toWorld);
+            String fromGroup = SepareWorldItems.getInstance().getConfig().getString("worlds." + fromWorld);
+            String toGroup = SepareWorldItems.getInstance().getConfig().getString("worlds." + toWorld);
 
-                PlayerDataManager.save(player, fromGroup);
+            PlayerDataManager.save(player, fromGroup);
 
-                if (!fromGroup.equals(toGroup)) {
-                    PlayerDataManager.load(player, toGroup);
-                } else {
-                    // PlayerDataManager.load(player, fromGroup);
-                    PlayerDataManager.reloadAllPlayerData(player, fromGroup);
-                }
+            if (!fromGroup.equals(toGroup)) {
+                PlayerDataManager.load(player, toGroup);
+            } else {
+                // PlayerDataManager.load(player, fromGroup);
+                PlayerDataManager.reloadAllPlayerData(player, fromGroup);
             }
         }
     }

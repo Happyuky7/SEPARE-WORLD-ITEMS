@@ -56,7 +56,7 @@ public final class SepareWorldItems extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor(" "));
 
         // Version config check
-        if (!getConfig().getString("config-version").equalsIgnoreCase("2.0.0-DEV-105")) {
+        if (!getConfig().getString("config-version").equalsIgnoreCase("2.0.0-DEV-105-TEST-2")) {
 
             Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&c[SepareWorldItems] Your config is outdated! Please delete your config.yml and restart the server!"));
             Bukkit.getPluginManager().disablePlugin(this);
@@ -95,6 +95,8 @@ public final class SepareWorldItems extends JavaPlugin {
             }
         }
 
+        Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor(" "));
+
         // Check for AuraSkills
         if (Bukkit.getPluginManager().getPlugin("AuraSkills") != null) {
             Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&a AuraSkills detected! Support available."));
@@ -106,9 +108,6 @@ public final class SepareWorldItems extends JavaPlugin {
                 getConfig().set("integrations.auraskills.enabled", false);
             }
         }
-
-
-
 
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor(" "));
 
