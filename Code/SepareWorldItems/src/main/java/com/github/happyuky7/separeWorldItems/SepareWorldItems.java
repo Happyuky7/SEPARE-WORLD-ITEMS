@@ -45,18 +45,35 @@ public final class SepareWorldItems extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor(" "));
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&a Server Version: &f" + Bukkit.getVersion()));
         
+
+        // Warning Version is early access
+        Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&e WARNING: &fThis version is in early access, "+
+        "if you find any bugs please report them on the GitHub page."));
+        Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&e RECOMMENDATION: &fMake a manual backup of the plugin folder " + 
+        "before replacing config.yml with the new version."));
+
+        Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor(" "));
+
+        // Notify if using Minecraft 1.21.9
+        if (Bukkit.getVersion().contains("1.21.9")) {
+            Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&a NOTE: &fYou are using Minecraft 1.21.9, " + 
+            "this version is in early access, if you find any bugs please report them on the GitHub page."));
+        }
+        Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor(" "));
+
         // Check server type
         if (isFolia()) {
             Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&a Server Type: &fFolia"));
         } else {
             Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&a Server Type: &fSpigot&7/&fPaper&7/&fBukkit&7/&fPurpur&7/&fOther"));
+            Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&a Server Type (Detected): &f" + Bukkit.getServer().getClass().getName()));
         }
 
 
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor(" "));
 
         // Version config check
-        if (!getConfig().getString("config-version").equalsIgnoreCase("2.0.0-DEV-105-TEST-2")) {
+        if (!getConfig().getString("config-version").equalsIgnoreCase("2.0.0-DEV-105-INITIAL-Support-1.21.9")) {
 
             Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&c[SepareWorldItems] Your config is outdated! Please delete your config.yml and restart the server!"));
             Bukkit.getPluginManager().disablePlugin(this);
