@@ -3,8 +3,7 @@ SEPARE WORLD ITEMS,  It's a echo plugin to be for your invention by world.
 
 ## Download
 
-[Donwload 2.0.0-DEV-104 (DEV-VERSION AND LASTED UPDATE | Folia Support) / Minecraft Version Support 1.8.8 - 1.21.X ](https://github.com/Happyuky7/SEPARE-WORLD-ITEMS/releases/)
- 
+[Donwload 2.0.0 (Folia Support) / Minecraft Version Support 1.8.8 - 1.21.X ](https://github.com/Happyuky7/SEPARE-WORLD-ITEMS/releases/)
 
 ---
 
@@ -26,7 +25,11 @@ I **recommend** you to make a **backup** and **check** the **changelist** of
 
 - `/swi` - Main Command.
 - `/swi reload` - Reload the plugin.
-- `/swi forcebackup` - Force a backup.
+- `/swi backup` - Create a backup.
+- `/swi backupforce` - Force a backup. (Require Confirm)
+- `/swi migrate <from> <to> [overwrite]` - Migrate storage backend. (Require Confirm)
+- `/swi confirm <code>` - Confirm a critical command.
+- `/swi cancel` - Cancel a pending confirmation.
 
 ---
 
@@ -48,7 +51,7 @@ $ git clone https://github.com/Happyuky7/SEPARE-WORLD-ITEMS.git
 Once downloaded in the git terminal use the following command:
 
 ```bash
-$ cd SEPARE-WORLD-ITEMS/Code/
+$ cd SEPARE-WORLD-ITEMS/Code/SepareWorldItems/
 ```
 
 Now inside the directory you execute the following maven command:
@@ -60,7 +63,7 @@ $ mvn clean install package
 Then you will find the compiled in the following folder
 
 ```bash
-SEPARE-WORLD-ITEMS/Code/target/
+SEPARE-WORLD-ITEMS/Code/SepareWorldItems/target/
 ```
 
 
@@ -95,9 +98,7 @@ RIGHTS RESERVED
 
 ## Special Thanks To
 
-![IntelliJ IDEA logo](https://resources.jetbrains.com/storage/products/company/brand/logos/IntelliJ_IDEA_icon.png?size=100px)
-![IntelliJ IDEA logo](https://resources.jetbrains.com/storage/products/company/brand/logos/IntelliJ_IDEA.png)
-![Azul Java logo](https://www.azul.com/wp-content/themes/azul/dist/img/logo.svg)
+![IntelliJ IDEA logo](https://resources.jetbrains.com/storage/products/company/brand/logos/IntelliJ_IDEA_icon.png?size=100px) ![IntelliJ IDEA logo](https://resources.jetbrains.com/storage/products/company/brand/logos/IntelliJ_IDEA.png) ![Azul Java logo](https://www.azul.com/wp-content/themes/azul/dist/img/logo.svg)
 
 [IntelliJ IDEA](https://www.jetbrains.com/idea/), Code editor for Java and other programming languages and programs.
 
