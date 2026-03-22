@@ -3,12 +3,12 @@
 # Original Author: https://github.com/Happyuky7/
 # Contributors:
 # - https://github.com/Happyuky7/
-# Lasted Update Version (Plugin): 2.0.0-DEV-105
+# Lasted Update Version (Plugin): 2.0.0
 
 # Lang ID | NOTE: Do not change this value.
 lang-id: ko_KR # Example: en_US, pt_BR, es_ES, jp_JP, etc.
 # Lang Version | NOTE: Do not change this value.
-lang-version: 2.0.0-DEV-105 # Internal check update this file.
+lang-version: 2.0.0 # Internal check update this file.
 
 # Basic
 prefix: "&8[&aSepareWorldItems&8] &r" # Variable: %prefix%
@@ -35,3 +35,15 @@ integration:
   essentialsx:
     vanish-reactivated: "%prefix% &aEssentialsX 투명화가 다시 활성화되었습니다&a."
     vanish-deactivated: "%prefix% &cEssentialsX 투명화가 비활성화되었습니다&c."
+
+commands:
+  confirm:
+    usage: "%prefix% &c사용법: /separeworlditems confirm <code>"
+    no-pending: "%prefix% &c대기 중인 작업이 없거나 코드가 만료/잘못되었습니다."
+    pending-invalid: "%prefix% &c대기 중인 작업이 올바르지 않습니다."
+  cancel:
+    success: "%prefix% &a대기 중인 확인을 취소했습니다."
+  critical:
+    header: "%prefix% &c이 명령어는 중요한 명령어입니다."
+    confirm-within: "%prefix% &e%seconds%초 안에 다음을 입력해 확인하세요: &f/separeworlditems confirm %code%"
+    migration-summary: "%prefix% &e마이그레이션: &f%from% -> %to% &7(overwrite=%overwrite%)"

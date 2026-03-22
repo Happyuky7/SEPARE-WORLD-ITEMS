@@ -5,9 +5,15 @@ import com.github.happyuky7.separeWorldItems.files.FileManager;
 import com.github.happyuky7.separeWorldItems.listeners.MoveEvent;
 import com.github.happyuky7.separeWorldItems.listeners.WorldChangeEvent;
 import com.github.happyuky7.separeWorldItems.managers.BackupManager;
+import com.github.happyuky7.separeWorldItems.managers.InventoryChangeLogs;
 import com.github.happyuky7.separeWorldItems.utils.ConvertTime;
 import com.github.happyuky7.separeWorldItems.utils.DownloadTranslations;
 import com.github.happyuky7.separeWorldItems.utils.MessageColors;
+import com.github.happyuky7.separeWorldItems.utils.ConfigValidator;
+import com.github.happyuky7.separeWorldItems.utils.LegacyUpgradeBackup;
+import com.github.happyuky7.separeWorldItems.storage.PlayerDataStore;
+import com.github.happyuky7.separeWorldItems.storage.StorageManager;
+import com.github.happyuky7.separeWorldItems.storage.StorageType;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -27,6 +33,8 @@ public final class SepareWorldItems extends JavaPlugin {
 
     private BackupManager backupManager;
 
+    private PlayerDataStore playerDataStore;
+
     @Override
     public void onEnable() {
         // Plugin startup logic
@@ -35,8 +43,38 @@ public final class SepareWorldItems extends JavaPlugin {
 
         config = new FileManager(this, "config");
 
+        // Safety backup for very old installs (<= 2.0.0-DEV-104)
+        LegacyUpgradeBackup.maybeCreateLegacyBackup(this);
+
 
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor(" "));
+        Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor(" "));
+
+        Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&a SepareWorldItems &7- &aStarting up..."));
+
+        Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor(" "));
+        Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor(" "));
+
+
+
+
+        // Validate configuration (warnings only)
+        try {
+            ConfigValidator.validate(getConfig(), getLogger());
+        } catch (Throwable t) {
+            getLogger().warning("[Config] Validation failed: " + t.getMessage());
+        }
+
+        // Initialize storage backend (YAML by default)
+        try {
+            playerDataStore = StorageManager.createAndMaybeMigrate(this);
+        } catch (Throwable t) {
+            getLogger().warning("[Storage] Failed to initialize storage, falling back to YAML files: " + t.getMessage());
+            playerDataStore = new com.github.happyuky7.separeWorldItems.storage.backends.YamlFilePlayerDataStore(this);
+        }
+
+        // Change-log retention (best-effort). SQL + YAML purge; Mongo/Redis handled via TTL.
+        InventoryChangeLogs.startRetentionTask(this, playerDataStore);
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&a SepareWorldItems &7- &aEnabled!"));
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor(" "));
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&a Author: &f" + getDescription().getAuthors().get(0)));
@@ -53,12 +91,6 @@ public final class SepareWorldItems extends JavaPlugin {
         "before replacing config.yml with the new version."));
 
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor(" "));
-
-        // Notify if using Minecraft 1.21.9
-        if (Bukkit.getVersion().contains("1.21.9")) {
-            Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&a NOTE: &fYou are using Minecraft 1.21.9, " + 
-            "this version is in early access, if you find any bugs please report them on the GitHub page."));
-        }
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor(" "));
 
         // Check server type
@@ -73,13 +105,35 @@ public final class SepareWorldItems extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor(" "));
 
         // Version config check
-        if (!getConfig().getString("config-version").equalsIgnoreCase("2.0.0-DEV-105-INITIAL-Support-1.21.9")) {
+        if (!getConfig().getString("config-version").equalsIgnoreCase("2.0.0")) {
 
             Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&c[SepareWorldItems] Your config is outdated! Please delete your config.yml and restart the server!"));
             Bukkit.getPluginManager().disablePlugin(this);
 
         }
 
+        Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor(" "));
+        Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor(" "));
+
+        Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor(
+            "&a Storage Backend: &f" + getConfig().getString("storage.type", "YAML")
+        ));
+
+        // Explicit warnings for non-file backends
+        try {
+            StorageType storageType = StorageType.fromConfig(getConfig().getString("storage.type", "YAML"));
+            if (storageType != StorageType.YAML && storageType != StorageType.SQLITE) {
+                Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&e[SepareWorldItems] WARNING: &fMYSQL/MARIADB/MONGODB/REDIS backends are still &eBETA&f."));
+                Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&e[SepareWorldItems] WARNING: &fThey may have bugs and could corrupt player data. Make backups."));
+
+                if (getConfig().getBoolean("integrations.worldguard.enabled", false)) {
+                    Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&c[SepareWorldItems] IMPORTANT: &fUsing BETA DB backends with &cWorldGuard regions&f is experimental."));
+                    Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&c[SepareWorldItems] IMPORTANT: &fIf you only use world-groups (no regions), corruption is less likely but still possible."));
+                }
+            }
+        } catch (Throwable ignored) {
+        }
+        Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor(" "));
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor(" "));
 
 
@@ -152,7 +206,7 @@ public final class SepareWorldItems extends JavaPlugin {
         }
 
         // Check if the language file version is lasted
-        if (!checkLangVersion("2.0.0-DEV-105")) {
+        if (!checkLangVersion("2.0.0")) {
             Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&c[SepareWorldItems] The language file with the ID '" + getConfig().getString("settings.langs.lang") + "' is outdated!")); 
             Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&c[SepareWorldItems] REQUIERED UPDATE!"));
         }
@@ -166,9 +220,11 @@ public final class SepareWorldItems extends JavaPlugin {
         );
 
         // Listeners
+        // WorldChangeEvent is the default world-group switcher.
+        // If WorldGuard is enabled, MoveEvent adds region-based switching on top (only when a configured region applies).
         getServer().getPluginManager().registerEvents(new WorldChangeEvent(), this);
-        
-        // Register WorldGuard integration if available
+
+        // Register WorldGuard integration if enabled
         if (getConfig().getBoolean("integrations.worldguard.enabled")) {
             getServer().getPluginManager().registerEvents(new MoveEvent(), this);
             getLogger().info("WorldGuard integration enabled - region-based inventory switching activated!");
@@ -186,6 +242,13 @@ public final class SepareWorldItems extends JavaPlugin {
         // Plugin shutdown logic
 
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor(" "));
+
+        try {
+            if (playerDataStore != null) {
+                playerDataStore.close();
+            }
+        } catch (Throwable ignored) {
+        }
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&c SepareWorldItems &7- &cDisabled"));
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor(" "));
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&a Author: &f" + getDescription().getAuthors().get(0)));
@@ -215,6 +278,10 @@ public final class SepareWorldItems extends JavaPlugin {
         return langs;
     }
 
+    public PlayerDataStore getPlayerDataStore() {
+        return playerDataStore;
+    }
+
 
 
     /**
@@ -223,7 +290,12 @@ public final class SepareWorldItems extends JavaPlugin {
     private void configureBackups(Boolean backupsEnabled, Integer backupInterval, String intervaltype, Integer maxBackups) {
 
         // Static configuration for backups
-        File userDataFolder = new File(getDataFolder(), "groups"); // Folder containing user data
+        // Backup the whole plugin folder so it includes:
+        // - groups/
+        // - worldguard/groups/
+        // - sqlite file (if used)
+        // Excludes backups/ folders to avoid recursion.
+        File userDataFolder = getDataFolder(); // Folder containing plugin data
         File backupFolder = new File(getDataFolder(), "backups"); // Folder for storing backups
         //int maxBackups = 5; // Maximum number of backups to retain
         //long backupInterval = 86400000L; // Backup interval in milliseconds (1 day)

@@ -3,12 +3,12 @@
 # Original Author: https://github.com/Happyuky7/
 # Contributors:
 # - https://github.com/Happyuky7/
-# Lasted Update Version (Plugin): 2.0.0-DEV-105
+# Lasted Update Version (Plugin): 2.0.0
 
 # Lang ID | NOTE: Do not change this value.
 lang-id: zh_CN # Example: en_US, pt_BR, es_ES, jp_JP, etc.
 # Lang Version | NOTE: Do not change this value.
-lang-version: 2.0.0-DEV-105 # Internal check update this file.
+lang-version: 2.0.0 # Internal check update this file.
 
 # Basic
 prefix: "&8[&aSepareWorldItems&8] &r" # Variable: %prefix%
@@ -35,3 +35,15 @@ integration:
   essentialsx:
     vanish-reactivated: "%prefix% &a你的 EssentialsX 隐身已重新激活&a。"
     vanish-deactivated: "%prefix% &c你的 EssentialsX 隐身已停用&c。"
+
+commands:
+  confirm:
+    usage: "%prefix% &c用法: /separeworlditems confirm <code>"
+    no-pending: "%prefix% &c没有待确认的操作，或验证码已过期/无效。"
+    pending-invalid: "%prefix% &c待确认的操作无效。"
+  cancel:
+    success: "%prefix% &a已取消待确认操作。"
+  critical:
+    header: "%prefix% &c这是一个关键命令。"
+    confirm-within: "%prefix% &e请在 %seconds% 秒内输入: &f/separeworlditems confirm %code%"
+    migration-summary: "%prefix% &e迁移: &f%from% -> %to% &7(overwrite=%overwrite%)"

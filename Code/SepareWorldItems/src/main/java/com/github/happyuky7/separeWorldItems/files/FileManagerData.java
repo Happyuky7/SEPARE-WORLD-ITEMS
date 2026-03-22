@@ -16,6 +16,10 @@ public class FileManagerData {
 
     public static void saveConfiguration(File file, FileConfiguration configuration) {
         try {
+            File parent = file.getParentFile();
+            if (parent != null && !parent.exists()) {
+                parent.mkdirs();
+            }
             configuration.save(file);
         } catch (IOException e) {
             Logger.getLogger(FileManagerData.class.getName()).log(Level.SEVERE,

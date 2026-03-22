@@ -3,12 +3,12 @@
 # Original Author: https://github.com/Happyuky7/
 # Contributors:
 # - https://github.com/Happyuky7/
-# Lasted Update Version (Plugin): 2.0.0-DEV-105
+# Lasted Update Version (Plugin): 2.0.0
 
 # Lang ID | NOTE: Do not change this value.
 lang-id: jp_JP # Example: en_US, pt_BR, es_ES, jp_JP, etc.
 # Lang Version | NOTE: Do not change this value.
-lang-version: 2.0.0-DEV-105 # Internal check update this file.
+lang-version: 2.0.0 # Internal check update this file.
 
 # Basic
 prefix: "&8[&aSepareWorldItems&8] &r" # Variable: %prefix%
@@ -35,3 +35,15 @@ integration:
   essentialsx:
     vanish-reactivated: "%prefix% &aEssentialsXの透明化が再有効化されました&a。"
     vanish-deactivated: "%prefix% &cEssentialsXの透明化が無効化されました&c。"
+
+commands:
+  confirm:
+    usage: "%prefix% &c使い方: /separeworlditems confirm <code>"
+    no-pending: "%prefix% &c保留中の操作がないか、コードが期限切れ/無効です。"
+    pending-invalid: "%prefix% &c保留中の操作が無効です。"
+  cancel:
+    success: "%prefix% &a保留中の確認をキャンセルしました。"
+  critical:
+    header: "%prefix% &cこれは重要なコマンドです。"
+    confirm-within: "%prefix% &e%seconds%秒以内に次を実行して確認してください: &f/separeworlditems confirm %code%"
+    migration-summary: "%prefix% &e移行: &f%from% -> %to% &7(overwrite=%overwrite%)"

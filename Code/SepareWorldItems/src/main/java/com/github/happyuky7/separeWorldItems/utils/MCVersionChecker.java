@@ -2,41 +2,116 @@ package com.github.happyuky7.separeWorldItems.utils;
 
 import org.bukkit.Bukkit;
 
-import java.util.Arrays;
-import java.util.List;
-
 public class MCVersionChecker {
 
+    /**
+     * Small semantic version (major.minor.patch) parsed from Bukkit.
+     */
+    public record SemVer(int major, int minor, int patch) implements Comparable<SemVer> {
+        @Override
+        public int compareTo(SemVer other) {
+            if (major != other.major) return Integer.compare(major, other.major);
+            if (minor != other.minor) return Integer.compare(minor, other.minor);
+            return Integer.compare(patch, other.patch);
+        }
+    }
+
+    /**
+     * Best-effort server Minecraft version.
+     * Prefers Bukkit.getMinecraftVersion() (e.g. "1.21.1") and falls back to parsing Bukkit.getBukkitVersion()/getVersion().
+     */
+    public static SemVer getServerMinecraftVersion() {
+        // Paper/Spigot provides this in modern versions.
+        String mc = null;
+        try {
+            mc = Bukkit.getMinecraftVersion();
+        } catch (Throwable ignored) {
+            // ignore
+        }
+
+        if (mc == null || mc.isBlank()) {
+            try {
+                mc = Bukkit.getBukkitVersion();
+            } catch (Throwable ignored) {
+                // ignore
+            }
+        }
+
+        if (mc == null || mc.isBlank()) {
+            mc = Bukkit.getVersion();
+        }
+
+        return parseSemVer(mc);
+    }
+
+    public static boolean isAtLeast(int major, int minor, int patch) {
+        return getServerMinecraftVersion().compareTo(new SemVer(major, minor, patch)) >= 0;
+    }
+
+    public static boolean isAtLeast(int major, int minor) {
+        return isAtLeast(major, minor, 0);
+    }
+
     public static boolean isOffHandSupported() {
-        List<String> versionsWithOffHand = Arrays.asList(
-                "1.9", "1.9.1", "1.9.2", "1.9.3", "1.9.4", "1.10", "1.10.1", "1.10.2",
-                "1.11", "1.11.1", "1.11.2", "1.12", "1.12.1", "1.12.2", "1.13", "1.13.1",
-                "1.13.2", "1.14", "1.14.1", "1.14.2", "1.14.3", "1.14.4", "1.15", "1.15.1",
-                "1.15.2", "1.16", "1.16.1", "1.16.2", "1.16.3", "1.16.4", "1.16.5", "1.17",
-                "1.17.1", "1.18", "1.18.1", "1.18.2", "1.19", "1.19.1", "1.19.2", "1.19.3",
-                "1.19.4", "1.20", "1.20.1", "1.20.2", "1.20.3", "1.20.4", "1.20.5", "1.20.6",
-                "1.21", "1.21.1", "1.21.2", "1.21.3", "1.21.4", "1.21.5", "1.21.6", "1.21.7",
-                "1.21.8", "1.21.9", "1.21.10", "1.21.11", "1.21.12"
-        );
-        return isVersionInRange(versionsWithOffHand);
+        // Offhand exists since 1.9
+        return isAtLeast(1, 9);
     }
 
     public static boolean isVersion21OrAbove() {
-        List<String> versionsWithNewAttributes = Arrays.asList(
-                "1.21", "1.21.1", "1.21.2", "1.21.3", "1.21.4", "1.21.5", "1.21.6", "1.21.7",
-                "1.21.8", "1.21.9", "1.21.10", "1.21.11", "1.21.12"
-        );
-        return isVersionInRange(versionsWithNewAttributes);
+        return isAtLeast(1, 21);
     }
 
-    private static boolean isVersionInRange(List<String> versions) {
-        String version = Bukkit.getVersion();
-        for (String ver : versions) {
-            if (version.contains(ver)) {
-                return true;
+    private static SemVer parseSemVer(String input) {
+        if (input == null) {
+            return new SemVer(0, 0, 0);
+        }
+
+        // Extract first occurrence of something like 1.21 or 1.21.1
+        String normalized = input;
+        int start = -1;
+        for (int i = 0; i < normalized.length(); i++) {
+            if (Character.isDigit(normalized.charAt(i))) {
+                start = i;
+                break;
             }
         }
-        return false;
+        if (start == -1) {
+            return new SemVer(0, 0, 0);
+        }
+
+        String tail = normalized.substring(start);
+        StringBuilder ver = new StringBuilder();
+        for (int i = 0; i < tail.length(); i++) {
+            char c = tail.charAt(i);
+            if (Character.isDigit(c) || c == '.') {
+                ver.append(c);
+            } else {
+                break;
+            }
+        }
+
+        String extracted = ver.toString();
+        String[] parts = extracted.split("\\.");
+        int major = parts.length > 0 ? safeParseInt(parts[0]) : 0;
+        int minor = parts.length > 1 ? safeParseInt(parts[1]) : 0;
+        int patch = parts.length > 2 ? safeParseInt(parts[2]) : 0;
+
+        // Newer MC version scheme may omit the leading "1." (e.g. "26.1").
+        // Normalize 26.1 -> 1.26.1 so legacy comparisons keep working.
+        boolean startsWithLegacyPrefix = extracted.startsWith("1.");
+        if (!startsWithLegacyPrefix && parts.length == 2 && major >= 20) {
+            return new SemVer(1, major, minor);
+        }
+
+        return new SemVer(major, minor, patch);
+    }
+
+    private static int safeParseInt(String s) {
+        try {
+            return Integer.parseInt(s);
+        } catch (Exception ignored) {
+            return 0;
+        }
     }
 
 }

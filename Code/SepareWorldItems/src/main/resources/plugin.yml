@@ -6,8 +6,9 @@ authors: [ Happyuky7 ]
 description: SepareWorldItems
 website: https://github.com/Happyuky7
 folia-supported: true
-soft-depend: [ PlaceholderAPI, EssentialsX, WorldGuard, Multiverse-Core, AuraSkills ]
+soft-depend: [ PlaceholderAPI, EssentialsX, WorldGuard, Multiverse-Core, AuraSkills, ViaVersion ]
 commands:
   separeworlditems:
     description: SepareWorldItems command
     usage: /<command>
+    aliases: [ swi, separeitems]

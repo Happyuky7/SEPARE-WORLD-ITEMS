@@ -1,9 +1,16 @@
 package com.github.happyuky7.separeWorldItems.managers;
 
 import com.github.happyuky7.separeWorldItems.SepareWorldItems;
+import com.github.happyuky7.separeWorldItems.storage.PlayerDataScope;
+import com.github.happyuky7.separeWorldItems.storage.PlayerDataStore;
+import com.github.happyuky7.separeWorldItems.storage.StorageType;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.logging.Level;
@@ -81,6 +88,12 @@ public class BackupManager {
             return;
         }
 
+        File snapshotDir = null;
+        boolean includeRemoteSnapshot = shouldIncludeRemoteSnapshot(plugin, false);
+        if (includeRemoteSnapshot) {
+            snapshotDir = createRemoteSnapshotExport(plugin, null, "auto");
+        }
+
         String timestamp = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date());
         File backupFile = new File(backupFolder, sourceFolder.getName() + "_" + timestamp + ".zip");
 
@@ -100,6 +113,10 @@ public class BackupManager {
             }
         } catch (IOException e) {
             plugin.getLogger().log(Level.SEVERE, "Failed to create backup for: " + sourceFolder.getName(), e);
+        } finally {
+            if (snapshotDir != null) {
+                deleteRecursively(snapshotDir.toPath());
+            }
         }
     }
 
@@ -111,8 +128,14 @@ public class BackupManager {
      * @param zos the ZIP output stream
      * @throws IOException if an I/O error occurs
      */
-    private static void zipDirectory(File folder, String basePath, ZipOutputStream zos) throws IOException {
+    public static void zipDirectory(File folder, String basePath, ZipOutputStream zos) throws IOException {
         for (File file : Objects.requireNonNull(folder.listFiles())) {
+            if (file.isDirectory()) {
+                String name = file.getName();
+                if ("backups".equalsIgnoreCase(name) || "forceBackups".equalsIgnoreCase(name)) {
+                    continue;
+                }
+            }
             String entryName = basePath + File.separator + file.getName();
             if (file.isDirectory()) {
                 zipDirectory(file, entryName, zos);
@@ -152,6 +175,12 @@ public class BackupManager {
         }
 
         // Create the backup using the BackupManager's createBackup method
+        File snapshotDir = null;
+        boolean includeRemoteSnapshot = shouldIncludeRemoteSnapshot(plugin, true);
+        if (includeRemoteSnapshot) {
+            snapshotDir = createRemoteSnapshotExport(plugin, null, "force");
+        }
+
         String timestamp = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date());
         File backupFile = new File(forceBackupFolder, sourceFolder.getName() + "_forceBackup_" + timestamp + ".zip");
 
@@ -162,6 +191,56 @@ public class BackupManager {
             forebackupname = backupFile.getName();
         } catch (IOException e) {
             plugin.getLogger().log(Level.SEVERE, "Failed to create force backup for: " + sourceFolder.getName(), e);
+        } finally {
+            if (snapshotDir != null) {
+                deleteRecursively(snapshotDir.toPath());
+            }
+        }
+    }
+
+    /**
+     * Creates a one-time backup zip in the given destination folder.
+     * Intended for migrations / upgrade safety backups.
+     */
+    public static @Nullable File createOneTimeBackup(JavaPlugin plugin, File sourceFolder, File destinationFolder, String fileNamePrefix, boolean includeRemoteSnapshot) {
+        return createOneTimeBackup(plugin, sourceFolder, destinationFolder, fileNamePrefix, includeRemoteSnapshot, null, null);
+    }
+
+    public static @Nullable File createOneTimeBackup(JavaPlugin plugin,
+                                                    File sourceFolder,
+                                                    File destinationFolder,
+                                                    String fileNamePrefix,
+                                                    boolean includeRemoteSnapshot,
+                                                    @Nullable PlayerDataStore snapshotStore,
+                                                    @Nullable String snapshotTag) {
+        if (!sourceFolder.exists() || !sourceFolder.isDirectory()) {
+            return null;
+        }
+
+        if (!destinationFolder.exists() && !destinationFolder.mkdirs()) {
+            plugin.getLogger().warning("Failed to create backup destination folder: " + destinationFolder.getAbsolutePath());
+            return null;
+        }
+
+        File snapshotDir = null;
+        if (includeRemoteSnapshot) {
+            snapshotDir = createRemoteSnapshotExport(plugin, snapshotStore, snapshotTag);
+        }
+
+        String timestamp = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date());
+        File backupFile = new File(destinationFolder, fileNamePrefix + "_" + timestamp + ".zip");
+
+        try (FileOutputStream fos = new FileOutputStream(backupFile);
+             ZipOutputStream zos = new ZipOutputStream(fos)) {
+            zipDirectory(sourceFolder, sourceFolder.getName(), zos);
+            return backupFile;
+        } catch (IOException e) {
+            plugin.getLogger().log(Level.SEVERE, "Failed to create one-time backup for: " + sourceFolder.getName(), e);
+            return null;
+        } finally {
+            if (snapshotDir != null) {
+                deleteRecursively(snapshotDir.toPath());
+            }
         }
     }
 
@@ -177,6 +256,112 @@ public class BackupManager {
         } else {
             plugin.getServer().getScheduler().runTaskTimerAsynchronously(plugin, () -> createBackup(sourceFolder), 0L,
                     backupInterval / 50);
+        }
+    }
+
+    private static boolean shouldIncludeRemoteSnapshot(JavaPlugin plugin, boolean force) {
+        try {
+            StorageType type = StorageType.fromConfig(plugin.getConfig().getString("storage.type", "YAML"));
+            if (type == StorageType.YAML || type == StorageType.SQLITE) {
+                return false;
+            }
+            if (force) {
+                return true;
+            }
+            return plugin.getConfig().getBoolean("settings.backups.remote-snapshot.enabled", false);
+        } catch (Throwable ignored) {
+            return false;
+        }
+    }
+
+    /**
+     * Creates a local YAML export folder containing the remote backend data.
+     * The folder is created inside the plugin data folder so it will be included in the zip.
+     */
+    private static @Nullable File createRemoteSnapshotExport(JavaPlugin plugin, @Nullable PlayerDataStore store, @Nullable String snapshotTag) {
+        if (!(plugin instanceof SepareWorldItems swi)) {
+            return null;
+        }
+
+        PlayerDataStore effectiveStore = store != null ? store : swi.getPlayerDataStore();
+        if (effectiveStore == null) {
+            return null;
+        }
+
+        String tag = (snapshotTag == null || snapshotTag.isBlank()) ? "current" : sanitizeFileComponent(snapshotTag);
+        File exportRoot = new File(swi.getDataFolder(), "_remoteSnapshotExport_" + tag);
+        // ensure clean
+        if (exportRoot.exists()) {
+            deleteRecursively(exportRoot.toPath());
+        }
+        if (!exportRoot.mkdirs()) {
+            return null;
+        }
+
+        try {
+            exportScopeToYaml(swi, effectiveStore, exportRoot, PlayerDataScope.WORLD_GROUP);
+            exportScopeToYaml(swi, effectiveStore, exportRoot, PlayerDataScope.WORLDGUARD_GROUP);
+            return exportRoot;
+        } catch (UnsupportedOperationException uoe) {
+            swi.getLogger().warning("[Backups] Remote snapshot not supported by current backend: " + uoe.getMessage());
+            deleteRecursively(exportRoot.toPath());
+            return null;
+        } catch (Throwable t) {
+            swi.getLogger().warning("[Backups] Remote snapshot export failed: " + t.getMessage());
+            deleteRecursively(exportRoot.toPath());
+            return null;
+        }
+    }
+
+    private static void exportScopeToYaml(SepareWorldItems plugin, PlayerDataStore store, File exportRoot, PlayerDataScope scope) {
+        store.forEachEntry(scope, (groupName, playerUuid, playerName) -> {
+            try {
+                String safeName = sanitizeFileComponent(playerName != null && !playerName.isBlank() ? playerName : playerUuid.toString());
+
+                File file = switch (scope) {
+                    case WORLD_GROUP -> new File(exportRoot, "groups" + File.separator + groupName + File.separator + safeName + "-" + playerUuid + ".yml");
+                    case WORLDGUARD_GROUP -> new File(exportRoot, "worldguard" + File.separator + "groups" + File.separator + groupName + File.separator + safeName + "-" + playerUuid + ".yml");
+                };
+
+                File parent = file.getParentFile();
+                if (parent != null && !parent.exists()) {
+                    parent.mkdirs();
+                }
+
+                var cfg = store.load(scope, groupName, playerUuid);
+                cfg.save(file);
+            } catch (Throwable ignored) {
+                // best-effort snapshot
+            }
+        });
+    }
+
+    private static String sanitizeFileComponent(String input) {
+        if (input == null || input.isBlank()) {
+            return "unknown";
+        }
+        // avoid weird filesystem characters
+        return input.replaceAll("[^a-zA-Z0-9_\\-\\.]", "_");
+    }
+
+    private static void deleteRecursively(Path root) {
+        if (root == null) {
+            return;
+        }
+        try {
+            if (!Files.exists(root)) {
+                return;
+            }
+            // delete children first
+            try (var walk = Files.walk(root)) {
+                walk.sorted(Comparator.reverseOrder()).forEach(p -> {
+                    try {
+                        Files.deleteIfExists(p);
+                    } catch (IOException ignored) {
+                    }
+                });
+            }
+        } catch (IOException ignored) {
         }
     }
 }

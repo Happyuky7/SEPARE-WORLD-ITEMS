@@ -1,5 +1,8 @@
 
-config-version: 2.0.0-DEV-105-INITIAL-Support-1.21.9
+# SeparateWorldItems Configuration File
+
+# NO Change this value.
+config-version: 2.0.0
 
 # Settings for the plugin.
 settings:
@@ -48,9 +51,51 @@ settings:
     interval-type: d
 
     # Maximum number of backups to keep.
-    # Default: 5
-    # NOTE: After all 5 are completed, the last of these will be removed so that a new one can be added.
-    max-backups: 5
+    # Default: 25
+    # NOTE: After all 25 are completed, the last of these will be removed so that a new one can be added.
+    max-backups: 25
+
+    # Remote snapshot (for MYSQL/MARIADB/MONGODB/REDIS).
+    # When enabled, the plugin will export a local YAML snapshot into the backup zip.
+    # NOTE: This can be heavy on large servers.
+    remote-snapshot:
+      enabled: false
+
+  # Change logs (inventory + all saved player data).
+  # For DB backends (SQL/Mongo/Redis) the plugin can record a snapshot on every save.
+  # Default retention is guaranteed to be at least 30 days.
+  # NOTE: This can grow fast on large servers.
+  change-logs:
+    # Enable change logs for DB backends.
+    # Default: true
+    enabled: true
+
+    # Keep logs for at least this many days.
+    # Default: 30 (1 month)
+    # NOTE: The plugin will enforce a minimum of 30 days.
+    retention-days: 30
+
+    # Store the full YAML payload for each snapshot.
+    # If false, logs may be empty (reserved for future hashing).
+    # Default: true
+    include-payload: true
+
+    # If true, the log payload captures the player's current full state (inventory + everything supported)
+    # even if you disabled some save toggles under settings.options.saves.*
+    # Default: true
+    capture-all-data: true
+
+    # YAML/file-based logs (optional).
+    # Recommended only for small servers (example: <= 50 players) due to disk usage.
+    yaml:
+      enabled: false
+      recommended-max-players: 50
+
+    # SQLite confirmation.
+    # SQLite logs can grow the local .sqlite file quickly.
+    # To enable change-logs on SQLITE you must explicitly confirm.
+    sqlite:
+      confirmed: false
 
   # Options for the plugin.
   options:
@@ -87,6 +132,16 @@ settings:
       off-hand: true
       health: true
 
+    # Optional per-group overrides for what is saved.
+    # If a key exists here, it overrides the global saves.* for that group.
+    # Example:
+    # saves-per-group:
+    #   default:
+    #     inventory: true
+    #   otherworldgroup:
+    #     inventory: false
+    saves-per-group: {}
+
 
   health-options:
     # TYPES:
@@ -118,6 +173,73 @@ integrations:
     # Default: false
     # Required: Essentials plugin.
     enabled: false
+
+
+# Storage backend
+# Default: YAML (same behavior as before)
+# TYPES: YAML, SQLITE, MYSQL, MARIADB, MONGODB, REDIS
+#
+# WARNING (IMPORTANT): MYSQL/MARIADB/MONGODB/REDIS are still BETA.
+# They may contain bugs and could corrupt player data.
+# Make backups before using them.
+# If you use WorldGuard regions, the risk is higher than world-only switching.
+storage:
+  type: YAML
+  # (LEGACY) If true and type != YAML, imports existing YAML files into the selected backend on startup.
+  # NOTE: This does NOT delete the YAML files.
+  # NOTE 2: This is basically the same as enabling migration with "from: YAML".
+  migrate-from-yaml: false
+
+  # Any -> Any migration (runs on startup).
+  # Example: migrate from REDIS to MYSQL
+  # storage:
+  #   type: MYSQL
+  #   migration:
+  #     enabled: true
+  #     from: REDIS
+  #     overwrite: false
+  migration:
+    enabled: false
+    from: YAML
+    # If false, only writes records that do not exist in target.
+    overwrite: false
+
+  sqlite:
+    # File name inside the plugin folder.
+    file: "separeworlditems.sqlite"
+
+  sql:
+    # For MYSQL/MARIADB
+    # You can configure EITHER a full JDBC URL OR a host/port/database.
+    #
+    # Option 1) Full JDBC URL (advanced)
+    # Example: jdbc:mysql://localhost:3306/separeworlditems?useSSL=false
+    jdbc-url: ""
+
+    # Option 2) Host + Port + Database (easy)
+    # If jdbc-url is empty and host+database are set, the plugin will build the JDBC URL automatically.
+    host: ""
+    port: 3306
+    database: "separeworlditems"
+
+    # Optional JDBC parameters appended to the URL (no need to include '?')
+    # Example: "useSSL=false&autoReconnect=true"
+    parameters: ""
+    username: ""
+    password: ""
+    pool:
+      maxPoolSize: 10
+
+  mongodb:
+    uri: "mongodb://localhost:27017"
+    database: "separeworlditems"
+    collection: "player_data"
+    # Optional collection for change logs
+    logs-collection: "change_logs"
+
+  redis:
+    uri: "redis://localhost:6379"
+    key-prefix: "swi"
   
 
 # Groups:
@@ -158,9 +280,17 @@ worldguard-regions:
   - otherregiongroup
 
   # Regions and their groups.
-  # Format --> region: group
+  # Supported formats:
+  # 1) Global (legacy): affects all worlds
+  #    regions:
+  #      spawn: defaultregiongroup
+  # 2) Per-world (recommended):
+  #    regions:
+  #      world:
+  #        spawn: defaultregiongroup
+  #      world_nether:
+  #        spawn: otherregiongroup
   # Regions is case sensitive.
-  # INFO: If the same region is in another world it will also affect.
   regions:
     spawn: defaultregiongroup
     pvp: otherregiongroup

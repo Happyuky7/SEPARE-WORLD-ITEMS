@@ -3,12 +3,12 @@
 # Original Author: https://github.com/Happyuky7/
 # Contributors:
 # - https://github.com/Happyuky7/
-# Lasted Update Version (Plugin): 2.0.0-DEV-105
+# Lasted Update Version (Plugin): 2.0.0
 
 # Lang ID | NOTE: Do not change this value.
 lang-id: de_DE # Example: en_US, pt_BR, es_ES, jp_JP, etc.
 # Lang Version | NOTE: Do not change this value.
-lang-version: 2.0.0-DEV-105 # Internal check update this file.
+lang-version: 2.0.0 # Internal check update this file.
 
 # Basic
 prefix: "&8[&aSepareWorldItems&8] &r" # Variable: %prefix%
@@ -35,3 +35,15 @@ integration:
   essentialsx:
     vanish-reactivated: "%prefix% &aDeine EssentialsX Unsichtbarkeit wurde reaktiviert&a."
     vanish-deactivated: "%prefix% &cDeine EssentialsX Unsichtbarkeit wurde deaktiviert&c."
+
+commands:
+  confirm:
+    usage: "%prefix% &cVerwendung: /separeworlditems confirm <code>"
+    no-pending: "%prefix% &cKeine ausstehende Aktion gefunden oder Code abgelaufen/ungültig."
+    pending-invalid: "%prefix% &cAusstehende Aktion ist ungültig."
+  cancel:
+    success: "%prefix% &aAusstehende Bestätigung abgebrochen."
+  critical:
+    header: "%prefix% &cDies ist ein kritischer Befehl."
+    confirm-within: "%prefix% &eBestätige innerhalb von %seconds%s mit: &f/separeworlditems confirm %code%"
+    migration-summary: "%prefix% &eMigration: &f%from% -> %to% &7(overwrite=%overwrite%)"
