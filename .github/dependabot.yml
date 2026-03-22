@@ -9,8 +9,3 @@ updates:
     directory: "/Code/SepareWorldItems" # Location of package manifests
     schedule:
       interval: "weekly"
-
-  - package-ecosystem: "maven"
-    directory: "/Legacy/CodeLegacy"
-    schedule:
-      interval: "weekly"
