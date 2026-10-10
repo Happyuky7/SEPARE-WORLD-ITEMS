@@ -1,0 +1,261 @@
+# ============================================================================================
+# SepareWorldItems v3 - plugin configuration (Spigot, Paper, Purpur, Folia)
+# Wiki / support: https://github.com/Happyuky7/SepareWorldItems
+# ============================================================================================
+#
+# How it works: every world belongs to a GROUP. Each player has one independent set of data
+# (inventory, armor, ender chest, XP, health, effects...) per group. When a player moves to a world
+# of another group, the current data is saved to the old group and the data of the new group is loaded.
+#
+# Make a backup of plugins/SepareWorldItems before changing settings that affect saved data.
+
+# Format version of this file. Do not change it: the plugin upgrades 2.0.0 files automatically.
+config-version: 3.0.0
+
+
+# ============================================================================================
+#  GENERAL
+# ============================================================================================
+settings:
+
+  # Extra log output for troubleshooting.
+  debug: false
+
+  langs:
+    # Download / update the language files from GitHub on startup (recommended).
+    autoDownload: true
+
+    # Language file in plugins/SepareWorldItems/langs/ (en_US, es_ES, de_DE, fr_FR, pt_BR, ...).
+    # Changing it requires a restart.
+    lang: "en_US"
+
+  # Add worlds that are not listed under "worlds" to the default group automatically
+  # (the first time a player enters them). Requires settings.options.default-group.enabled.
+  auto-configure-worlds: false
+
+
+  # ------------------------------------------------------------------------------------------
+  #  BACKUPS - zip of the whole plugin folder (player data, config, SQLite file)
+  # ------------------------------------------------------------------------------------------
+  backups:
+    enabled: true
+
+    # Time between backups, in "interval-type" units.
+    interval: 1
+
+    # Unit of "interval": m = minutes, h = hours, d = days (lower case).
+    # Busy servers: every 6 or 12 hours is a sensible minimum.
+    interval-type: d
+
+    # Backups to keep; the oldest one is deleted when a new one exceeds this number.
+    max-backups: 25
+
+    # For MYSQL / MARIADB / MONGODB / REDIS: also export the database records as YAML inside the zip.
+    # Can be heavy on large servers.
+    remote-snapshot:
+      enabled: false
+
+
+  # ------------------------------------------------------------------------------------------
+  #  CHANGE LOGS - history of every save (restore items after bugs, griefing or mistakes)
+  # ------------------------------------------------------------------------------------------
+  # Database backends store a snapshot on every save. This can grow fast on large servers.
+  change-logs:
+    enabled: true
+
+    # Days to keep the history. The plugin never keeps less than 30 days.
+    retention-days: 30
+
+    # Store the full data of each snapshot (needed to restore items).
+    include-payload: true
+
+    # Log everything the player has, even the sections disabled under settings.options.saves.
+    capture-all-data: true
+
+    # History as YAML files for the YAML backend. Only recommended for small servers (disk usage).
+    yaml:
+      enabled: false
+      recommended-max-players: 50
+
+    # The SQLite file grows quickly with history enabled: set to true to confirm you want it.
+    sqlite:
+      confirmed: false
+
+
+  # ------------------------------------------------------------------------------------------
+  #  WHAT IS SEPARATED PER GROUP
+  # ------------------------------------------------------------------------------------------
+  options:
+
+    # Group used by auto-configure-worlds for new worlds, and as the fallback group of unlisted worlds
+    # (API, WorldGuard regions). If you remove this group from "groups", change it here too.
+    default-group:
+      enabled: true
+      group: default
+
+    # true  = saved per group (each group has its own copy)
+    # false = NOT kept: it is reset when the player changes group
+    # Changing these with players online can make them lose data: back up first.
+    saves:
+      gamemode: true
+      flying: true          # includes "allow flight"
+      fly-speed: true
+      exp: true
+      enderchest: true
+      inventory: true       # main inventory and armor
+      potion-effects: true
+      food-level: true
+      off-hand: true        # Minecraft 1.9+
+      health: true          # see settings.health-options
+      # Data that other plugins add through the SepareWorldItems API uses its section id, e.g.:
+      # "myplugin:mana": false
+
+    # Per-group overrides of "saves". Keys set here win over the global value for that group.
+    # Example:
+    # saves-per-group:
+    #   creative:
+    #     exp: false
+    #     health: false
+    saves-per-group: {}
+
+  # How health is saved and restored:
+  #   BUKKIT      - vanilla health and max health (default)
+  #   CUSTOM      - do not touch health (another plugin manages it)
+  #   AURA_SKILLS - AuraSkills health (requires integrations.auraskills.enabled)
+  health-options:
+    type: BUKKIT
+
+
+# ============================================================================================
+#  INTEGRATIONS - each one only works when that plugin is installed
+# ============================================================================================
+integrations:
+  placeholderapi:
+    # PlaceholderAPI placeholders.
+    enabled: true
+  auraskills:
+    # AuraSkills (AureliumSkills): mana (and health with health-options.type: AURA_SKILLS). BETA.
+    enabled: false
+  worldguard:
+    # Region groups (see "worldguard-regions" below).
+    # Supported: WorldGuard 6.1 / 6.2 (Minecraft 1.8.8 - 1.12.2) and WorldGuard 7.x (1.13 - 26.x).
+    enabled: false
+  essentials:
+    # EssentialsX: vanish handling on world change (see "essentialsx" below).
+    enabled: false
+
+
+# ============================================================================================
+#  STORAGE
+# ============================================================================================
+# type: YAML | SQLITE | MYSQL | MARIADB | MONGODB | REDIS
+#   YAML    one file per player and group in plugins/SepareWorldItems/groups/ (default)
+#   SQLITE  one local database file
+#   MYSQL / MARIADB / MONGODB / REDIS  shared databases (BETA: back up before using them;
+#           region groups with a remote database are experimental)
+storage:
+  type: YAML
+
+  # Legacy option: on startup, copy the YAML files into the selected backend (files are kept).
+  # Same as migration.enabled: true + migration.from: YAML.
+  migrate-from-yaml: false
+
+  # Copy all player data from another backend on startup, e.g. from YAML to MYSQL:
+  #   type: MYSQL
+  #   migration: { enabled: true, from: YAML, overwrite: false }
+  # A backup of the source is created before migrating. Disable it again after the first start.
+  migration:
+    enabled: false
+    from: YAML
+    # false = only copy players missing in the target; true = replace existing records.
+    overwrite: false
+
+  sqlite:
+    # File inside the plugin folder.
+    file: "separeworlditems.sqlite"
+
+  # MYSQL / MARIADB: set EITHER jdbc-url OR host + port + database.
+  sql:
+    # Full JDBC URL (advanced), e.g. jdbc:mysql://localhost:3306/separeworlditems?useSSL=false
+    jdbc-url: ""
+
+    host: ""
+    port: 3306
+    database: "separeworlditems"
+    # Extra JDBC parameters (without '?'), e.g. "useSSL=false&autoReconnect=true"
+    parameters: ""
+
+    username: ""
+    password: ""
+    pool:
+      maxPoolSize: 10
+
+  mongodb:
+    uri: "mongodb://localhost:27017"
+    database: "separeworlditems"
+    collection: "player_data"
+    # Collection for the change logs.
+    logs-collection: "change_logs"
+
+  redis:
+    uri: "redis://localhost:6379"
+    key-prefix: "swi"
+
+
+# ============================================================================================
+#  GROUPS AND WORLDS
+# ============================================================================================
+# Every group used below must be listed here. Keep "default" unless you change default-group.
+groups:
+  - default
+  - otherworldgroup
+
+# World name (case sensitive) -> group.
+# Players only switch data when moving between two worlds listed here; unlisted worlds keep the
+# player's current data (use auto-configure-worlds to add new worlds automatically).
+worlds:
+  world: default
+  world_nether: otherworldgroup
+  world_the_end: default
+
+
+# ============================================================================================
+#  WORLDGUARD REGIONS (BETA) - requires integrations.worldguard.enabled
+# ============================================================================================
+# While a player stands in a configured region they use that region group's data; leaving it
+# switches back to the world group. With overlapping regions the highest priority wins.
+# Region ids are case sensitive. Back up your server before using regions.
+worldguard-regions:
+  # Groups that regions may use (region data is stored apart from world groups).
+  groups:
+  - defaultregiongroup
+  - otherregiongroup
+
+  # Region id -> group. Two formats:
+  #   all worlds:     regions: { spawn: defaultregiongroup }
+  #   per world (recommended):
+  #     regions:
+  #       world:
+  #         spawn: defaultregiongroup
+  #       world_nether:
+  #         spawn: otherregiongroup
+  regions:
+    spawn: defaultregiongroup
+    pvp: otherregiongroup
+
+
+# ============================================================================================
+#  PLUGIN-SPECIFIC OPTIONS
+# ============================================================================================
+# EssentialsX (BETA): players in vanish are briefly un-vanished during a world change so their data
+# is switched correctly, then vanished again.
+essentialsx:
+  vanish-bypass: true
+
+# AuraSkills (BETA): keep mana separated per group.
+auraskills:
+  save-mana: true
+
+# Anonymous usage statistics (bStats). Not implemented yet: reserved for a future version.
+metrics:
+  enabled: true

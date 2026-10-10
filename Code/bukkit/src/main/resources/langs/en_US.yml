@@ -1,0 +1,49 @@
+# SepareWorldItems
+# Lang Translation:
+# Original Author: https://github.com/Happyuky7/
+# Contributors:
+# - https://github.com/Happyuky7/
+# Lasted Update Version (Plugin): 2.0.0
+
+# Lang ID | NOTE: Do not change this value.
+lang-id: en_US # Example: en_US, pt_BR, es_ES, jp_JP, etc.
+# Lang Version | NOTE: Do not change this value.
+lang-version: 2.0.0 # Internal check update this file.
+
+# Basic
+prefix: "&8[&aSepareWorldItems&8] &r" # Variable: %prefix%
+no-permission: "%prefix% &cYou don't have permission to do that."
+
+reload: "%prefix% &aPlugin reloaded."
+
+backups:
+  force-backup:
+    start: "%prefix% &aStarting backup..."
+    end: "%prefix% &aBackup completed."
+    completed:
+      - ""
+      - "%prefix% &aBackup completed."
+      - "&aBackup saved in &f%backup_path%"
+      - ""
+    error:
+      - ""
+      - "%prefix% &cAn error occurred while backing up."
+      - "&cPlease check the console for more information."
+      - ""
+
+integration:
+  essentialsx:
+    vanish-reactivated: "%prefix% &aYour EssentialsX vanish has been reactivated&a."
+    vanish-deactivated: "%prefix% &cYour EssentialsX vanish has been deactivated&c."
+
+commands:
+  confirm:
+    usage: "%prefix% &cUsage: /separeworlditems confirm <code>"
+    no-pending: "%prefix% &cNo pending action found or code expired/invalid."
+    pending-invalid: "%prefix% &cPending action is invalid."
+  cancel:
+    success: "%prefix% &aPending confirmation cancelled."
+  critical:
+    header: "%prefix% &cThis is a critical command."
+    confirm-within: "%prefix% &eConfirm within %seconds%s using: &f/separeworlditems confirm %code%"
+    migration-summary: "%prefix% &eMigration: &f%from% -> %to% &7(overwrite=%overwrite%)"

@@ -1,0 +1,14 @@
+name: SepareWorldItems
+version: ${project.version}
+main: com.github.happyuky7.separeWorldItems.SepareWorldItems
+api-version: '1.16'
+authors: [ Happyuky7 ]
+description: SepareWorldItems
+website: https://github.com/Happyuky7
+folia-supported: true
+softdepend: [ PlaceholderAPI, EssentialsX, WorldGuard, Multiverse-Core, AuraSkills, ViaVersion ]
+commands:
+  separeworlditems:
+    description: SepareWorldItems command
+    usage: /<command>
+    aliases: [ swi, separeitems]
