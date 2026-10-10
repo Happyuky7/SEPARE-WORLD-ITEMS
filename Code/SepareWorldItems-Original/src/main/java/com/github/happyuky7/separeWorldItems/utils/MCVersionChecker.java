@@ -21,10 +21,14 @@ public class MCVersionChecker {
      * Prefers Bukkit.getMinecraftVersion() (e.g. "1.21.1") and falls back to parsing Bukkit.getBukkitVersion()/getVersion().
      */
     public static SemVer getServerMinecraftVersion() {
-        // Paper/Spigot provides this in modern versions.
+        // Paper provides this in modern versions (Spigot API doesn't expose it).
         String mc = null;
         try {
-            mc = Bukkit.getMinecraftVersion();
+            var m = Bukkit.class.getMethod("getMinecraftVersion");
+            Object v = m.invoke(null);
+            if (v instanceof String s) {
+                mc = s;
+            }
         } catch (Throwable ignored) {
             // ignore
         }

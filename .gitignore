@@ -113,3 +113,6 @@ buildNumber.properties
 run/
 
 wiki2/
+
+# Local-only release notes (do not commit)
+RELEASES/2.0.1.md

@@ -213,11 +213,7 @@ public class MoveEvent implements Listener {
         };
 
         SepareWorldItems plugin = SepareWorldItems.getInstance();
-        if (plugin.isFolia()) {
-            plugin.getServer().getGlobalRegionScheduler().runDelayed(plugin, task -> job.run(), MOVE_CONFIRM_DELAY_TICKS);
-        } else {
-            plugin.getServer().getScheduler().runTaskLater(plugin, job, MOVE_CONFIRM_DELAY_TICKS);
-        }
+        PluginSchedulers.runSyncLater(plugin, job, MOVE_CONFIRM_DELAY_TICKS);
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)

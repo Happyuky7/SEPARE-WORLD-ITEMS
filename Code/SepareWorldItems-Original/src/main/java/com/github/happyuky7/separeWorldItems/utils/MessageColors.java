@@ -35,6 +35,7 @@ public class MessageColors {
                 || Bukkit.getVersion().contains("1.21.7") || Bukkit.getVersion().contains("1.21.8")
                 || Bukkit.getVersion().contains("1.21.9") || Bukkit.getVersion().contains("1.21.10")
                 || Bukkit.getVersion().contains("1.21.11") || Bukkit.getVersion().contains("26.1")
+                || Bukkit.getVersion().contains("26.2") || Bukkit.getVersion().contains("26.3")
         ) {
 
             Pattern pattern = Pattern.compile("#[a-fA-F0-9]{6}");

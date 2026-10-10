@@ -83,25 +83,11 @@ public class WorldChangeEvent implements Listener {
                     player.sendMessage(MessageColors
                             .getMsgColor(MessagesManager.getMessage("integration.essentialsx.vanish-deactivated")));
 
-                    if (SepareWorldItems.getInstance().isFolia()) {
-
-                        SepareWorldItems.getInstance().getServer().getGlobalRegionScheduler().runDelayed(
-                                SepareWorldItems.getInstance(), (task) -> {
-                                    IntegrationEssentialsX.setPlayerVanish(player, true);
-                                    player.sendMessage(MessageColors.getMsgColor(
-                                            MessagesManager.getMessage("integration.essentialsx.vanish-reactivated")));
-                                }, 1L);
-
-                    } else {
-
-                        SepareWorldItems.getInstance().getServer().getScheduler()
-                                .runTaskLater(SepareWorldItems.getInstance(), () -> {
-                                    IntegrationEssentialsX.setPlayerVanish(player, true);
-                                    player.sendMessage(MessageColors.getMsgColor(
-                                            MessagesManager.getMessage("integration.essentialsx.vanish-reactivated")));
-                                }, 1L);
-
-                    }
+                    PluginSchedulers.runSyncLater(SepareWorldItems.getInstance(), () -> {
+                        IntegrationEssentialsX.setPlayerVanish(player, true);
+                        player.sendMessage(MessageColors.getMsgColor(
+                                MessagesManager.getMessage("integration.essentialsx.vanish-reactivated")));
+                    }, 1L);
                 }
             }
         }

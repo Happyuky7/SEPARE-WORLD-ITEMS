@@ -4,6 +4,7 @@ import com.github.happyuky7.separeWorldItems.SepareWorldItems;
 import com.github.happyuky7.separeWorldItems.storage.PlayerDataScope;
 import com.github.happyuky7.separeWorldItems.storage.PlayerDataStore;
 import com.github.happyuky7.separeWorldItems.storage.StorageType;
+import com.github.happyuky7.separeWorldItems.utils.PluginSchedulers;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.Nullable;
 
@@ -250,13 +251,17 @@ public class BackupManager {
      * @param sourceFolder the folder to back up
      */
     public void startAutoBackup(File sourceFolder) {
-        if (SepareWorldItems.getInstance().isFolia()) {
-            plugin.getServer().getGlobalRegionScheduler().runAtFixedRate(plugin, (task) -> createBackup(sourceFolder), 1L,
-                    backupInterval / 50);
-        } else {
-            plugin.getServer().getScheduler().runTaskTimerAsynchronously(plugin, () -> createBackup(sourceFolder), 0L,
-                    backupInterval / 50);
+        long periodTicks = backupInterval / 50;
+
+        SepareWorldItems swi = SepareWorldItems.getInstance();
+        if (swi.isFolia()) {
+            boolean scheduled = PluginSchedulers.tryFoliaGlobalRunAtFixedRate(swi, () -> createBackup(sourceFolder), 1L, periodTicks);
+            if (scheduled) {
+                return;
+            }
         }
+
+        plugin.getServer().getScheduler().runTaskTimerAsynchronously(plugin, () -> createBackup(sourceFolder), 0L, periodTicks);
     }
 
     private static boolean shouldIncludeRemoteSnapshot(JavaPlugin plugin, boolean force) {

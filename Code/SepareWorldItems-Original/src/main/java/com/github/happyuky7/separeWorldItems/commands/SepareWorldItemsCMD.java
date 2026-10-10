@@ -8,6 +8,7 @@ import com.github.happyuky7.separeWorldItems.storage.StorageManager;
 import com.github.happyuky7.separeWorldItems.storage.StorageType;
 import com.github.happyuky7.separeWorldItems.storage.migration.StoreToStoreMigration;
 import com.github.happyuky7.separeWorldItems.utils.MessageColors;
+import com.github.happyuky7.separeWorldItems.utils.PluginSchedulers;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -237,15 +238,7 @@ public class SepareWorldItemsCMD implements CommandExecutor, TabCompleter {
                 }
             };
 
-            if (plugin.isFolia()) {
-                try {
-                    plugin.getServer().getAsyncScheduler().runNow(plugin, task -> job.run());
-                } catch (Throwable t) {
-                    Bukkit.getScheduler().runTaskAsynchronously(plugin, job);
-                }
-            } else {
-                Bukkit.getScheduler().runTaskAsynchronously(plugin, job);
-            }
+            PluginSchedulers.runAsync(plugin, job);
 
             return true;
         }
@@ -284,11 +277,7 @@ public class SepareWorldItemsCMD implements CommandExecutor, TabCompleter {
     }
 
     private static void runSync(SepareWorldItems plugin, Runnable run) {
-        if (plugin.isFolia()) {
-            plugin.getServer().getGlobalRegionScheduler().run(plugin, task -> run.run());
-        } else {
-            Bukkit.getScheduler().runTask(plugin, run);
-        }
+        PluginSchedulers.runSync(plugin, run);
     }
 
     private static boolean isConfirmed(String[] args) {

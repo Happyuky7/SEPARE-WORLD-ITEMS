@@ -3,7 +3,7 @@ SEPARE WORLD ITEMS,  It's a echo plugin to be for your invention by world.
 
 ## Download
 
-[Donwload 2.0.0 (Folia Support) / Minecraft Version Support 1.8.8 - 1.21.X ](https://github.com/Happyuky7/SEPARE-WORLD-ITEMS/releases/)
+[Donwload 2.0.1 (Folia Support) / Minecraft Version Support 1.8.8 - 26.1.2 ](https://github.com/Happyuky7/SEPARE-WORLD-ITEMS/releases/)
 
 ---
 
