@@ -116,3 +116,8 @@ wiki2/
 
 # Local-only release notes (do not commit)
 RELEASES/2.0.1.md
+
+# Gradle / build output (projects live in Code/, see Code/.gitignore)
+.gradle/
+build/
+.kotlin/

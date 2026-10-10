@@ -111,3 +111,31 @@ buildNumber.properties
 
 # Common working directory
 run/
+
+# Gradle
+.gradle/
+build/
+.kotlin/
+!**/gradle/wrapper/gradle-wrapper.jar
+
+# Bootstrap output (portable JDKs, collected builds)
+.jdks/
+dist/
+
+# VS Code / Eclipse Java tooling (generated per Gradle project)
+.vscode/
+bin/
+.project
+.classpath
+.settings/
+.factorypath
+
+# Fabric Loom
+remappedSrc/
+
+# Dev servers / local test data (mod and plugin test runs)
+logs/
+crash-reports/
+*.sqlite
+*.db
+.env
