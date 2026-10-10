@@ -1,8 +1,10 @@
 # NOTE1
 
-Because it is inside another folder, the reason is that the current version when this note, 
-is that it is only a plugin version, it is planned to make a 
-version natively compatible with Fabric and Forge soon.
+SepareWorldItems v3: the plugin lives in `bukkit/` and the untouched v2 plugin in `SepareWorldItems-Original/`,
+next to the Fabric (`fabric/`, `fabric-legacy/`), NeoForge (`neoforge/`) and Forge (`forge/`) mods and the
+shared `api/`, `common/` and `minecraft/` modules. See [README.md](README.md).
 
-### The current version of the plugin is partially compatible with MoHist (it has already been tested).
+### The plugin version is partially compatible with MoHist (it has already been tested).
 ### Therefore it should be compatible with Banner or some other plugins + mods software, in Fabric or Forge.
+
+Planned: Hytale support (after inspecting the real Hytale server API).
