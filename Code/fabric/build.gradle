@@ -1,0 +1,188 @@
+// Shared build logic for every Fabric version in fabric/versions/<mc>/.
+// Sources live once in fabric/src and are preprocessed per version (see buildSrc/Preprocessor).
+
+import swi.build.PreprocessTask
+
+subprojects { Project p ->
+    String mc = p.property("minecraft_version")
+    int javaVersion = Integer.parseInt(p.property("java_version").toString())
+    // Minecraft 26.1+ ships without obfuscation: use the non-remapping Loom there.
+    boolean remap = p.property("loom_remap").toString().toBoolean()
+
+    p.apply plugin: remap ? "net.fabricmc.fabric-loom-remap" : "net.fabricmc.fabric-loom"
+    p.apply plugin: "maven-publish"
+
+    p.base {
+        archivesName = "SepareWorldItems-fabric-${mc}"
+    }
+
+    p.repositories {
+        maven { url = "https://maven.fabricmc.net/" }
+        // Any Modrinth project as maven.modrinth:<slug>:<version> (integrations with other mods).
+        maven {
+            url = "https://api.modrinth.com/maven"
+            content { includeGroup "maven.modrinth" }
+        }
+        // Cardinal Components (Trinkets API types).
+        maven { url = "https://maven.ladysnake.org/releases" }
+        // owo-lib / Accessories libraries (only for in-game integration tests).
+        maven { url = "https://maven.wispforest.io/releases" }
+    }
+
+    def preprocess = p.tasks.register("preprocessSources", PreprocessTask) {
+        // Loader-specific code + vanilla code shared with NeoForge/Forge.
+        sources.from(rootProject.file("fabric/src/main/java"), rootProject.file("minecraft/src/main/java"), rootProject.file("integrations/accessories/src/main/java"), rootProject.file("integrations/regions/src/main/java"))
+        output = p.layout.buildDirectory.dir("preprocessed/java")
+        minecraftVersion = mc
+    }
+
+    p.sourceSets.main.java.srcDirs = [preprocess.map { it.output }]
+    p.sourceSets.main.resources.srcDirs = [rootProject.file("fabric/src/main/resources")]
+
+    p.dependencies {
+        minecraft "com.mojang:minecraft:${mc}"
+        implementation project(":api")
+        implementation project(":common")
+        if (remap) {
+            mappings p.loom.officialMojangMappings()
+            modImplementation "net.fabricmc:fabric-loader:${p.property('fabric_loader_version')}"
+            modImplementation "net.fabricmc.fabric-api:fabric-api:${p.property('fabric_api_version')}"
+        } else {
+            implementation "net.fabricmc:fabric-loader:${p.property('fabric_loader_version')}"
+            implementation "net.fabricmc.fabric-api:fabric-api:${p.property('fabric_api_version')}"
+        }
+        // LuckPerms & co. through Lucko's fabric-permissions-api (bundled, it is a tiny library mod).
+        String fpa = p.findProperty("fabric_permissions_version")
+        if (fpa != null) {
+            if (remap) {
+                include(modImplementation("maven.modrinth:fabric-permissions-api:${fpa}"))
+            } else {
+                include(implementation("maven.modrinth:fabric-permissions-api:${fpa}"))
+            }
+        }
+        // Optional integrations, compiled against the mod and only active when it is installed
+        // (values are Modrinth version ids or numbers). -PswiTestMods also runs them in the dev server.
+        for (String key : ["trinkets", "cardinal-components-api", "accessories", "owo-lib", "yawp", "flan", "open-parties-and-claims"]) {
+            String ver = p.findProperty("mod_" + key.replace("-", "_"))
+            if (ver != null) {
+                String dep = "maven.modrinth:${key}:${ver}"
+                // -PswiTestMods=trinkets,cardinal-components-api   or   -PswiTestMods=all
+                String testMods = p.findProperty("swiTestMods")
+                boolean testRuntime = testMods != null && (testMods == "all" || testMods.split(",").collect { it.trim() }.contains(key))
+                if (remap) {
+                    modCompileOnly dep
+                    if (testRuntime) modLocalRuntime dep
+                } else {
+                    compileOnly dep
+                    if (testRuntime) localRuntime dep
+                }
+            }
+        }
+        // Full coordinates of extra compile-only API modules (e.g. Cardinal Components base for Trinkets).
+        String extraApis = p.findProperty("mod_extra_compile")
+        if (extraApis != null) {
+            for (String dep : extraApis.split(",")) {
+                if (remap) modCompileOnly dep.trim() else compileOnly dep.trim()
+            }
+        }
+        // Libraries those mods need at runtime in the dev server (-PswiTestMods).
+        String extraRuntime = p.findProperty("mod_extra_test_runtime")
+        if (extraRuntime != null && p.hasProperty("swiTestMods")) {
+            for (String dep : extraRuntime.split(",")) {
+                if (remap) modLocalRuntime dep.trim() else localRuntime dep.trim()
+            }
+        }
+        // Bundled libraries (jar-in-jar).
+        include(implementation("org.yaml:snakeyaml:2.7"))
+        include(implementation("org.xerial:sqlite-jdbc:3.53.4.0"))
+        include(implementation("org.mariadb.jdbc:mariadb-java-client:3.5.10"))
+        // MongoDB + Redis drivers (include is not transitive: every jar is listed; Gson comes with Minecraft).
+        for (String lib : p.property("swi_driver_libs").toString().split(",")) {
+            include(implementation(lib.trim()))
+        }
+        // Minecraft ships SLF4J since 1.18 only.
+        if (javaVersion < 17) {
+            include(implementation("org.slf4j:slf4j-api:1.7.36"))
+        }
+    }
+
+    p.tasks.withType(JavaCompile).configureEach {
+        options.encoding = "UTF-8"
+        options.release = javaVersion
+        options.compilerArgs << "-Xlint:-options"
+    }
+
+    p.java {
+        sourceCompatibility = JavaVersion.toVersion(javaVersion)
+        targetCompatibility = JavaVersion.toVersion(javaVersion)
+    }
+
+    p.processResources {
+        def props = [
+                version              : p.version,
+                minecraft_dependency : p.property("minecraft_dependency"),
+                java_dependency      : ">=${javaVersion}",
+                loader_version       : p.property("fabric_loader_version"),
+                // Fabric API used the mod id "fabric" before 0.44.
+                fabric_api_mod_id    : p.findProperty("fabric_api_mod_id") ?: "fabric-api",
+        ]
+        inputs.properties props
+        filesMatching("fabric.mod.json") {
+            expand props
+        }
+        // Language files of the repository (same as the plugin).
+        from(rootProject.file("../langs")) { into "separeworlditems/langs"; include "*.yml" }
+    }
+
+    // api + common are plain Java: merge their classes into the mod jar (no remapping needed).
+    p.tasks.named("jar", Jar) {
+        from(rootProject.project(":api").sourceSets.main.output)
+        from(rootProject.project(":common").sourceSets.main.output)
+        from(rootProject.file("../LICENSE.txt"))
+    }
+
+    // Collect every version's jar in Code/build/libs/fabric.
+    def finalJar = remap ? p.tasks.named("remapJar") : p.tasks.named("jar")
+    p.tasks.register("collectJar", Copy) {
+        from(finalJar)
+        into(rootProject.layout.buildDirectory.dir("libs/fabric"))
+    }
+    p.tasks.named("build") { finalizedBy("collectJar") }
+
+    p.loom {
+        runs {
+            server {
+                runDir = "run"
+                // ./gradlew :fabric:<mc>:runServer -PswiSelftest  -> in-game integration test, then the server stops.
+                if (p.hasProperty("swiSelftest")) {
+                    vmArg "-Dsepareworlditems.selftest=true"
+                }
+            }
+        }
+    }
+
+    // Dev server for the self test only: accept the EULA of the throwaway run/ folder and skip auth.
+    p.tasks.matching { it.name == "runServer" }.configureEach { t ->
+        t.doFirst {
+            if (p.hasProperty("swiSelftest")) {
+                File run = p.file("run")
+                run.mkdirs()
+                new File(run, "eula.txt").text = "eula=true\n"
+                File props = new File(run, "server.properties")
+                if (!props.exists()) {
+                    props.text = "online-mode=false\nserver-port=25599\nspawn-protection=0\nview-distance=4\nsimulation-distance=4\n"
+                }
+                if (p.hasProperty("swiTestMods")) {
+                    // Fresh world with a datapack that gives players a Trinkets "hand/ring" slot.
+                    p.delete(new File(run, "world"))
+                    File pack = new File(run, "world/datapacks/swi_test")
+                    new File(pack, "data/trinkets/slots/hand").mkdirs()
+                    new File(pack, "data/trinkets/entities").mkdirs()
+                    new File(pack, "pack.mcmeta").text = '{"pack":{"description":"SWI test","pack_format":48,"supported_formats":[1,999],"min_format":1,"max_format":999}}'
+                    new File(pack, "data/trinkets/slots/hand/ring.json").text = '{"amount":1}'
+                    new File(pack, "data/trinkets/entities/swi_test.json").text = '{"entities":["player"],"slots":["hand/ring"]}'
+                }
+            }
+        }
+    }
+}

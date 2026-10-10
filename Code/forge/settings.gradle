@@ -1,0 +1,15 @@
+pluginManagement {
+    includeBuild("../build-logic")
+    repositories {
+        maven { name = "MinecraftForge"; url = "https://maven.minecraftforge.net/" }
+        gradlePluginPortal()
+        mavenCentral()
+    }
+}
+
+// MinecraftForge mod: one source tree (forge/src + shared minecraft/src), preprocessed per Minecraft version.
+rootProject.name = "SepareWorldItems-forge"
+for (mc in ["1.21.1", "1.21.11", "26.1.2", "26.2", "26.3"]) {
+    include(mc)
+    project(":$mc").projectDir = file("versions/$mc")
+}

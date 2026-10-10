@@ -1,0 +1,26 @@
+modLoader = "javafml"
+loaderVersion = "[1,)"
+license = "All-Rights-Reserved"
+issueTrackerURL = "https://github.com/Happyuky7/SepareWorldItems/issues"
+
+[[mods]]
+modId = "separeworlditems"
+version = "${version}"
+displayName = "SepareWorldItems"
+authors = "Happyuky7"
+displayURL = "https://github.com/Happyuky7/SepareWorldItems"
+description = '''Separate inventories, ender chest, XP, health, effects and more per world group.'''
+
+[[dependencies.separeworlditems]]
+modId = "neoforge"
+type = "required"
+versionRange = "[${neoforge_version},)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.separeworlditems]]
+modId = "minecraft"
+type = "required"
+versionRange = "${minecraft_range}"
+ordering = "NONE"
+side = "BOTH"

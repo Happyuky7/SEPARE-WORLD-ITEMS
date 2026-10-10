@@ -1,0 +1,202 @@
+# ============================================================================================
+# SepareWorldItems v3 - mod configuration (Fabric, NeoForge, Forge)
+# Wiki / support: https://github.com/Happyuky7/SepareWorldItems
+# ============================================================================================
+#
+# How it works: every dimension belongs to a GROUP. Each player has one independent set of data
+# (inventory, armor, off-hand, ender chest, XP, health, food, effects, accessory slots...) per group.
+# Changing to a dimension of another group saves the current data to the old group and loads the new one.
+#
+# Same keys as the Bukkit plugin. Dimensions use their ids: "minecraft:overworld", "minecraft:the_nether",
+# "mymod:mining_world"... This file:   config/separeworlditems/config.yml
+# Player data:  <world save>/separeworlditems/   (every singleplayer world keeps its own data)
+# Commands:     /swi   /swi group [player]   /swi reload   /swi backup   (permission: separeworlditems.admin or OP level 2)
+
+# Format version of this file. Do not change it.
+config-version: 3.0.0
+
+
+# ============================================================================================
+#  GENERAL
+# ============================================================================================
+settings:
+
+  # Extra log output for troubleshooting.
+  debug: false
+
+  langs:
+    # Download / update the language file from GitHub on startup and /swi reload.
+    autoDownload: true
+
+    # Language file in config/separeworlditems/langs/ (en_US, es_ES, de_DE, fr_FR, pt_BR, ...).
+    # Missing keys fall back to the bundled copy of the same language, then to en_US.
+    lang: "en_US"
+
+  # On server start, add every dimension that is not listed under "worlds" to the default group.
+  # NOTE: this rewrites this file (its comments are removed).
+  auto-configure-worlds: false
+
+  options:
+
+    # Group of the players' current data when they join in a dimension that is not listed under "worlds".
+    default-group:
+      enabled: true
+      group: default
+
+    # true  = saved per group (each group has its own copy)
+    # false = NOT kept: it is reset when the player changes group
+    # Changing these with players online can make them lose data: back up first.
+    saves:
+      gamemode: true
+      flying: true          # includes "may fly"
+      fly-speed: true
+      exp: true
+      enderchest: true
+      inventory: true       # main inventory and armor
+      potion-effects: true
+      food-level: true      # food and saturation
+      off-hand: true
+      health: true          # see settings.health-options
+
+      # Mod integrations (only used when that mod is installed):
+      curios: true          # Curios slots, incl. cosmetic slots        (NeoForge)
+      trinkets: true        # Trinkets slots                             (Fabric)
+      accessories: true     # Accessories slots, incl. cosmetic slots    (Fabric / NeoForge)
+
+      # Data that other mods add through the SepareWorldItems API uses its section id, e.g.:
+      # "mymod:mana": false
+
+    # Per-group overrides of "saves". Keys set here win over the global value for that group.
+    # Example:
+    # saves-per-group:
+    #   creative:
+    #     exp: false
+    #     health: false
+    saves-per-group: {}
+
+  # How health is saved and restored:
+  #   VANILLA - health and max health (default; BUKKIT is accepted as an alias)
+  #   CUSTOM  - do not touch health (another mod manages it)
+  health-options:
+    type: VANILLA
+
+  # ------------------------------------------------------------------------------------------
+  #  BACKUPS - zip of <world save>/separeworlditems/ (+ this config) in <world save>/separeworlditems/backups/
+  # ------------------------------------------------------------------------------------------
+  # Manual backup: /swi backup
+  backups:
+    enabled: true
+
+    # Time between backups, in "interval-type" units.
+    interval: 1
+
+    # Unit of "interval": m = minutes, h = hours, d = days (lower case).
+    interval-type: d
+
+    # Backups to keep; the oldest one is deleted when a new one exceeds this number.
+    max-backups: 25
+
+    # For MYSQL / MARIADB / MONGODB / REDIS: also export the database records as YAML inside the zip.
+    # Can be heavy on large servers.
+    remote-snapshot:
+      enabled: false
+
+
+# ============================================================================================
+#  STORAGE
+# ============================================================================================
+# type: YAML | SQLITE | MYSQL | MARIADB | MONGODB | REDIS
+#   YAML    one file per player and group (default)
+#   SQLITE  one local database file
+#   MYSQL / MARIADB  shared database (same tables as the plugin)
+#   MONGODB / REDIS  shared database (same documents / keys as the plugin)
+# Changing the type requires a restart. Data is NOT migrated automatically between types.
+# Do NOT share a database between a mod server and a plugin server: items are stored in different
+# formats (the mod refuses to load plugin records instead of losing items).
+storage:
+  type: YAML
+
+  sqlite:
+    # File inside <world save>/separeworlditems/
+    file: "separeworlditems.sqlite"
+
+  # MYSQL / MARIADB: set EITHER jdbc-url OR host + port + database.
+  sql:
+    # Full JDBC URL (advanced), e.g. jdbc:mariadb://localhost:3306/separeworlditems
+    jdbc-url: ""
+
+    host: ""
+    port: 3306
+    database: "separeworlditems"
+    # Extra JDBC parameters (without '?'), e.g. "useSSL=false"
+    parameters: ""
+
+    username: ""
+    password: ""
+
+  mongodb:
+    # e.g. mongodb://user:password@localhost:27017/?authSource=admin
+    uri: "mongodb://localhost:27017"
+    database: "separeworlditems"
+    collection: "player_data"
+
+  redis:
+    # e.g. redis://:password@localhost:6379/0   (rediss:// for TLS)
+    uri: "redis://localhost:6379"
+    key-prefix: "swi"
+
+
+# ============================================================================================
+#  GROUPS AND DIMENSIONS
+# ============================================================================================
+# Every group used under "worlds" must be listed here (region groups go in regions.groups).
+groups:
+  - default
+  - otherworldgroup
+
+# Dimension id -> group.
+# Players only switch data when they arrive in a listed dimension; in unlisted dimensions they keep
+# the data of the last group they were in.
+worlds:
+  "minecraft:overworld": default
+  "minecraft:the_nether": default
+  "minecraft:the_end": default
+
+
+# ============================================================================================
+#  REGION / CLAIM GROUPS - YAWP, Flan, Open Parties and Claims (only used when installed)
+# ============================================================================================
+# While a player stands in a configured area they use that group's data; leaving it switches back to
+# the dimension's group (like the plugin's worldguard-regions). Back up before enabling it.
+regions:
+  enabled: false
+
+  # How often (in ticks, 20 = 1 second) positions are checked. A new area must be seen on two
+  # checks in a row before switching, so walking along a border does not flicker.
+  check-interval-ticks: 10
+
+  # Groups that areas may use.
+  groups:
+    - regiongroup
+
+  # YAWP (Yet Another World Protector): region name -> group.
+  # Per dimension, or "*" for every dimension. The highest priority region wins.
+  yawp:
+    "*": {}
+    # "*":
+    #   spawn: regiongroup
+    # "minecraft:the_nether":
+    #   arena: regiongroup
+
+  # Flan: checked in this order, first match wins.
+  flan:
+    claims: {}          # claim uuid or claim name -> group (sub-claims inherit their parent)
+    owners: {}          # owner uuid -> group (every claim of that player)
+    admin-claims: ""    # group for admin (server) claims, "" = none
+    any-claim: ""       # group for any other claim, "" = none
+
+  # Open Parties and Claims: checked in this order, first match wins.
+  opac:
+    owners: {}          # owner uuid -> group (chunks claimed by that player)
+    parties: {}         # party uuid or party name -> group (chunks claimed by its members)
+    any-claim: ""       # group for any other claimed chunk, "" = none

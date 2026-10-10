@@ -1,0 +1,86 @@
+plugins {
+    // legacy-looming must use the same Loom line as fabric-loom.
+    id "fabric-loom" version "1.16.3"
+    id "legacy-looming" version "1.16.1"
+}
+
+base {
+    archivesName = "SepareWorldItems-fabric-${project.minecraft_version}"
+}
+
+repositories {
+    mavenCentral()
+}
+
+sourceSets.main.java.srcDirs += [file("../api/src/main/java"), file("../common/src/main/java")]
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings legacy.yarn(project.minecraft_version, project.yarn_build)
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    modImplementation "net.legacyfabric.legacy-fabric-api:legacy-fabric-api:${project.legacy_fabric_api_version}"
+
+    compileOnly "org.jetbrains:annotations:26.1.0"
+    include(implementation("org.yaml:snakeyaml:2.7"))
+    include(implementation("org.xerial:sqlite-jdbc:3.53.4.0"))
+    include(implementation("org.mariadb.jdbc:mariadb-java-client:3.5.10"))
+    // MongoDB + Redis drivers; Minecraft 1.12.2 has no SLF4J.
+    for (String lib : project.property("swi_driver_libs").toString().split(",")) {
+        include(implementation(lib.trim()))
+    }
+    include(implementation("org.slf4j:slf4j-api:1.7.36"))
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = "UTF-8"
+    options.release = 8
+    options.compilerArgs << "-Xlint:-options"
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+processResources {
+    def props = [version: project.version, loader_version: project.loader_version]
+    inputs.properties props
+    filesMatching("fabric.mod.json") { expand props }
+    // Same default config as the modern Fabric mod.
+    from(file("../fabric/src/main/resources/separeworlditems")) { into "separeworlditems" }
+    // Language files of the repository (same as the plugin).
+    from(file("../../langs")) { into "separeworlditems/langs"; include "*.yml" }
+}
+
+jar {
+    from(rootProject.file("../../LICENSE.txt"))
+}
+
+def collect = tasks.register("collectJar", Copy) {
+    from(tasks.named("remapJar"))
+    into(file("../build/libs/fabric"))
+}
+tasks.named("build") { finalizedBy(collect) }
+
+loom {
+    runs {
+        server {
+            runDir = "run"
+            if (project.hasProperty("swiSelftest")) {
+                vmArg "-Dsepareworlditems.selftest=true"
+            }
+        }
+    }
+}
+
+tasks.matching { it.name == "runServer" }.configureEach { t ->
+    t.doFirst {
+        if (project.hasProperty("swiSelftest")) {
+            file("run").mkdirs()
+            file("run/eula.txt").text = "eula=true\n"
+            if (!file("run/server.properties").exists()) {
+                file("run/server.properties").text = "online-mode=false\nserver-port=25599\nspawn-protection=0\nview-distance=4\n"
+            }
+        }
+    }
+}

@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "separeworlditems",
+  "version": "${version}",
+  "name": "SepareWorldItems",
+  "description": "Separate inventories, ender chest, XP, health, effects and more per world group.",
+  "authors": ["Happyuky7"],
+  "contact": {
+    "homepage": "https://github.com/Happyuky7/SepareWorldItems",
+    "sources": "https://github.com/Happyuky7/SepareWorldItems"
+  },
+  "license": "All-Rights-Reserved",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["com.github.happyuky7.swi.fabric.legacy.SwiLegacyFabric"]
+  },
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "legacy-fabric-api": "*",
+    "minecraft": "1.12.2"
+  }
+}

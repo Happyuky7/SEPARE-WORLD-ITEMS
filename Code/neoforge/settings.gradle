@@ -1,0 +1,15 @@
+pluginManagement {
+    includeBuild("../build-logic")
+    repositories {
+        maven { name = "NeoForged"; url = "https://maven.neoforged.net/releases" }
+        gradlePluginPortal()
+        mavenCentral()
+    }
+}
+
+// NeoForge mod: one source tree (neoforge/src + shared minecraft/src), preprocessed per Minecraft version.
+rootProject.name = "SepareWorldItems-neoforge"
+for (mc in ["1.21.1", "1.21.11", "26.1.2", "26.2", "26.3"]) {
+    include(mc)
+    project(":$mc").projectDir = file("versions/$mc")
+}

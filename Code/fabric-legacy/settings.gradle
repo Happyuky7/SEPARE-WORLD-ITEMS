@@ -1,0 +1,12 @@
+pluginManagement {
+    repositories {
+        maven { name = "Fabric"; url = "https://maven.fabricmc.net/" }
+        maven { name = "LegacyFabric"; url = "https://repo.legacyfabric.net/repository/legacyfabric/" }
+        gradlePluginPortal()
+        mavenCentral()
+    }
+}
+
+// Minecraft 1.12.2 through Legacy Fabric. Separate build because legacy-looming needs its own Loom line.
+// api/ and common/ sources from the main build are compiled in directly (they target Java 8).
+rootProject.name = "SepareWorldItems-fabric-legacy"

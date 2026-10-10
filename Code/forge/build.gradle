@@ -1,0 +1,114 @@
+import swi.build.PreprocessTask
+
+plugins {
+    id "net.minecraftforge.gradle" version "7.0.40" apply false
+    id "net.minecraftforge.jarjar" version "0.2.3" apply false
+    id "swi.preprocess"
+}
+
+File code = rootProject.file("..")
+
+subprojects { Project p ->
+    String mc = p.property("minecraft_version")
+    int javaVersion = Integer.parseInt(p.property("java_version").toString())
+    // Minecraft 26.1+ ships without obfuscation, older versions need Mojang's official mappings.
+    boolean obfuscated = mc.startsWith("1.")
+
+    p.apply plugin: "java"
+    p.apply plugin: "net.minecraftforge.gradle"
+    p.apply plugin: "net.minecraftforge.jarjar"
+    p.base { archivesName = "SepareWorldItems-forge-${mc}" }
+    p.java.toolchain.languageVersion = JavaLanguageVersion.of(javaVersion)
+
+    def preprocess = p.tasks.register("preprocessSources", PreprocessTask) {
+        sources.from(new File(code, "forge/src/main/java"), new File(code, "minecraft/src/main/java"))
+        output = p.layout.buildDirectory.dir("preprocessed/java")
+        minecraftVersion = mc
+    }
+    // api + common are plain Java 8 sources shared by every platform.
+    p.sourceSets.main.java.srcDirs = [preprocess.map { it.output }, new File(code, "api/src/main/java"), new File(code, "common/src/main/java")]
+    p.sourceSets.main.resources.srcDirs = [new File(code, "forge/src/main/resources")]
+
+    p.minecraft {
+        if (obfuscated) {
+            mappings channel: "official", version: mc
+        }
+        runs {
+            register("server") {
+                workingDir = p.layout.projectDirectory.dir("run")
+                args "--nogui"
+                if (p.hasProperty("swiSelftest")) {
+                    systemProperty "separeworlditems.selftest", "true"
+                }
+            }
+        }
+    }
+
+    p.repositories {
+        p.minecraft.mavenizer(it)
+        maven p.fg.forgeMaven
+        maven p.fg.minecraftLibsMaven
+        mavenCentral()
+    }
+
+    // Bundled libraries (Jar-in-Jar): the final jar is the 'jarJar' task output.
+    p.jarJar.register()
+    p.tasks.named("jar") { archiveClassifier = "slim" }
+    p.tasks.named("jarJar") { archiveClassifier = null }
+
+    p.dependencies {
+        implementation p.minecraft.dependency("net.minecraftforge:forge:${mc}-${p.property('forge_version')}")
+        compileOnly "org.jetbrains:annotations:26.1.0"
+        // SnakeYAML, SQL drivers, MongoDB + Redis drivers (Gson and SLF4J come with Minecraft).
+        def bundled = ["org.yaml:snakeyaml:2.7", "org.xerial:sqlite-jdbc:3.53.4.0", "org.mariadb.jdbc:mariadb-java-client:3.5.10"] + p.property("swi_driver_libs").toString().split(",").collect { it.trim() }
+        for (lib in bundled) {
+            implementation lib
+            jarJar lib
+        }
+    }
+
+    p.tasks.withType(JavaCompile).configureEach {
+        options.encoding = "UTF-8"
+        options.compilerArgs << "-Xlint:-options"
+    }
+
+    p.processResources {
+        def props = [version: p.version, minecraft_range: p.property("minecraft_range"), forge_major: p.property("forge_major")]
+        inputs.properties props
+        filesMatching("META-INF/mods.toml") { expand props }
+        from(new File(code, "fabric/src/main/resources/separeworlditems")) { into "separeworlditems" }
+        from(new File(code, "../langs")) { into "separeworlditems/langs"; include "*.yml" }
+        // Forge treats every mod as a resource pack: pack formats differ per Minecraft version.
+        String packMeta = p.property("pack_meta").toString()
+        inputs.property("pack_meta", packMeta)
+        doLast {
+            File meta = new File(destinationDir, "pack.mcmeta")
+            String body = packMeta.substring(1, packMeta.length() - 1)
+            meta.text = '{"pack":{"description":"SepareWorldItems resources",' + body + '}}'
+        }
+    }
+
+    p.tasks.register("collectJar", Copy) {
+        from(p.tasks.named("jarJar"))
+        into(new File(code, "build/libs/forge"))
+    }
+    p.tasks.named("build") {
+        dependsOn("jarJar")
+        finalizedBy("collectJar")
+    }
+
+    // Dev server for the self test: throwaway run/ folder, EULA accepted, no auth.
+    p.afterEvaluate {
+        p.tasks.matching { it.name == "runServer" }.configureEach { t ->
+            t.doFirst {
+                if (p.hasProperty("swiSelftest")) {
+                    File run = p.file("run")
+                    run.mkdirs()
+                    new File(run, "eula.txt").text = "eula=true\n"
+                    File props = new File(run, "server.properties")
+                    if (!props.exists()) props.text = "online-mode=false\nserver-port=25599\nview-distance=4\nsimulation-distance=4\n"
+                }
+            }
+        }
+    }
+}
