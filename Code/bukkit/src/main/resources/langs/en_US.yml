@@ -1,14 +1,14 @@
 # SepareWorldItems
-# Lang Translation:
+# Lang Translation: English
 # Original Author: https://github.com/Happyuky7/
 # Contributors:
 # - https://github.com/Happyuky7/
-# Lasted Update Version (Plugin): 2.0.0
+# Lasted Update Version (Plugin): 3.0.0-beta-1
 
 # Lang ID | NOTE: Do not change this value.
 lang-id: en_US # Example: en_US, pt_BR, es_ES, jp_JP, etc.
 # Lang Version | NOTE: Do not change this value.
-lang-version: 2.0.0 # Internal check update this file.
+lang-version: 3.0.0-beta-1 # Internal check update this file.
 
 # Basic
 prefix: "&8[&aSepareWorldItems&8] &r" # Variable: %prefix%
@@ -47,3 +47,16 @@ commands:
     header: "%prefix% &cThis is a critical command."
     confirm-within: "%prefix% &eConfirm within %seconds%s using: &f/separeworlditems confirm %code%"
     migration-summary: "%prefix% &eMigration: &f%from% -> %to% &7(overwrite=%overwrite%)"
+
+# Fabric / NeoForge / Forge mod (v3)
+mod:
+  info:
+    - "%prefix% &fv&a%version% &7(%loader%, Minecraft %minecraft%)"
+    - "&7Storage: &f%storage% &7| Groups: &f%groups%"
+    - "&7https://github.com/Happyuky7/SEPARE-WORLD-ITEMS"
+  reload: "%prefix% &aConfiguration reloaded."
+  reload-warnings: "%prefix% &eConfiguration reloaded with &f%count% &ewarning(s):"
+  reload-warning-line: "&7 - &e%problem%"
+  group: "%prefix% &f%player% &7-> &a%group%"
+  group-untracked: "%prefix% &f%player% &7-> &cnot tracked (unmanaged dimension)"
+  player-offline: "%prefix% &cPlayer &f%player% &cis not online."

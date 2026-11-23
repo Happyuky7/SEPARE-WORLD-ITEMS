@@ -6,9 +6,9 @@
   "description": "Separate inventories, ender chest, XP, health, effects and more per world group.",
   "authors": ["Happyuky7"],
   "contact": {
-    "homepage": "https://github.com/Happyuky7/SepareWorldItems",
-    "sources": "https://github.com/Happyuky7/SepareWorldItems",
-    "issues": "https://github.com/Happyuky7/SepareWorldItems/issues"
+    "homepage": "https://github.com/Happyuky7/SEPARE-WORLD-ITEMS",
+    "sources": "https://github.com/Happyuky7/SEPARE-WORLD-ITEMS",
+    "issues": "https://github.com/Happyuky7/SEPARE-WORLD-ITEMS/issues"
   },
   "license": "All-Rights-Reserved",
   "environment": "*",

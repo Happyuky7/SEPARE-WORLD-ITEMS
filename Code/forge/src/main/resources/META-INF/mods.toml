@@ -1,14 +1,14 @@
 modLoader = "javafml"
 loaderVersion = "[${forge_major},)"
 license = "All-Rights-Reserved"
-issueTrackerURL = "https://github.com/Happyuky7/SepareWorldItems/issues"
+issueTrackerURL = "https://github.com/Happyuky7/SEPARE-WORLD-ITEMS/issues"
 
 [[mods]]
 modId = "separeworlditems"
 version = "${version}"
 displayName = "SepareWorldItems"
 authors = "Happyuky7"
-displayURL = "https://github.com/Happyuky7/SepareWorldItems"
+displayURL = "https://github.com/Happyuky7/SEPARE-WORLD-ITEMS"
 description = '''Separate inventories, ender chest, XP, health, effects and more per world group.'''
 
 [[dependencies.separeworlditems]]

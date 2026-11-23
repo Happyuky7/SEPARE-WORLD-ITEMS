@@ -85,7 +85,7 @@ public final class SepareWorldItems extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor(" "));
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&a Author: &f" + getDescription().getAuthors().get(0)));
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&a Version: &f" + getDescription().getVersion()));
-        Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&a Github: &fhttps://github.com/Happyuky7/SepareWorldItems"));
+        Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&a Github: &fhttps://github.com/Happyuky7/SEPARE-WORLD-ITEMS"));
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor(" "));
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&a Server Version: &f" + Bukkit.getVersion()));
         
@@ -218,7 +218,7 @@ public final class SepareWorldItems extends JavaPlugin {
         }
 
         // Check if the language file version is lasted
-        if (!checkLangVersion("2.0.0")) {
+        if (!checkLangVersion("3.0.0-beta-1")) {
             Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&c[SepareWorldItems] The language file with the ID '" + getConfig().getString("settings.langs.lang") + "' is outdated!")); 
             Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&c[SepareWorldItems] REQUIERED UPDATE!"));
         }
@@ -271,7 +271,7 @@ public final class SepareWorldItems extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor(" "));
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&a Author: &f" + getDescription().getAuthors().get(0)));
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&a Version: &f" + getDescription().getVersion()));
-        Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&a Github: &fhttps://github.com/Happyuky7/SepareWorldItems"));
+        Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor("&a Github: &fhttps://github.com/Happyuky7/SEPARE-WORLD-ITEMS"));
         Bukkit.getConsoleSender().sendMessage(MessageColors.getMsgColor(" "));
 
     }
