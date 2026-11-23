@@ -94,8 +94,8 @@ subprojects { Project p ->
         }
         // Bundled libraries (jar-in-jar).
         include(implementation("org.yaml:snakeyaml:2.7"))
-        include(implementation("org.xerial:sqlite-jdbc:3.53.4.0"))
-        include(implementation("org.mariadb.jdbc:mariadb-java-client:3.5.10"))
+        include(implementation("org.xerial:sqlite-jdbc:3.54.1.0"))
+        include(implementation("org.mariadb.jdbc:mariadb-java-client:3.5.11"))
         // MongoDB + Redis drivers (include is not transitive: every jar is listed; Gson comes with Minecraft).
         for (String lib : p.property("swi_driver_libs").toString().split(",")) {
             include(implementation(lib.trim()))

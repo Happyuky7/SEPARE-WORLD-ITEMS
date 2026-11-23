@@ -73,7 +73,7 @@ subprojects { Project p ->
             for (String dep : extraRuntime.split(",")) runtimeOnly dep.trim()
         }
         // SnakeYAML, SQL drivers, MongoDB + Redis drivers (Gson and SLF4J come with Minecraft).
-        def bundled = ["org.yaml:snakeyaml:2.7", "org.xerial:sqlite-jdbc:3.53.4.0", "org.mariadb.jdbc:mariadb-java-client:3.5.10"] + p.property("swi_driver_libs").toString().split(",").collect { it.trim() }
+        def bundled = ["org.yaml:snakeyaml:2.7", "org.xerial:sqlite-jdbc:3.54.1.0", "org.mariadb.jdbc:mariadb-java-client:3.5.11"] + p.property("swi_driver_libs").toString().split(",").collect { it.trim() }
         for (lib in bundled) {
             implementation lib
             jarJar lib

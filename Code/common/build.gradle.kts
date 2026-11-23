@@ -21,14 +21,14 @@ dependencies {
     // Provided by Bukkit at runtime; bundled (jar-in-jar) by the Fabric mod.
     compileOnly("org.yaml:snakeyaml:2.7")
     // Remote storage drivers: bundled by the plugin and the mods, optional at runtime.
-    compileOnly("org.mongodb:mongodb-driver-sync:5.2.0")
+    compileOnly("org.mongodb:mongodb-driver-sync:5.15.0")
     compileOnly("redis.clients:jedis:5.1.5")
 
     testImplementation("org.yaml:snakeyaml:2.7")
-    testImplementation("org.xerial:sqlite-jdbc:3.53.4.0")
-    testImplementation("org.mongodb:mongodb-driver-sync:5.2.0")
+    testImplementation("org.xerial:sqlite-jdbc:3.54.1.0")
+    testImplementation("org.mongodb:mongodb-driver-sync:5.15.0")
     testImplementation("redis.clients:jedis:5.1.5")
-    testImplementation(platform("org.junit:junit-bom:5.13.4"))
+    testImplementation(platform("org.junit:junit-bom:5.14.4"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
