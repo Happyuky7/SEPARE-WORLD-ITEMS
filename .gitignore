@@ -121,3 +121,6 @@ RELEASES/2.0.1.md
 .gradle/
 build/
 .kotlin/
+
+# Internal release notes (not published)
+RELEASES/

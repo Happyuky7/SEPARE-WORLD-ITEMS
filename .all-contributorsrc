@@ -1,0 +1,46 @@
+{
+  "projectName": "SEPARE-WORLD-ITEMS",
+  "projectOwner": "Happyuky7",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "commitConvention": "none",
+  "contributorsPerLine": 7,
+  "linkToUsage": false,
+  "contributors": [
+    {
+      "login": "Happyuky7",
+      "name": "Happyuky7",
+      "avatar_url": "https://avatars.githubusercontent.com/u/58347721?v=4",
+      "profile": "https://happyuky7.com",
+      "contributions": [
+        "code",
+        "maintenance",
+        "translation",
+        "doc"
+      ]
+    },
+    {
+      "login": "HyperekDerg",
+      "name": "HyperekDerg",
+      "avatar_url": "https://avatars.githubusercontent.com/u/94315198?v=4",
+      "profile": "https://hyperdragon-portfolio.netlify.app/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "wildmaster84",
+      "name": "wildmaster84",
+      "avatar_url": "https://avatars.githubusercontent.com/u/46942741?v=4",
+      "profile": "https://github.com/wildmaster84",
+      "contributions": [
+        "code"
+      ]
+    }
+  ]
+}

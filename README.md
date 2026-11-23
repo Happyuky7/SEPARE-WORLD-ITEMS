@@ -3,25 +3,36 @@ SEPARE WORLD ITEMS,  It's a echo plugin to be for your invention by world.
 
 ## Download
 
-[Donwload 2.0.1 (Folia Support) / Minecraft Version Support 1.8.8 - 26.1.2 ](https://github.com/Happyuky7/SEPARE-WORLD-ITEMS/releases/)
+**Latest (BETA):** [Download 3.0.0-beta-1 (Plugin + Fabric / NeoForge / Forge mods) / Minecraft Version Support 1.8.8 - 26.3](https://github.com/Happyuky7/SEPARE-WORLD-ITEMS/releases/tag/3.0.0-beta-1)
+
+**Stable:** [Download 2.0.1 (Folia Support) / Minecraft Version Support 1.8.8 - 26.1.2](https://github.com/Happyuky7/SEPARE-WORLD-ITEMS/releases/)
+
+> 3.0.0-beta-1 is a pre-release: make a **backup** of `plugins/SepareWorldItems/` before updating from 2.x.
 
 ---
 
 ## Install
 
-- Download Lasted Plugin Version.
-- Move you plugin folder `/plugins`.
-- Start or Restart your server.
-- Join a plugin folder `/plugins/SepareWorldItems`.
-- Configure plugin in `config.yml`.
-- Restart Your Server.
+**Plugin (Spigot, Paper, Purpur, Folia)**
+
+- Download the jar for your server version (see the table in [Version 3](#version-3-beta--plugin--mods)): `-java8` (1.8.8 - 1.16.5), `-java17` (1.17 - 1.20.4) or `-java21` (1.20.5 - 26.x).
+- Put it in your `/plugins` folder.
+- Start or restart your server.
+- Configure the plugin in `/plugins/SepareWorldItems/config.yml`.
+- Restart your server.
+
+**Mod (Fabric, NeoForge, Forge)**
+
+- Download `SepareWorldItems-<loader>-<minecraft>-<version>.jar` for your loader and Minecraft version.
+- Put it in your `/mods` folder (Fabric also needs Fabric API; 1.12.2 needs Legacy Fabric API).
+- Configure it in `config/separeworlditems/config.yml`.
 
 **Note:** If you use any `DEV-VERSION` of the plugin,
 I **recommend** you to make a **backup** and **check** the **changelist** of
 
 ---
 
-## Version 3 (IN DEVELOPMENT) — plugin + mods
+## Version 3 (BETA) — plugin + mods
 
 SepareWorldItems v3 runs on Bukkit-based servers **and** as a server-side mod (also singleplayer/LAN),
 with one shared core, one config format and one developer API. The v2 plugin is kept untouched in
@@ -147,7 +158,7 @@ Gradle (Kotlin DSL):
 ```kotlin
 repositories { mavenLocal() }
 dependencies {
-    compileOnly("com.github.happyuky7:separeworlditems-api:3.0.0")
+    compileOnly("com.github.happyuky7:separeworlditems-api:3.0.0-beta-1")
     // Fabric mods: modCompileOnly(...) on remapped versions works too, the API has no Minecraft classes.
 }
 ```
@@ -158,7 +169,7 @@ Maven:
 <dependency>
     <groupId>com.github.happyuky7</groupId>
     <artifactId>separeworlditems-api</artifactId>
-    <version>3.0.0</version>
+    <version>3.0.0-beta-1</version>
     <scope>provided</scope>
 </dependency>
 ```
@@ -214,16 +225,37 @@ The older Bukkit-only API (`com.github.happyuky7.separeWorldItems.api`) keeps wo
 
 ---
 
-## Contributors
+## Contributors ✨
 
-- [**Happyuky7**](https://github.com/Happyuky7) - Main Developer and Maintainer.
-- [**HyperekDerg**](https://github.com/HyperekDerg) - Implement Backup Utility.
-- [**wildmaster84**](https://github.com/wildmaster84) - Fix Folia Support and Implement auto worlds adding to config.
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://happyuky7.com"><img src="https://avatars.githubusercontent.com/u/58347721?v=4?s=100" width="100px;" alt="Happyuky7"/><br /><sub><b>Happyuky7</b></sub></a><br /><a href="https://github.com/Happyuky7/SEPARE-WORLD-ITEMS/commits?author=Happyuky7" title="Code">💻</a> <a href="#maintenance-Happyuky7" title="Maintenance">🚧</a> <a href="#translation-Happyuky7" title="Translation">🌍</a> <a href="https://github.com/Happyuky7/SEPARE-WORLD-ITEMS/commits?author=Happyuky7" title="Documentation">📖</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://hyperdragon-portfolio.netlify.app/"><img src="https://avatars.githubusercontent.com/u/94315198?v=4?s=100" width="100px;" alt="HyperekDerg"/><br /><sub><b>HyperekDerg</b></sub></a><br /><a href="https://github.com/Happyuky7/SEPARE-WORLD-ITEMS/commits?author=HyperekDerg" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/wildmaster84"><img src="https://avatars.githubusercontent.com/u/46942741?v=4?s=100" width="100px;" alt="wildmaster84"/><br /><sub><b>wildmaster84</b></sub></a><br /><a href="https://github.com/Happyuky7/SEPARE-WORLD-ITEMS/commits?author=wildmaster84" title="Code">💻</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+
+- **HyperekDerg** - Implemented the backup utility.
+- **wildmaster84** - Fixed Folia support and implemented auto-adding worlds to the config.
 
 
 ---
 
-© Copyright Happyuky7 2017-2025 ©
+© Copyright Happyuky7 2017-2026 ©
 RIGHTS RESERVED
 
 ## Special Thanks To
@@ -233,3 +265,13 @@ RIGHTS RESERVED
 [IntelliJ IDEA](https://www.jetbrains.com/idea/), Code editor for Java and other programming languages and programs.
 
 [Azul Java](https://www.azul.com/) The world’s largest commercial provider of OpenJDK
+
+## Star History
+
+<a href="https://www.star-history.com/#Happyuky7/SEPARE-WORLD-ITEMS&Date">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=Happyuky7/SEPARE-WORLD-ITEMS&type=Date&theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=Happyuky7/SEPARE-WORLD-ITEMS&type=Date" />
+    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=Happyuky7/SEPARE-WORLD-ITEMS&type=Date" />
+  </picture>
+</a>
